@@ -1,0 +1,91 @@
+﻿@using WEB.Models.ViewModels
+
+@model DiaconatoVm
+
+@{
+    var paises = ViewBag.Pais;
+    var title = ViewBag.Title;
+}
+
+<form asp-area="" asp-controller="Diaconato" asp-action="AlterarAsync" method="post">
+    <div id="modalAdicionar" data-bs-backdrop="static" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header border-bottom d-flex justify-content-between align-items-center" style="background-color: #628dbc;">
+                    <h5 class="modal-title text-white">@title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="DiaconatoId">
+
+                    <div class="form-group mb-3">
+                        <label asp-for="NomeCompleto" class="control-label"></label><span class="text-danger ms-1">*</span>
+                        <input asp-for="NomeCompleto" class="form-control" />
+                        <span asp-validation-for="NomeCompleto" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Igreja" class="control-label"></label><span class="text-danger ms-1">*</span>
+                        <input asp-for="Igreja" class="form-control" />
+                        <span asp-validation-for="Igreja" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Regiao" class="control-label"></label><span class="text-danger ms-1">*</span>
+                        <input asp-for="Regiao" class="form-control" />
+                        <span asp-validation-for="Regiao" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Cargo" class="control-label"></label><span class="text-danger ms-1">*</span>
+                        <input asp-for="Cargo" class="form-control" />
+                        <span asp-validation-for="Cargo" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Contato" class="control-label"></label><span class="text-danger ms-1">*</span>
+                        <input asp-for="Contato" class="form-control" />
+                        <span asp-validation-for="Contato" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="NomePastor" class="control-label"></label><span class="text-danger ms-1">*</span>
+                        <input asp-for="NomePastor" class="form-control" />
+                        <span asp-validation-for="NomePastor" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="DataNascimento" class="control-label"></label><span class="text-danger ms-1">*</span>
+                        <input asp-for="DataNascimento" class="form-control" />
+                        <span asp-validation-for="DataNascimento" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="DataMinisterio" class="control-label"></label>
+                        <input asp-for="DataMinisterio" class="form-control" />
+                        <span asp-validation-for="DataMinisterio" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="DataBatismo" class="control-label"></label>
+                        <input asp-for="DataBatismo" class="form-control" />
+                        <span asp-validation-for="DataBatismo" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-check">
+                        <input asp-for="Ativo" class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
+                        <label asp-for="Ativo" class="form-check-label" for="flexCheckIndeterminate"></label>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <input type="submit" value="Salvar" class="btn btn-primary order-0 order-sm-1">
+                    <button type="button" id="btnNovo" data-url="@Url.Action("AlterarAsync", "Diaconato")" class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i>
+                        Novo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
