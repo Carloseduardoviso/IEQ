@@ -1,4 +1,5 @@
-﻿using WEB.Models.Entities;
+﻿using System.Linq.Expressions;
+using WEB.Models.Entities;
 
 namespace WEB.Data.Repositories.Interfaces
 {
@@ -7,5 +8,6 @@ namespace WEB.Data.Repositories.Interfaces
         Task AddAsync(Diaconato diaconato);
         Task UpdateAsync(Diaconato diaconato);
         Task<Diaconato?> GetByIdAsync(Guid diaconatoId);
+        Task<IEnumerable<Diaconato>> GetAllAsync(Expression<Func<Diaconato, bool>>? expression);
     }
 }

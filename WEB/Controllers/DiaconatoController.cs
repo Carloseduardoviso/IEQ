@@ -15,7 +15,7 @@ namespace WEB.Controllers
         }
 
         public IActionResult Index()
-        {
+        {            
             return View();
         }
 
@@ -30,7 +30,7 @@ namespace WEB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AlterarAsync(DiaconatoVm diaconatoVm)
+        public async Task<IActionResult> AlterarDiaconato(DiaconatoVm diaconatoVm)
         {
             string mensagemSucess = "";
             var novo = await _diaconatoService.GetByIdAsync(diaconatoVm.DiaconatoId);

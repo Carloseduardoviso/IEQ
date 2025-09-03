@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using WEB.Data.Repositories.Interfaces;
 using WEB.Models.Entities;
 
@@ -17,6 +18,13 @@ namespace WEB.Data.Repositories
         {
             await _dataContext.AddAsync(diaconato);
             await _dataContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Diaconato>> GetAllAsync(Expression<Func<Diaconato, bool>>? expression)
+        {
+            if (expression is not null) return await _dataContext.Diaconatos.AsNoTracking().Where(expression).OrderBy(c => c.NomeCompleto).ToListAsync();
+
+            return await _dataContext.Diaconatos.AsNoTracking().OrderBy(c => c.NomeCompleto).ToListAsync();
         }
 
         public async Task<Diaconato?> GetByIdAsync(Guid diaconatoId)

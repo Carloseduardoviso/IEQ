@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Linq.Expressions;
 using WEB.Data.Repositories.Interfaces;
 using WEB.Models.Entities;
 using WEB.Models.ViewModels;
@@ -21,6 +22,12 @@ namespace WEB.Services
         {
             var diaconato = _mapper.Map<Diaconato>(diaconatoVm);
             await _diaconatoRepository.AddAsync(diaconato);
+        }
+
+        public async Task<IEnumerable<DiaconatoVm>> GetAllAsync(Expression<Func<DiaconatoVm, bool>>? expression = null)
+        {
+            var diaconato = await _diaconatoRepository.GetAllAsync(_mapper.Map<Expression<Func<Diaconato, bool>>>(expression));
+            return _mapper.Map<IEnumerable<DiaconatoVm>>(diaconato);
         }
 
         public async Task<DiaconatoVm?> GetByIdAsync(Guid diaconatoId)
