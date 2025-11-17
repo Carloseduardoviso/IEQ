@@ -2,6 +2,175 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Bem Vindo</h1>
+<div id="carouselExampleControls" class="carousel slide mt-3" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+        <!-- SLIDE 1 -->
+        <div class="carousel-item active">
+            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                <img src="~/images/home/logo_ieq.png" alt="Logo IEQ" class="slide-img">
+                <p class="slide-text">Igreja do Evangelho Quadrangular</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="carousel-item">
+            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                <img src="~/images/home/logo_diaconato.png" alt="Logo Diaconato" class="slide-img">
+                <p class="slide-text">Coordenadoria Estadual de Diaconato</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="carousel-item">
+            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                <img src="~/images/home/logo_criancas.png" alt="Logo Crianças" class="slide-img">
+                <p class="slide-text">Grupo Missionário de Crianças</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div class="carousel-item">
+            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                <img src="~/images/home/logo_juniores.png" alt="Logo Juniores" class="slide-img">
+                <p class="slide-text">Grupo Missionário de Juniores</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5 -->
+        <div class="carousel-item">
+            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                <img src="~/images/home/logo_adolescentes.png" alt="Logo Adolescentes" class="slide-img">
+                <p class="slide-text">Grupo Missionário de Adolescentes</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 6 -->
+        <div class="carousel-item">
+            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                <img src="~/images/home/logo_homens.png" alt="Logo Homens" class="slide-img">
+                <p class="slide-text">Grupo Missionário de Homens</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 7 -->
+        <div class="carousel-item">
+            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                <img src="~/images/home/logo_mulheres.png" alt="Logo Mulheres" class="slide-img">
+                <p class="slide-text">Grupo Missionário de Mulheres</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 8 -->
+        <div class="carousel-item">
+            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                <img src="~/images/home/logo_jovens-casados.png" alt="Logo Casados" class="slide-img">
+                <p class="slide-text">Grupo Missionário de Jovens Casados</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 9 -->
+        <div class="carousel-item">
+            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                <img src="~/images/home/logo_melhor-idade.png" alt="Logo Melhor Idade" class="slide-img">
+                <p class="slide-text">Grupo Missionário da Melhor Idade</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CONTROLES -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon custom-arrow"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon custom-arrow"></span>
+        <span class="visually-hidden">Próximo</span>
+    </button>
+
 </div>
+
+<style>
+    /* === CARD DO CARROSSEL === */
+    #carouselExampleControls {
+        margin-left: 40px;
+        margin-right: 40px;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        background: #ffffff;
+    }
+
+    /* ALTURA DO CARD */
+    .slide-content {
+        height: 350px;
+    }
+
+    /* TAMANHO DA IMAGEM */
+    .slide-img {
+        width: 200px;
+        max-height: 180px;
+        object-fit: contain;
+        margin-bottom: 15px;
+    }
+
+    /* TEXTO DO SLIDE */
+    .slide-text {
+        font-size: 1.3rem;
+        font-weight: 600;
+        text-align: center;
+        color: #333;
+    }
+
+    /* BOTÕES PRETOS */
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        filter: invert(100%) brightness(0%);
+        border-radius: 50%;
+        padding: 15px;
+    }
+
+    /* === RESPONSIVIDADE === */
+
+    /* CELULAR */
+    @@media (max-width: 575.98px) {
+        #carouselExampleControls {
+            margin-left: 10px;
+            margin-right: 10px;
+            border-radius: 12px;
+        }
+
+        .slide-content {
+            height: 280px;
+        }
+
+        .slide-img {
+            width: 150px;
+            max-height: 130px;
+        }
+
+        .slide-text {
+            font-size: 1rem;
+        }
+    }
+
+    /* TABLET */
+    @@media (min-width: 576px) and (max-width: 991.98px) {
+        #carouselExampleControls {
+            margin-left: 20px;
+            margin-right: 20px;
+            border-radius: 16px;
+        }
+
+        .slide-content {
+            height: 300px;
+        }
+
+        .slide-img {
+            width: 170px;
+        }
+    }
+
+</style>

@@ -20,3 +20,50 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* NAVBAR GRADIENTE */
+.ieq-navbar {
+    background: linear-gradient(90deg, #ff0000, #ffdd00, #0066ff, #8000ff);
+    padding: 12px 20px;
+}
+
+
+/* LOGO NAVBAR */
+.nav-logo {
+    height: 35px;
+    width: auto;
+    margin-right: 8px;
+}
+
+/* LINKS */
+.nav-link-ieq {
+    color: #ffffff !important;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 8px 15px;
+    transition: 0.3s ease;
+    border-radius: 8px;
+}
+
+    /* HOVER */
+    .nav-link-ieq:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff !important;
+    }
+
+    /* ITEM ATIVO (opcional) */
+    .nav-link-ieq.active {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+/* MOBILE */
+@media (max-width: 576px) {
+    .nav-link-ieq {
+        text-align: center;
+        margin-top: 5px;
+    }
+
+    .nav-logo {
+        height: 30px;
+    }
+}
