@@ -12,6 +12,39 @@
         public DateTime? DataNascimento { get; set; }
         public DateTime? DataMinisterio { get; set; }
         public DateTime? DataBatismo { get; set; }
-        public bool Ativo { get; set; }
+        public bool Ativo { get; set; } = true;
+        public IFormFile? Foto { get; set; }
+        public string? FotoUrl { get; set; }
+
+        public string TempoMinisterio
+        {
+            get
+            {
+                if (DataMinisterio == null)
+                    return "-";
+
+                var inicio = DataMinisterio.Value;
+                var hoje = DateTime.Today;
+
+                var anos = hoje.Year - inicio.Year;
+                var meses = hoje.Month - inicio.Month;
+
+                if (hoje.Day < inicio.Day)
+                    meses--;
+
+                if (meses < 0)
+                {
+                    anos--;
+                    meses += 12;
+                }
+
+                if (anos > 0 && meses > 0)
+                    return $"{anos} ano(s) e {meses} mês(es)";
+                else if (anos > 0)
+                    return $"{anos} ano(s)";
+                else
+                    return $"{meses} mês(es)";
+            }
+        }
     }
 }

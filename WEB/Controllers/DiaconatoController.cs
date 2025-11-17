@@ -14,9 +14,10 @@ namespace WEB.Controllers
             _diaconatoService = diaconatoService;
         }
 
-        public IActionResult Index()
-        {            
-            return View();
+        public async Task<IActionResult> Index()
+        {
+            var buscaTodos = await _diaconatoService.GetAllAsync();
+            return View(buscaTodos);
         }
 
         public async Task<IActionResult> Cadastrar(Guid? diaconatoId)
@@ -33,18 +34,36 @@ namespace WEB.Controllers
         public async Task<IActionResult> AlterarDiaconato(DiaconatoVm diaconatoVm)
         {
             string mensagemSucess = "";
-            var novo = await _diaconatoService.GetByIdAsync(diaconatoVm.DiaconatoId);
+          
+            if (diaconatoVm.Foto != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "diaconato");
 
-            if (novo != null)
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var nomeArquivo = Guid.NewGuid() + Path.GetExtension(diaconatoVm.Foto.FileName);
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await diaconatoVm.Foto.CopyToAsync(stream);
+                }
+
+                diaconatoVm.FotoUrl = "/images/diaconato/" + nomeArquivo;
+            }
+
+            var existente = await _diaconatoService.GetByIdAsync(diaconatoVm.DiaconatoId);
+
+            if (existente != null)
             {
                 await _diaconatoService.UpdateAsync(diaconatoVm);
-                mensagemSucess = "Edição de cliente, efetuado com sucesso!";
-
+                mensagemSucess = "Edição de cliente efetuada com sucesso!";
             }
             else
             {
                 await _diaconatoService.AddAsync(diaconatoVm);
-                mensagemSucess = "Cadastro de cliente, efetuado com sucesso!";
+                mensagemSucess = "Cadastro de cliente efetuado com sucesso!";
             }
 
             return RedirectToAction("Index", "Diaconato").Success(mensagemSucess);

@@ -7,7 +7,7 @@
     var title = ViewBag.Title;
 }
 
-<form asp-action="AlterarDiaconato">
+<form asp-action="AlterarDiaconato" enctype="multipart/form-data">
     <div id="modalAdicionar" data-bs-backdrop="static" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -18,6 +18,19 @@
                 <div class="modal-body">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="DiaconatoId">
+
+                    <div class="form-group mb-3">
+                        <label class="control-label">Foto</label>
+                        <input asp-for="Foto" type="file" class="form-control" accept="image/*" />
+                        <span asp-validation-for="Foto" class="text-danger"></span>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model?.FotoUrl))
+                    {
+                        <div class="form-group mb-3">
+                            <img src="@Model.FotoUrl" alt="Foto" style="width:120px; border-radius:8px;" />
+                        </div>
+                    }
 
                     <div class="form-group mb-3">
                         <label asp-for="NomeCompleto" class="control-label"></label><span class="text-danger ms-1">*</span>

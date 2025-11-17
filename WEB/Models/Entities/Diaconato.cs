@@ -13,4 +13,5 @@ public class Diaconato
     public DateTime? DataMinisterio { get; set; }
     public DateTime? DataBatismo { get; set; }
     public bool Ativo { get; set; }
+    public string? FotoUrl { get; set; }
 }

@@ -21,6 +21,7 @@ namespace WEB.Data.Config
             builder.Property(d => d.DataMinisterio);
             builder.Property(d => d.DataBatismo);
             builder.Property(d => d.Ativo);
+            builder.Property(d => d.FotoUrl);
         }
     }
 }
