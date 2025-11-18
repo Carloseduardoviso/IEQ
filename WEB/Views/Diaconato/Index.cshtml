@@ -36,10 +36,8 @@
                         <th>#</th>
                         <th>Nome</th>
                         <th>Igreja</th>
-                        <th>Pastor Titular</th>
                         <th>Região</th>
                         <th>Cargo</th>
-                        <th>Tempo no Ministério</th>
                         <th>Ativo</th>
                         <th width="15%">Ações</th>
                     </tr>
@@ -57,15 +55,13 @@
                                     }
                                     else
                                     {
-                                        <img src="/images/no-photo.png" style="width:50px; height:50px; object-fit:cover; border-radius:6px;" />
+                                        <img src="~/images/Home/foto_padrao.png" style="width:50px; height:50px; object-fit:cover; border-radius:6px;" />
                                     }
                                 </td>
                                 <td>@item.NomeCompleto</td>
                                 <td>@item.Igreja</td>
-                                <td>@item.NomePastor</td>
                                 <td>@item.Regiao</td>
                                 <td>@item.Cargo</td>
-                                <td>@item.TempoMinisterio</td>
                                 <td>
                                     <span class="badge @(item.Ativo ? "bg-success" : "bg-danger") px-3">
                                         @(item.Ativo ? "Sim" : "Não")
@@ -75,28 +71,26 @@
                                     @if (item.Ativo)
                                     {
                                         <a class="btn btn-light btn-sm edit-button" title="Editar"
-                                           data-url="@Url.Action("Cadastrar", "Diaconato", new { id = item.DiaconatoId })">
+                                           data-id="@item.DiaconatoId"
+                                           data-url="@Url.Action("Cadastrar", "Diaconato")">
                                             <i class="fa-solid fa-pen-to-square text-primary"></i>
                                         </a>
 
                                         <a class="btn btn-light btn-sm remove-button" title="Excluír"
                                            data-url="@Url.Action("Excluir", "Diaconato", new { id = item.DiaconatoId })">
                                             <i class="fa-solid fa-trash text-danger"></i>
-                                        </a>                                     
+                                        </a>   
+                                        <a class="btn btn-light btn-sm remove-button" title="Excluír"
+                                           asp-action="Detalhe" asp-controller="Diaconato" asp-route-DiaconatoId="@item.DiaconatoId">
+                                            <i class="fa-solid fa-eye text-primary"></i>
+                                        </a>
                                     }
                                     else
                                     {
                                         <a class="btn btn-light btn-sm ativar-button" title="Ativar Obreiro"
                                            data-url="@Url.Action("Inativar", "Diaconato", new { id = item.DiaconatoId })">
                                             <i class="fa-solid fa-check text-success"></i>
-                                        </a>
-
-                                        @* <a class="btn ativar-button"
-                                           data-url="@Url.Action("Inativar", "Estado", new { id = item.DiaconatoId })"
-                                           data-id="@item.DiaconatoId"
-                                           title="Ativar" style="font-size: 10px;">
-                                            <i class="fa-solid fa-toggle-off text-success me-2"> Ativar </i>
-                                        </a> *@
+                                        </a>                                   
                                     }
                                 </td>
                             </tr>
@@ -105,7 +99,7 @@
                     else
                     {
                         <tr>
-                            <td colspan="6" class="text-center text-muted">Nenhum resultado encontrado</td>
+                            <td colspan="9" class="text-center text-muted">Nenhum resultado encontrado</td>
                         </tr>
                     }
                 </tbody>

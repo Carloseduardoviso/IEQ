@@ -1,0 +1,145 @@
+﻿@model IEnumerable<DiaconatoVm>
+
+@{
+    var aniversariantesMes = Model?
+        .Where(d => d.Ativo && d.DataNascimento.HasValue && d.DataNascimento.Value.Month == DateTime.Today.Month)
+        .ToList() ?? new List<DiaconatoVm>();
+}
+
+@if (aniversariantesMes.Any())
+{
+    if (aniversariantesMes.Count == 1)
+    {
+        <!-- Apenas 1 aniversariante -->
+        var d = aniversariantesMes[0];
+        <div id="carouselAniversariantes" class="carousel slide mt-3" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                    <p class="text-body">Aniversáriante do Mês</p>
+                    <img src="@(!string.IsNullOrEmpty(d.FotoUrl) ? d.FotoUrl : "~/images/home/foto_padrao.png")"
+                         alt="@d.NomeCompleto" class="slide-img rounded-circle">
+                    <p class="slide-text mb-0">@d.NomeCompleto</p>
+                    <small class="text-muted">Aniversário: @d.DataNascimento?.ToString("dd/MM")</small>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Carrossel com vários aniversariantes -->
+        <div id="carouselAniversariantes" class="carousel slide mt-3" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @for (int i = 0; i < aniversariantesMes.Count; i++)
+                {
+                    var d = aniversariantesMes[i];
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                            <p class="text-body">Aniversáriante do Mês</p>
+                            <img src="@(!string.IsNullOrEmpty(d.FotoUrl) ? d.FotoUrl : "~/images/home/foto_padrao.png")"
+                                 alt="@d.NomeCompleto" class="slide-img rounded-circle">
+                            <p class="slide-text mb-0">@d.NomeCompleto</p>
+                            <small class="text-muted">Aniversário: @d.DataNascimento?.ToString("dd/MM")</small>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselAniversariantes" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon custom-arrow"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselAniversariantes" data-bs-slide="next">
+                <span class="carousel-control-next-icon custom-arrow"></span>
+                <span class="visually-hidden">Próximo</span>
+            </button>
+        </div>
+    }
+}
+else
+{
+    <p class="text-center text-muted mt-3">Não há aniversariantes neste mês.</p>
+}
+
+<style>
+    /* === CARD DO CARROSSEL === */
+    #carouselAniversariantes {
+        margin-left: 40px;
+        margin-right: 40px;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        background: #ffffff;
+    }
+
+    /* ALTURA DO CARD */
+    .slide-content {
+        height: 350px;
+    }
+
+    /* TAMANHO DA IMAGEM */
+    .slide-img {
+        width: 200px;
+        max-height: 180px;
+        object-fit: contain;
+        margin-bottom: 15px;
+    }
+
+    /* TEXTO DO SLIDE */
+    .slide-text {
+        font-size: 1.3rem;
+        font-weight: 600;
+        text-align: center;
+        color: #333;
+    }
+
+    /* BOTÕES PRETOS */
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        filter: invert(100%) brightness(0%);
+        border-radius: 50%;
+        padding: 15px;
+    }
+
+    /* === RESPONSIVIDADE === */
+
+    /* CELULAR */
+    @@media (max-width: 575.98px) {
+        #carouselAniversariantes {
+            margin-left: 10px;
+            margin-right: 10px;
+            border-radius: 12px;
+        }
+
+        .slide-content {
+            height: 280px;
+        }
+
+        .slide-img {
+            width: 150px;
+            max-height: 130px;
+        }
+
+        .slide-text {
+            font-size: 1rem;
+        }
+    }
+
+    /* TABLET */
+    @@media (min-width: 576px) and (max-width: 991.98px) {
+        #carouselAniversariantes {
+            margin-left: 20px;
+            margin-right: 20px;
+            border-radius: 16px;
+        }
+
+        .slide-content {
+            height: 300px;
+        }
+
+        .slide-img {
+            width: 170px;
+        }
+    }
+
+</style>

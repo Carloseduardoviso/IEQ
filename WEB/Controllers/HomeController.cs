@@ -1,32 +1,25 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using WEB.Models;
+using WEB.Services.Interfaces;
 
-namespace WEB.Controllers
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly IDiaconatoService _diaconatoService;
+
+    public HomeController(IDiaconatoService diaconatoService)
     {
-        private readonly ILogger<HomeController> _logger;
+        _diaconatoService = diaconatoService;
+    }
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+    public async Task<IActionResult> Index()
+    {
+        var todosDiaconatos = await _diaconatoService.GetAllAsync();
+        return View(todosDiaconatos); // envia para a view Home/Index
+    }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    // Partial dos aniversariantes
+    public async Task<IActionResult> Aniversariantes()
+    {
+        var todos = await _diaconatoService.GetAllAsync();
+        return PartialView("_Aniversariantes", todos);
     }
 }
