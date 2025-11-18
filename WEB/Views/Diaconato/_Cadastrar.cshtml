@@ -11,18 +11,30 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
-                <div class="modal-header border-bottom d-flex justify-content-between align-items-center" style="background-color: #628dbc;">
+                <!-- HEADER -->
+                <div class="modal-header" style="background-color: #628dbc;">
                     <h5 class="modal-title text-white">@title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
+                <!-- BODY -->
                 <div class="modal-body">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="DiaconatoId" />
 
-                    <div class="row mb-3">
+                    <input type="hidden" asp-for="DiaconatoId" />
+                    <input type="hidden" asp-for="FotoUrl" />
+                    <input type="hidden" asp-for="FotoUrlConsagracao" />
+                    <input type="hidden" asp-for="FotoUrl5Anos" />
+                    <input type="hidden" asp-for="FotoUrl10Anos" />
+                    <input type="hidden" asp-for="FotoUrl15Anos" />
+                    <input type="hidden" asp-for="FotoUrl20Anos" />
+                    <input type="hidden" asp-for="FotoUrl25Anos" />
+
+                    <!-- SEÇÃO 1 =============================== -->
+                    <h5 class="border-bottom pb-2 mb-3">Dados Pessoais</h5>
+
+                    <div class="row mb-4">
                         <div class="col-md-6">
-                            <label class="control-label">Foto</label>
+                            <label asp-for="Foto"></label><span class="text-danger"> *</span>
                             <input asp-for="Foto" type="file" class="form-control" accept="image/*" />
                             <span asp-validation-for="Foto" class="text-danger"></span>
                         </div>
@@ -30,84 +42,161 @@
                         @if (!string.IsNullOrEmpty(Model?.FotoUrl))
                         {
                             <div class="col-md-6 d-flex align-items-end">
-                                <img src="@Model.FotoUrl" alt="Foto" style="width:120px; border-radius:8px;" />
+                                <img src="@Model.FotoUrl" alt="Foto" class="border rounded" style="width:130px;" />
                             </div>
                         }
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12 mb-3">
-                            <label asp-for="NomeCompleto" class="control-label"></label><span class="text-danger">*</span>
-                            <input asp-for="NomeCompleto" class="form-control" />
-                            <span asp-validation-for="NomeCompleto" class="text-danger"></span>
-                        </div>
+                    <div class="mb-3">
+                        <label asp-for="NomeCompleto"></label><span class="text-danger"> *</span>
+                        <input asp-for="NomeCompleto" class="form-control" />
+                        <span asp-validation-for="NomeCompleto" class="text-danger"></span>
                     </div>
+
+                    <!-- SEÇÃO 2 =============================== -->
+                    <h5 class="border-bottom pb-2 mb-3">Informações da Igreja</h5>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label asp-for="Igreja" class="control-label"></label><span class="text-danger">*</span>
+                            <label asp-for="Igreja"></label><span class="text-danger"> *</span>
                             <input asp-for="Igreja" class="form-control" />
-                            <span asp-validation-for="Igreja" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label asp-for="Regiao" class="control-label"></label><span class="text-danger">*</span>
+                            <label asp-for="Regiao"></label><span class="text-danger"> *</span>
                             <input asp-for="Regiao" class="form-control" />
-                            <span asp-validation-for="Regiao" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4 mb-3">
-                            <label asp-for="Cargo" class="control-label"></label><span class="text-danger">*</span>
+                            <label asp-for="Cargo"></label><span class="text-danger"> *</span>
                             <input asp-for="Cargo" class="form-control" />
-                            <span asp-validation-for="Cargo" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label asp-for="Contato" class="control-label"></label><span class="text-danger">*</span>
+                            <label asp-for="Contato"></label><span class="text-danger"> *</span>
                             <input asp-for="Contato" class="form-control" />
-                            <span asp-validation-for="Contato" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label asp-for="NomePastor" class="control-label"></label><span class="text-danger">*</span>
+                            <label asp-for="NomePastor"></label><span class="text-danger"> *</span>
                             <input asp-for="NomePastor" class="form-control" />
-                            <span asp-validation-for="NomePastor" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- SEÇÃO 3 =============================== -->
+                    <h5 class="border-bottom pb-2 mb-3">Datas Importantes</h5>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="DataNascimento"></label>
+                            <input asp-for="DataNascimento" type="date" class="form-control" />
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="DataMinisterio"></label><span class="text-danger"> *</span>
+                            <input asp-for="DataMinisterio" type="date" class="form-control" />
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="DataBatismo"></label>
+                            <input asp-for="DataBatismo" type="date" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-check mt-2">
+                        <input asp-for="Ativo" class="form-check-input" type="checkbox">
+                        <label asp-for="Ativo" class="form-check-label"></label>
+                    </div>
+
+                    <!-- SEÇÃO 4 =============================== -->
+                    <h5 class="border-bottom pb-2 mt-4 mb-3">Certificações</h5>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="FotoConsagracao"></label>
+                            <input asp-for="FotoConsagracao" type="file" class="form-control" accept="image/*" />
+
+                            @if (!string.IsNullOrEmpty(Model?.FotoUrlConsagracao))
+                            {
+                                <div class="col-md-6 d-flex align-items-end">
+                                    <img src="@Model.FotoUrlConsagracao" alt="Foto" class="border rounded" style="width:130px;" />
+                                </div>
+                            }
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="Foto5Anos"></label>
+                            <input asp-for="Foto5Anos" type="file" class="form-control" accept="image/*" />
+
+                            @if (!string.IsNullOrEmpty(Model?.FotoUrl5Anos))
+                            {
+                                <div class="col-md-6 d-flex align-items-end">
+                                    <img src="@Model.FotoUrl5Anos" alt="Foto" class="border rounded" style="width:130px;" />
+                                </div>
+                            }
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="Foto10Anos"></label>
+                            <input asp-for="Foto10Anos" type="file" class="form-control" accept="image/*" />
+
+                            @if (!string.IsNullOrEmpty(Model?.FotoUrl10Anos))
+                            {
+                                <div class="col-md-6 d-flex align-items-end">
+                                    <img src="@Model.FotoUrl10Anos" alt="Foto" class="border rounded" style="width:130px;" />
+                                </div>
+                            }
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4 mb-3">
-                            <label asp-for="DataNascimento" class="control-label"></label><span class="text-danger">*</span>
-                            <input asp-for="DataNascimento" type="date" class="form-control" />
-                            <span asp-validation-for="DataNascimento" class="text-danger"></span>
+                            <label asp-for="Foto15Anos"></label>
+                            <input asp-for="Foto15Anos" type="file" class="form-control" accept="image/*" />
+
+                            @if (!string.IsNullOrEmpty(Model?.FotoUrl15Anos))
+                            {
+                                <div class="col-md-6 d-flex align-items-end">
+                                    <img src="@Model.FotoUrl15Anos" alt="Foto" class="border rounded" style="width:130px;" />
+                                </div>
+                            }
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label asp-for="DataMinisterio" class="control-label"></label>
-                            <input asp-for="DataMinisterio" type="date" class="form-control" />
-                            <span asp-validation-for="DataMinisterio" class="text-danger"></span>
+                            <label asp-for="Foto20Anos"></label>
+                            <input asp-for="Foto20Anos" type="file" class="form-control" accept="image/*" />
+
+                            @if (!string.IsNullOrEmpty(Model?.FotoUrl20Anos))
+                            {
+                                <div class="col-md-6 d-flex align-items-end">
+                                    <img src="@Model.FotoUrl20Anos" alt="Foto" class="border rounded" style="width:130px;" />
+                                </div>
+                            }
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label asp-for="DataBatismo" class="control-label"></label>
-                            <input asp-for="DataBatismo" type="date" class="form-control" />
-                            <span asp-validation-for="DataBatismo" class="text-danger"></span>
-                        </div>
-                    </div>
+                            <label asp-for="Foto25Anos"></label>
+                            <input asp-for="Foto25Anos" type="file" class="form-control" accept="image/*" />
 
-                    <div class="form-check mt-3">
-                        <input asp-for="Ativo" class="form-check-input" type="checkbox" id="flexCheckIndeterminate">
-                        <label asp-for="Ativo" class="form-check-label" for="flexCheckIndeterminate"></label>
+                            @if (!string.IsNullOrEmpty(Model?.FotoUrl25Anos))
+                            {
+                                <div class="col-md-6 d-flex align-items-end">
+                                    <img src="@Model.FotoUrl25Anos" alt="Foto" class="border rounded" style="width:130px;" />
+                                </div>
+                            }
+                        </div>
                     </div>
 
                 </div>
 
+                <!-- FOOTER -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <input type="submit" value="Salvar" class="btn btn-primary">                   
+                    <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
+
             </div>
         </div>
     </div>

@@ -22,6 +22,12 @@ namespace WEB.Data.Config
             builder.Property(d => d.DataBatismo);
             builder.Property(d => d.Ativo);
             builder.Property(d => d.FotoUrl);
+            builder.Property(d => d.FotoUrlConsagracao);
+            builder.Property(d => d.FotoUrl5Anos);
+            builder.Property(d => d.FotoUrl10Anos);
+            builder.Property(d => d.FotoUrl15Anos);
+            builder.Property(d => d.FotoUrl20Anos);
+            builder.Property(d => d.FotoUrl25Anos);
         }
     }
 }

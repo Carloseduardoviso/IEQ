@@ -14,4 +14,10 @@ public class Diaconato
     public DateTime? DataBatismo { get; set; }
     public bool Ativo { get; set; }
     public string? FotoUrl { get; set; }
+    public string? FotoUrlConsagracao { get; set; }
+    public string? FotoUrl5Anos { get; set; }
+    public string? FotoUrl10Anos { get; set; }
+    public string? FotoUrl15Anos { get; set; }
+    public string? FotoUrl20Anos { get; set; }
+    public string? FotoUrl25Anos { get; set; }
 }
