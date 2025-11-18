@@ -24,13 +24,7 @@ namespace WEB.Controllers
         {
             var detalhe = await _diaconatoService.GetByIdAsync(diaconatoId.Value);
             return PartialView("_Detalhe", detalhe);
-        }
-
-        public async Task<IActionResult> Aniversariantes()
-        {
-            var buscaTodos = await _diaconatoService.GetAllAsync();
-            return PartialView("_Aniversariantes", buscaTodos);
-        }
+        }     
 
         public async Task<IActionResult> Cadastrar(Guid? diaconatoId)
         {

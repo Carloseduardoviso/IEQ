@@ -22,4 +22,9 @@ public class HomeController : Controller
         var todos = await _diaconatoService.GetAllAsync();
         return PartialView("_Aniversariantes", todos);
     }
+    public async Task<IActionResult> Condecoracao()
+    {
+        var todos = await _diaconatoService.GetAllAsync();
+        return PartialView("_Condecoracao", todos);
+    }
 }
