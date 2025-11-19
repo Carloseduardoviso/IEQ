@@ -24,7 +24,7 @@ namespace WEB.Controllers
         {
             var detalhe = await _diaconatoService.GetByIdAsync(diaconatoId.Value);
             return PartialView("_Detalhe", detalhe);
-        }     
+        }
 
         public async Task<IActionResult> Cadastrar(Guid? diaconatoId)
         {
@@ -42,6 +42,7 @@ namespace WEB.Controllers
             string mensagemSucesso;
 
             // Salva foto de perfil
+
             if (vm.Foto != null)
             {
                 var pasta = Path.Combine("wwwroot", "images", "diaconato", "perfil");
@@ -49,7 +50,7 @@ namespace WEB.Controllers
                 if (!Directory.Exists(pasta))
                     Directory.CreateDirectory(pasta);
 
-                var nomeArquivo = Guid.NewGuid() + Path.GetExtension(vm.Foto.FileName);
+                var nomeArquivo = vm.NomeCompleto + Path.GetExtension(vm.Foto.FileName);
                 var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
 
                 using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
@@ -59,7 +60,11 @@ namespace WEB.Controllers
 
                 vm.FotoUrl = "/images/diaconato/perfil/" + nomeArquivo;
             }
-            //vm.FotoUrl = await SalvarArquivoPerfil(vm.Foto!, "perfil");
+
+            if (true)
+            {
+
+            }
 
             // Salva certificados (cada um com seu próprio arquivo)
             vm.FotoUrlConsagracao = await SalvarArquivo(vm.FotoConsagracao!, "certificados");
@@ -86,6 +91,26 @@ namespace WEB.Controllers
             return RedirectToAction("Index", "Diaconato").Success(mensagemSucesso);
         }
 
+        private async Task<string> SalvarArquivoPerfil(DiaconatoVm vm)
+        {
+            if (vm == null) return null;
+
+            var pasta = Path.Combine("wwwroot", "images", "diaconato", "perfil");
+
+            if (!Directory.Exists(pasta))
+                Directory.CreateDirectory(pasta);
+
+            var nomeArquivo = Guid.NewGuid() + Path.GetExtension(vm.Foto!.FileName);
+            var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+            using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+            {
+                await vm.Foto.CopyToAsync(stream);
+            }
+
+            //vm.FotoUrl = "/images/diaconato/perfil/" + nomeArquivo;
+            return $"/images/diaconato/perfil/{nomeArquivo}";
+        }
 
 
         private async Task<string> SalvarArquivo(IFormFile arquivo, string pastaDestino)
