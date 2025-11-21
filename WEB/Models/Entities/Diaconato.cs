@@ -15,7 +15,8 @@ public class Diaconato
     public int TempoAcumuladoEmMeses { get; set; } = 0;
     public DateTime? DataReativacao { get; set; }
     public DateTime? DataInativacao { get; set; }
-
+    public string? Estado { get; set; }
+    public string? Cidade { get; set; }
     public bool Ativo { get; set; }
     public string? FotoUrl { get; set; }
     public string? FotoUrlConsagracao { get; set; }

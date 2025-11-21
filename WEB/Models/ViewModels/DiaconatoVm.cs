@@ -44,7 +44,8 @@ namespace WEB.Models.ViewModels
         public int TempoAcumuladoEmMeses { get; set; } = 0;
         public DateTime? DataReativacao { get; set; }
         public DateTime? DataInativacao { get; set; }
-
+        public string? Estado { get; set; }
+        public string? Cidade { get; set; }
         public bool Ativo { get; set; } = true;
 
         [Display(Name = "Foto de Perfil")]

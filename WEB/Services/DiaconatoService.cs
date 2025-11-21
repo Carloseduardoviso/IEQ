@@ -38,9 +38,24 @@ namespace WEB.Services
             return (_mapper.Map<IEnumerable<DiaconatoVm>>(lista), count);
         }
 
-        public async Task<DiaconatoVm?> GetByIdAsync(Guid diaconatoId)
+        public async Task<DiaconatoVm?> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<DiaconatoVm>(await _diaconatoRepository.GetByIdAsync(diaconatoId));
+            var item = await _diaconatoRepository.GetByIdAsync(id);
+            var vm = _mapper.Map<DiaconatoVm>(item);
+
+            if (item != null && item.Ativo && item.DataInativacao == null)
+            {
+                DateTime inicio = item.DataReativacao ?? item.DataMinisterio ?? DateTime.Today;
+                DateTime fim = DateTime.Today;
+
+                int meses = ((fim.Year - inicio.Year) * 12) + (fim.Month - inicio.Month);
+                if (fim.Day < inicio.Day)
+                    meses--;
+
+                vm.TempoAcumuladoEmMeses = item.TempoAcumuladoEmMeses + Math.Max(0, meses);
+            }
+
+            return vm;
         }
 
         public async Task InativarAsync(Guid diaconatoId)
@@ -53,10 +68,20 @@ namespace WEB.Services
             await _diaconatoRepository.ReativarAsync(diaconatoId);
         }
 
-        public async Task UpdateAsync(DiaconatoVm diaconatoVm)
+        public async Task UpdateAsync(DiaconatoVm vm)
         {
-            Diaconato diaconato = _mapper.Map<Diaconato>(diaconatoVm);
-            await _diaconatoRepository.UpdateAsync(diaconato);
+            var existente = await _diaconatoRepository.GetByIdAsync(vm.DiaconatoId);
+            if (existente == null) return;
+
+            var atualizado = _mapper.Map<Diaconato>(vm);
+
+            atualizado.TempoAcumuladoEmMeses = existente.TempoAcumuladoEmMeses;
+            atualizado.DataReativacao = existente.DataReativacao;
+            atualizado.DataInativacao = existente.DataInativacao;
+            atualizado.Ativo = existente.Ativo;
+
+            await _diaconatoRepository.UpdateAsync(atualizado);
         }
+
     }
 }

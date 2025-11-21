@@ -54,11 +54,7 @@
                         <div class="list-group-item">
                             <i class="fa-solid fa-user-tie me-2 text-primary"></i>
                             <strong>Pastor Titular:</strong> @Model.NomePastor
-                        </div>
-                        <div class="list-group-item">
-                            <i class="fa-solid fa-map-location-dot me-2 text-primary"></i>
-                            <strong>Região:</strong> @Model.Regiao
-                        </div>
+                        </div>                     
                         <div class="list-group-item">
                             <i class="fa-solid fa-briefcase me-2 text-primary"></i>
                             <strong>Cargo:</strong> @Model.Cargo
@@ -70,6 +66,23 @@
                         <div class="list-group-item">
                             <i class="fa-solid fa-hourglass-half me-2 text-primary"></i>
                             <strong>Tempo no Ministério:</strong> @Model.TempoMinisterio
+                        </div>
+                     
+                        <div class="list-group-item">
+                            <div class="row text-start text-md-start g-2">
+                                <div class="col-12 col-sm-4">
+                                    <i class="fa-solid fa-map-location-dot me-2 text-primary"></i>
+                                    <strong>Região:</strong>  @Model.Regiao
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <i class="fa-solid fa-map-location-dot me-2 text-primary"></i>
+                                    <strong>Cidade:</strong> @Model.Cidade
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <i class="fa-solid fa-map-location-dot me-2 text-primary"></i>
+                                    <strong>Estado:</strong> @Model.Estado
+                                </div>
+                            </div>
                         </div>
                         <div class="list-group-item">
                             <div class="row text-start text-md-start g-2">

@@ -47,30 +47,32 @@ namespace WEB.Data.Repositories
 
         public async Task InativarAsync(Guid diaconatoId)
         {
-            var entity = await GetByIdAsync(diaconatoId);
+            var item = await GetByIdAsync(diaconatoId);
 
-            if (entity != null)
-            {
-                entity.Ativo = false;
-                entity.DataInativacao = DateTime.Today;
+            item.Ativo = false;
+            item.DataInativacao = DateTime.Today;
 
-                if (entity.DataReativacao != null)
-                {
-                    var inicio = entity.DataReativacao.Value;
-                    var fim = DateTime.Today;
+            // Se nunca foi reativado antes, usa DataMinisterio como início
+            var inicio = item.DataReativacao ?? item.DataMinisterio;
 
-                    int meses = ((fim.Year - inicio.Year) * 12) + fim.Month - inicio.Month;
+            if (inicio == null)
+                throw new Exception("DataMinisterio não pode ser nula.");
 
-                    if (fim.Day < inicio.Day)
-                        meses--;
+            var fim = DateTime.Today;
 
-                    entity.TempoAcumuladoEmMeses += Math.Max(0, meses);
-                }
+            int meses = ((fim.Year - inicio.Value.Year) * 12) + fim.Month - inicio.Value.Month;
 
-                _dataContext.Diaconatos.Update(entity);
-                await _dataContext.SaveChangesAsync();
-            }
+            if (fim.Day < inicio.Value.Day)
+                meses--;
+
+            item.TempoAcumuladoEmMeses += Math.Max(0, meses);
+
+            // Zera início para o próximo ciclo
+            item.DataReativacao = null;
+
+            await UpdateAsync(item);
         }
+
 
         public async Task ReativarAsync(Guid diaconatoId)
         {
