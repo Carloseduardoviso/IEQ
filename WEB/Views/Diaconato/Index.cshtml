@@ -15,20 +15,20 @@
             </button>
         </div>
         <div class="card-body table-responsive">
-            <section class="conteudo-inicial mx-auto">
-                <div>
-                    <form asp-action="Index" asp-controller="Diaconato" method="get" class="d-flex flex-wrap flex-column flex-lg-row" style="gap: 20px; margin-bottom: 20px;">
-                        <div style="flex-grow: 4;">
-                            <label class="form-label"><strong>Busca por</strong></label>
-                            <input type="text" class="form-control" name="NomeAndSigla" placeholder="Digite o nome ou sigla" />
-                        </div>
+            <section class="conteudo-inicial mx-auto mb-4">
+                <form asp-action="Index" asp-controller="Diaconato" method="get" class="row g-3">
 
-                        <div class="d-flex gap-2 justify-content-md-end align-items-end flex-column flex-lg-row">
-                            <button type="submit" class="btn btn-primary">Pesquisar</button>
-                            <a href="@Url.Action("Index", "Diaconato")" class="btn btn-warning">Limpar Busca</a>
-                        </div>
-                    </form>
-                </div>
+                    <div class="col-12 col-md-8 col-lg-9">
+                        <label class="form-label"><strong>Busca por</strong></label>
+                        <input type="text" class="form-control" name="NomeAndSigla" placeholder="Digite o nome ou sigla" />
+                    </div>
+
+                    <div class="col-12 col-md-4 col-lg-3 d-flex gap-2 align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Pesquisar</button>
+                        <a href="@Url.Action("Index", "Diaconato")" class="btn btn-warning w-100">Limpar</a>
+                    </div>
+
+                </form>
             </section>
             <table id="tableEstado" class="table table-striped">
                 <thead>
@@ -71,15 +71,15 @@
                                     @if (item.Ativo)
                                     {
                                         <a class="btn btn-light btn-sm edit-button" title="Editar"
-                                           data-id="@item.DiaconatoId"
-                                           data-url="@Url.Action("Cadastrar", "Diaconato")">
+                                           asp-action="Cadastrar" asp-controller="Diaconato" asp-route-DiaconatoId="@item.DiaconatoId">
                                             <i class="fa-solid fa-pen-to-square text-primary"></i>
                                         </a>
 
-                                        <a class="btn btn-light btn-sm remove-button" title="Excluír"
-                                           data-url="@Url.Action("Excluir", "Diaconato", new { id = item.DiaconatoId })">
-                                            <i class="fa-solid fa-trash text-danger"></i>
-                                        </a>   
+                                        <a class="btn btn-light btn-sm ativar-button" title="Inativar Obreiro"
+                                           asp-action="ObreiroAtivo" asp-controller="Diaconato" asp-route-DiaconatoId="@item.DiaconatoId">
+                                            <i class="fa-solid fa-check text-danger"></i>
+                                        </a>
+
                                         <a class="btn btn-light btn-sm remove-button" title="Excluír"
                                            asp-action="Detalhe" asp-controller="Diaconato" asp-route-DiaconatoId="@item.DiaconatoId">
                                             <i class="fa-solid fa-eye text-primary"></i>
@@ -87,10 +87,14 @@
                                     }
                                     else
                                     {
-                                        <a class="btn btn-light btn-sm ativar-button" title="Ativar Obreiro"
-                                           data-url="@Url.Action("Inativar", "Diaconato", new { id = item.DiaconatoId })">
-                                            <i class="fa-solid fa-check text-success"></i>
-                                        </a>                                   
+                                        <a class="btn btn-light btn-sm ativar-button" title="Inativar Obreiro"
+                                           asp-action="ObreiroAtivo" asp-controller="Diaconato" asp-route-DiaconatoId="@item.DiaconatoId">
+                                            <i class="fa-solid fa-check text-danger"></i>
+                                        </a>
+                                        <a class="btn btn-light btn-sm remove-button" title="Excluír"
+                                           asp-action="Detalhe" asp-controller="Diaconato" asp-route-DiaconatoId="@item.DiaconatoId">
+                                            <i class="fa-solid fa-eye text-primary"></i>
+                                        </a>
                                     }
                                 </td>
                             </tr>

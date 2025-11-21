@@ -35,6 +35,16 @@ namespace WEB.Services
             return _mapper.Map<DiaconatoVm>(await _diaconatoRepository.GetByIdAsync(diaconatoId));
         }
 
+        public async Task InativarAsync(Guid diaconatoId)
+        {
+            await _diaconatoRepository.InativarAsync(diaconatoId);
+        }
+
+        public async Task ReativarAsync(Guid diaconatoId)
+        {
+            await _diaconatoRepository.ReativarAsync(diaconatoId);
+        }
+
         public async Task UpdateAsync(DiaconatoVm diaconatoVm)
         {
             Diaconato diaconato = _mapper.Map<Diaconato>(diaconatoVm);

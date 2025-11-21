@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WEB.Data;
 
@@ -11,9 +12,11 @@ using WEB.Data;
 namespace WEB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20251121005959_DataInativacao")]
+    partial class DataInativacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,9 +52,6 @@ namespace WEB.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataNascimento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DataReativacao")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FotoUrl")
@@ -90,9 +90,6 @@ namespace WEB.Migrations
                     b.Property<string>("Regiao")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TempoAcumuladoEmMeses")
-                        .HasColumnType("int");
 
                     b.HasKey("DiaconatoId");
 

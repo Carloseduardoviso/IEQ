@@ -32,6 +32,46 @@ namespace WEB.Data.Repositories
             return await _dataContext.Diaconatos.AsNoTracking().FirstOrDefaultAsync(x => x.DiaconatoId == diaconatoId);
         }
 
+        public async Task InativarAsync(Guid diaconatoId)
+        {
+            var entity = await GetByIdAsync(diaconatoId);
+
+            if (entity != null)
+            {
+                entity.Ativo = false;
+                entity.DataInativacao = DateTime.Today;
+
+                if (entity.DataReativacao != null)
+                {
+                    var inicio = entity.DataReativacao.Value;
+                    var fim = DateTime.Today;
+
+                    int meses = ((fim.Year - inicio.Year) * 12) + fim.Month - inicio.Month;
+
+                    if (fim.Day < inicio.Day)
+                        meses--;
+
+                    entity.TempoAcumuladoEmMeses += Math.Max(0, meses);
+                }
+
+                _dataContext.Diaconatos.Update(entity);
+                await _dataContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task ReativarAsync(Guid diaconatoId)
+        {
+            var entity = await GetByIdAsync(diaconatoId);
+
+            if (entity != null)
+            {
+                entity.Ativo = true;
+                entity.DataReativacao = DateTime.Today;
+                _dataContext.Diaconatos.Update(entity);
+                await _dataContext.SaveChangesAsync();
+            }
+        }
+
         public async Task UpdateAsync(Diaconato diaconato)
         {
             _dataContext.Diaconatos.Update(diaconato);

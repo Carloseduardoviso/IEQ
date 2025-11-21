@@ -41,6 +41,10 @@ namespace WEB.Models.ViewModels
         [Display(Name = "Data do Batismo")]
         [Required(ErrorMessage = "O campo {0} é obrigatório !")]
         public DateTime? DataBatismo { get; set; }
+        public int TempoAcumuladoEmMeses { get; set; } = 0;
+        public DateTime? DataReativacao { get; set; }
+        public DateTime? DataInativacao { get; set; }
+
         public bool Ativo { get; set; } = true;
 
         [Display(Name = "Foto de Perfil")]
@@ -67,35 +71,37 @@ namespace WEB.Models.ViewModels
         public string? FotoUrl15Anos { get; set; }
         public string? FotoUrl20Anos { get; set; }
         public string? FotoUrl25Anos { get; set; }
-
         public string TempoMinisterio
         {
             get
             {
-                if (DataMinisterio == null)
-                    return "-";
+                int mesesTotais = TempoAcumuladoEmMeses;
 
-                var inicio = DataMinisterio.Value;
-                var hoje = DateTime.Today;
-
-                var anos = hoje.Year - inicio.Year;
-                var meses = hoje.Month - inicio.Month;
-
-                if (hoje.Day < inicio.Day)
-                    meses--;
-
-                if (meses < 0)
+                if (Ativo && DataReativacao != null)
                 {
-                    anos--;
-                    meses += 12;
+                    var inicio = DataReativacao.Value;
+                    var fim = DateTime.Today;
+
+                    int meses = ((fim.Year - inicio.Year) * 12) + fim.Month - inicio.Month;
+
+                    if (fim.Day < inicio.Day)
+                        meses--;
+
+                    mesesTotais += Math.Max(0, meses);
                 }
 
-                if (anos > 0 && meses > 0)
-                    return $"{anos} ano(s) e {meses} mês(es)";
+                if (mesesTotais <= 0)
+                    return "-";
+
+                int anos = mesesTotais / 12;
+                int mesesRestantes = mesesTotais % 12;
+
+                if (anos > 0 && mesesRestantes > 0)
+                    return $"{anos} ano(s) e {mesesRestantes} mês(es)";
                 else if (anos > 0)
                     return $"{anos} ano(s)";
                 else
-                    return $"{meses} mês(es)";
+                    return $"{mesesRestantes} mês(es)";
             }
         }
     }

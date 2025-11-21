@@ -1,5 +1,10 @@
 ﻿@{
     Layout = "_Layout";
+
+    var partes = (Model.NomeCompleto ?? "").Trim().Split(' ');
+    var nomeCurto = partes.Length >= 2
+    ? $"{partes[0]} {partes[1]}"
+    : partes[0];
 }
 
 @model DiaconatoVm
@@ -86,5 +91,180 @@
                 </div>
             </div> <!-- row -->
         </div> <!-- card-body -->
+
+       
+        @if (!string.IsNullOrEmpty(Model.FotoUrlConsagracao) || !string.IsNullOrEmpty(Model.FotoUrl5Anos) 
+          || !string.IsNullOrEmpty(Model.FotoUrl10Anos) || !string.IsNullOrEmpty(Model.FotoUrl15Anos) 
+          || !string.IsNullOrEmpty(Model.FotoUrl20Anos) || !string.IsNullOrEmpty(Model.FotoUrl25Anos))
+        {
+            <div class="card-header bg-primary text-white d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-2">
+                <h3 class="mb-0"><i class="fa-solid fa-certificate"></i>  Certificações</h3>
+            </div>
+            <div class="row">
+                @if (!string.IsNullOrEmpty(Model.FotoUrlConsagracao))
+                {
+                    <div class="col-12 col-md-6">
+                        <div class="list-group list-group-flush shadow-sm rounded">
+                            <div class="list-group-item text-center">
+                                <h3 class="mb-3"><strong>Consagração</strong></h3>
+                                <img src="@Model.FotoUrlConsagracao"
+                                     alt="Certificado de Consagração"
+                                     class="img-fluid certificado-3d" />
+                            </div>
+
+                            <a href="@Model.FotoUrlConsagracao"
+                               target="_blank"
+                               class="btn btn-primary mb-3">
+                                Visualizar
+                            </a>
+                        </div>
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(Model.FotoUrl5Anos))
+                {
+
+                    <div class="col-12 col-md-6">
+                        <div class="list-group list-group-flush shadow-sm rounded">
+                            <div class="list-group-item text-center">
+                                <h3 class="mb-3"><strong>Condecoração de 5 Anos</strong></h3>
+                                <!-- Imagem do Certificado em Paisagem -->
+                                @if (!string.IsNullOrEmpty(Model.FotoUrl5Anos))
+                                {
+                                    <img src="@Model.FotoUrl5Anos" alt="Certificado de Consagração" class="img-fluid certificado-3d" />
+                                }
+                            </div>
+
+                            <!-- Botão Visualizar -->
+                            <a href="@Model?.FotoUrl5Anos"
+                               target="_blank"
+                               class="btn btn-primary mb-3">
+                                Visualizar
+                            </a>
+                        </div>
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(Model?.FotoUrl10Anos))
+                {
+
+                    <div class="col-12 col-md-6">
+                        <div class="list-group list-group-flush shadow-sm rounded">
+                            <div class="list-group-item text-center">
+                                <h3 class="mb-3"><strong>Condecoração de 10 Anos</strong></h3>
+                                <!-- Imagem do Certificado em Paisagem -->
+                                @if (!string.IsNullOrEmpty(Model.FotoUrl10Anos))
+                                {
+                                    <img src="@Model.FotoUrl10Anos" alt="Certificado de Consagração" class="img-fluid certificado-3d" />
+                                }
+                            </div>
+
+                            <!-- Botão Visualizar -->
+                            <a href="@Model?.FotoUrl10Anos"
+                               target="_blank"
+                               class="btn btn-primary mb-3">
+                                Visualizar
+                            </a>
+                        </div>
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(Model?.FotoUrl15Anos))
+                {
+
+                    <div class="col-12 col-md-6">
+                        <div class="list-group list-group-flush shadow-sm rounded">
+                            <div class="list-group-item text-center">
+                                <h3 class="mb-3"><strong>Condecoração de 15 Anos</strong></h3>
+                                <!-- Imagem do Certificado em Paisagem -->
+                                @if (!string.IsNullOrEmpty(Model.FotoUrl15Anos))
+                                {
+                                    <img src="@Model.FotoUrl15Anos" alt="Certificado de Consagração" class="img-fluid certificado-3d" />
+                                }
+                            </div>
+
+                            <!-- Botão Visualizar -->
+                            <a href="@Model?.FotoUrl15Anos"
+                               target="_blank"
+                               class="btn btn-primary mb-3">
+                                Visualizar
+                            </a>
+                        </div>
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(Model?.FotoUrl20Anos))
+                {
+
+                    <div class="col-12 col-md-6">
+                        <div class="list-group list-group-flush shadow-sm rounded">
+                            <div class="list-group-item text-center">
+                                <h3 class="mb-3"><strong>Condecoração de 20 Anos</strong></h3>
+                                <!-- Imagem do Certificado em Paisagem -->
+                                @if (!string.IsNullOrEmpty(Model.FotoUrl20Anos))
+                                {
+                                    <img src="@Model.FotoUrl20Anos" alt="Certificado de Consagração" class="img-fluid certificado-3d" />
+                                }
+                            </div>
+
+                            <!-- Botão Visualizar -->
+                            <a href="@Model?.FotoUrl20Anos"
+                               target="_blank"
+                               class="btn btn-primary mb-3">
+                                Visualizar
+                            </a>
+                        </div>
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(Model?.FotoUrl25Anos))
+                {
+
+                    <div class="col-12 col-md-6">
+                        <div class="list-group list-group-flush shadow-sm rounded">
+                            <div class="list-group-item text-center">
+                                <h3 class="mb-3"><strong>Condecoração de 25 Anos</strong></h3>
+                                <!-- Imagem do Certificado em Paisagem -->
+                                @if (!string.IsNullOrEmpty(Model.FotoUrl25Anos))
+                                {
+                                    <img src="@Model.FotoUrl25Anos" alt="Certificado de Consagração" class="img-fluid certificado-3d" />
+                                }
+                            </div>
+
+                            <!-- Botão Visualizar -->
+                            <a href="@Model?.FotoUrl25Anos"
+                               target="_blank"
+                               class="btn btn-primary mb-3">
+                                Visualizar
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
     </div> <!-- card -->
 </div> <!-- container -->
+
+<style>
+    .certificado-3d {
+        width: 100%;
+        max-width: 1531px;
+        aspect-ratio: 1531 / 980; /* Força proporção correta */
+        object-fit: cover; /* Preenche sem distorcer */
+        border-radius: 12px;
+        image-rendering: auto;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.20), 0 6px 6px rgba(0,0,0,0.15);
+    }
+
+
+        /* Efeito 3D quando passa o mouse */
+        .certificado-3d:hover {
+            transform: scale(1.03) rotateX(3deg) rotateY(-3deg);
+            box-shadow: 0 20px 35px rgba(0,0,0,0.30), 0 12px 12px rgba(0,0,0,0.20);
+        }
+</style>

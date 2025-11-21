@@ -9,5 +9,7 @@ namespace WEB.Services.Interfaces
         Task UpdateAsync(DiaconatoVm diaconatoVm);
         Task<DiaconatoVm?> GetByIdAsync(Guid diaconatoId);
         Task<IEnumerable<DiaconatoVm>> GetAllAsync(Expression<Func<DiaconatoVm, bool>>? expression = null);
+        Task InativarAsync(Guid diaconatoId);
+        Task ReativarAsync(Guid diaconatoId);
     }
 }

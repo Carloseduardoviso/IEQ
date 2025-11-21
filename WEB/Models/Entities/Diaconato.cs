@@ -12,6 +12,10 @@ public class Diaconato
     public DateTime? DataNascimento { get; set; }
     public DateTime? DataMinisterio { get; set; }
     public DateTime? DataBatismo { get; set; }
+    public int TempoAcumuladoEmMeses { get; set; } = 0;
+    public DateTime? DataReativacao { get; set; }
+    public DateTime? DataInativacao { get; set; }
+
     public bool Ativo { get; set; }
     public string? FotoUrl { get; set; }
     public string? FotoUrlConsagracao { get; set; }

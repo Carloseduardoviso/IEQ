@@ -9,5 +9,7 @@ namespace WEB.Data.Repositories.Interfaces
         Task UpdateAsync(Diaconato diaconato);
         Task<Diaconato?> GetByIdAsync(Guid diaconatoId);
         Task<IEnumerable<Diaconato>> GetAllAsync(Expression<Func<Diaconato, bool>>? expression);
+        Task InativarAsync(Guid diaconatoId);
+        Task ReativarAsync(Guid diaconatoId);
     }
 }

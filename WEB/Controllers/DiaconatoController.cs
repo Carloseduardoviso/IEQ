@@ -26,6 +26,27 @@ namespace WEB.Controllers
             return PartialView("_Detalhe", detalhe);
         }
 
+        public async Task<IActionResult> ObreiroAtivo(Guid? diaconatoId)
+        {
+            if (diaconatoId == null)
+                return NotFound();
+
+            var item = await _diaconatoService.GetByIdAsync(diaconatoId.Value);
+
+            if (item.Ativo)
+            {
+                await _diaconatoService.InativarAsync(diaconatoId.Value);
+                TempData["success"] = "Obreiro inativado e tempo de ministério congelado!";
+            }
+            else
+            {
+                await _diaconatoService.ReativarAsync(diaconatoId.Value);
+                TempData["success"] = "Obreiro reativado! Tempo de ministério voltou a contar.";
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public async Task<IActionResult> Cadastrar(Guid? diaconatoId)
         {
             var novo = new DiaconatoVm();
@@ -61,18 +82,155 @@ namespace WEB.Controllers
                 vm.FotoUrl = "/images/diaconato/perfil/" + nomeArquivo;
             }
 
-            if (true)
+            if (vm.FotoConsagracao != null)
             {
+                var pasta = Path.Combine("wwwroot", "images", "diaconato", "certificados", "consagracao");
 
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var name = vm.NomeCompleto?.Trim() + "_Consagracao";
+
+                var extensao = Path.GetExtension(vm.FotoConsagracao.FileName);
+                if (string.IsNullOrEmpty(extensao))
+                    extensao = ".png";
+
+                var nomeArquivo = name + extensao;
+
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.FotoConsagracao.CopyToAsync(stream);
+                }
+
+                vm.FotoUrlConsagracao = "/images/diaconato/certificados/consagracao/" + nomeArquivo;
             }
 
-            // Salva certificados (cada um com seu próprio arquivo)
-            vm.FotoUrlConsagracao = await SalvarArquivo(vm.FotoConsagracao!, "certificados");
-            vm.FotoUrl5Anos = await SalvarArquivo(vm.Foto5Anos!, "certificados");
-            vm.FotoUrl10Anos = await SalvarArquivo(vm.Foto10Anos!, "certificados");
-            vm.FotoUrl15Anos = await SalvarArquivo(vm.Foto15Anos!, "certificados");
-            vm.FotoUrl20Anos = await SalvarArquivo(vm.Foto20Anos!, "certificados");
-            vm.FotoUrl25Anos = await SalvarArquivo(vm.Foto25Anos!, "certificados");
+            if (vm.Foto5Anos != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "diaconato", "certificados", "5anos");
+
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var name = vm.NomeCompleto?.Trim() + "_5anos";
+
+                var extensao = Path.GetExtension(vm.Foto5Anos!.FileName);
+                if (string.IsNullOrEmpty(extensao))
+                    extensao = ".png";
+
+                var nomeArquivo = name + extensao;
+
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.Foto5Anos.CopyToAsync(stream);
+                }
+
+                vm.FotoUrl5Anos = "/images/diaconato/certificados/5anos/" + nomeArquivo;
+            }
+
+            if (vm.Foto10Anos != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "diaconato", "certificados", "10anos");
+
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var name = vm.NomeCompleto?.Trim() + "_10anos";
+
+                var extensao = Path.GetExtension(vm.Foto10Anos!.FileName);
+                if (string.IsNullOrEmpty(extensao))
+                    extensao = ".png";
+
+                var nomeArquivo = name + extensao;
+
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.Foto10Anos.CopyToAsync(stream);
+                }
+
+                vm.FotoUrl10Anos = "/images/diaconato/certificados/10anos/" + nomeArquivo;
+            }
+
+            if (vm.Foto15Anos != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "diaconato", "certificados", "15anos");
+
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var name = vm.NomeCompleto?.Trim() + "_15anos";
+
+                var extensao = Path.GetExtension(vm.Foto15Anos!.FileName);
+                if (string.IsNullOrEmpty(extensao))
+                    extensao = ".png";
+
+                var nomeArquivo = name + extensao;
+
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.Foto15Anos.CopyToAsync(stream);
+                }
+
+                vm.FotoUrl15Anos = "/images/diaconato/certificados/15anos/" + nomeArquivo;
+            }
+
+            if (vm.Foto20Anos != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "diaconato", "certificados", "20anos");
+
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var name = vm.NomeCompleto?.Trim() + "_20anos";
+
+                var extensao = Path.GetExtension(vm.Foto5Anos!.FileName);
+                if (string.IsNullOrEmpty(extensao))
+                    extensao = ".png";
+
+                var nomeArquivo = name + extensao;
+
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.Foto20Anos.CopyToAsync(stream);
+                }
+
+                vm.FotoUrl20Anos = "/images/diaconato/certificados/20anos/" + nomeArquivo;
+            }
+
+            if (vm.Foto25Anos != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "diaconato", "certificados", "25anos");
+
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var name = vm.NomeCompleto?.Trim() + "_25anos";
+
+                var extensao = Path.GetExtension(vm.Foto25Anos!.FileName);
+                if (string.IsNullOrEmpty(extensao))
+                    extensao = ".png";
+
+                var nomeArquivo = name + extensao;
+
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.Foto25Anos.CopyToAsync(stream);
+                }
+
+                vm.FotoUrl25Anos = "/images/diaconato/certificados/25anos/" + nomeArquivo;
+            }
 
             // Verifica se já existe
             var existente = await _diaconatoService.GetByIdAsync(vm.DiaconatoId);
@@ -89,48 +247,6 @@ namespace WEB.Controllers
             }
 
             return RedirectToAction("Index", "Diaconato").Success(mensagemSucesso);
-        }
-
-        private async Task<string> SalvarArquivoPerfil(DiaconatoVm vm)
-        {
-            if (vm == null) return null;
-
-            var pasta = Path.Combine("wwwroot", "images", "diaconato", "perfil");
-
-            if (!Directory.Exists(pasta))
-                Directory.CreateDirectory(pasta);
-
-            var nomeArquivo = Guid.NewGuid() + Path.GetExtension(vm.Foto!.FileName);
-            var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
-
-            using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
-            {
-                await vm.Foto.CopyToAsync(stream);
-            }
-
-            //vm.FotoUrl = "/images/diaconato/perfil/" + nomeArquivo;
-            return $"/images/diaconato/perfil/{nomeArquivo}";
-        }
-
-
-        private async Task<string> SalvarArquivo(IFormFile arquivo, string pastaDestino)
-        {
-            if (arquivo == null) return null;
-
-            var pasta = Path.Combine("wwwroot", "images", "diaconato", pastaDestino);
-
-            if (!Directory.Exists(pasta))
-                Directory.CreateDirectory(pasta);
-
-            var nomeArquivo = Guid.NewGuid() + Path.GetExtension(arquivo.FileName);
-            var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
-
-            using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
-            {
-                await arquivo.CopyToAsync(stream);
-            }
-
-            return $"/images/diaconato/{pastaDestino}/{nomeArquivo}";
-        }
+        }       
     }
 }
