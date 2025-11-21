@@ -11,5 +11,6 @@ namespace WEB.Data.Repositories.Interfaces
         Task<IEnumerable<Diaconato>> GetAllAsync(Expression<Func<Diaconato, bool>>? expression);
         Task InativarAsync(Guid diaconatoId);
         Task ReativarAsync(Guid diaconatoId);
+        Task<(IEnumerable<Diaconato> lista, int count)> GetAllPaginationAsync(Expression<Func<Diaconato, bool>>? expression, int skip);
     }
 }

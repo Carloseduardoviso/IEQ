@@ -11,5 +11,6 @@ namespace WEB.Services.Interfaces
         Task<IEnumerable<DiaconatoVm>> GetAllAsync(Expression<Func<DiaconatoVm, bool>>? expression = null);
         Task InativarAsync(Guid diaconatoId);
         Task ReativarAsync(Guid diaconatoId);
+        Task<(IEnumerable<DiaconatoVm> lista, int count)> GetAllPaginationAsync(Expression<Func<DiaconatoVm, bool>>? filtragem, int skip);
     }
 }

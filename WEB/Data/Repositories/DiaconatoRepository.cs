@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 using WEB.Data.Repositories.Interfaces;
 using WEB.Models.Entities;
@@ -25,6 +26,18 @@ namespace WEB.Data.Repositories
             if (expression is not null) return await _dataContext.Diaconatos.AsNoTracking().Where(expression).OrderBy(c => c.NomeCompleto).ToListAsync();
 
             return await _dataContext.Diaconatos.AsNoTracking().OrderBy(c => c.NomeCompleto).ToListAsync();
+        }
+
+        public async Task<(IEnumerable<Diaconato> lista, int count)> GetAllPaginationAsync(Expression<Func<Diaconato, bool>>? expression, int skip)
+        {
+            var query = _dataContext.Diaconatos.AsNoTracking();
+
+            if (expression != null) query = query.Where(expression);
+
+            var lista = await query.OrderBy(x => x.NomeCompleto).Skip(skip).Take(5).ToListAsync();
+            var count = await query.CountAsync();
+
+            return (lista, count);
         }
 
         public async Task<Diaconato?> GetByIdAsync(Guid diaconatoId)

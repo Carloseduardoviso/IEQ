@@ -30,6 +30,14 @@ namespace WEB.Services
             return _mapper.Map<IEnumerable<DiaconatoVm>>(diaconato);
         }
 
+        public async Task<(IEnumerable<DiaconatoVm> lista, int count)> GetAllPaginationAsync(Expression<Func<DiaconatoVm, bool>>? filtragem, int skip)
+        {
+            var expressionMap = _mapper.Map<Expression<Func<Diaconato, bool>>>(filtragem);
+            var (lista, count) = await _diaconatoRepository.GetAllPaginationAsync(expressionMap, skip);
+
+            return (_mapper.Map<IEnumerable<DiaconatoVm>>(lista), count);
+        }
+
         public async Task<DiaconatoVm?> GetByIdAsync(Guid diaconatoId)
         {
             return _mapper.Map<DiaconatoVm>(await _diaconatoRepository.GetByIdAsync(diaconatoId));

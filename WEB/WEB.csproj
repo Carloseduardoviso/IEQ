@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\Builder\" />
     <Folder Include="wwwroot\images\diaconato\" />
     <Folder Include="wwwroot\images\diaconato\certificados\" />
     <Folder Include="wwwroot\images\diaconato\perfil\" />

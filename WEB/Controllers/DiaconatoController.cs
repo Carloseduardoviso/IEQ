@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WEB.Helpers.Builder.Filtro;
 using WEB.Helpers.Messages;
 using WEB.Models.ViewModels;
 using WEB.Services.Interfaces;
@@ -14,10 +15,18 @@ namespace WEB.Controllers
             _diaconatoService = diaconatoService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FiltroDiaconatoVm filtroDiaconatoVm, int pagina = 1)
         {
-            var buscaTodos = await _diaconatoService.GetAllAsync();
-            return View(buscaTodos);
+            var filtroFinal = FiltroDiaconatoBuilder.Construir(filtroDiaconatoVm);
+            var (lista, count) = await _diaconatoService.GetAllPaginationAsync(filtroFinal, (pagina - 1) * 5);
+            int numeroTotalPaginas = (int)Math.Ceiling(count / (double)5);
+            pagina = Math.Clamp(pagina, 0, numeroTotalPaginas);
+
+            ViewBag.FiltroDiaconato = filtroDiaconatoVm;
+            ViewBag.NumeroTotalPaginas = numeroTotalPaginas;
+            ViewBag.PaginaAtual = pagina;
+            ViewBag.TotalRegistro = count;
+            return View(lista);
         }
 
         public async Task<IActionResult> Detalhe(Guid? diaconatoId)
