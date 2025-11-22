@@ -49,7 +49,6 @@ namespace WEB.Models.ViewModels
         public bool Ativo { get; set; } = true;
 
         [Display(Name = "Foto de Perfil")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório !")]
         public IFormFile? Foto { get; set; }
 
         [Display(Name = "Consagração")]

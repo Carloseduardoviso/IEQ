@@ -15,80 +15,88 @@
         var anosServico = (int)((DateTime.Today - d.DataMinisterio.Value).TotalDays / 365.25);
         return marcos.Where(m => m <= anosServico).ToList();
     };
+
+    // Verifica se há algum certificado em qualquer diácono
+    bool possuiCertificados = condecoracoes.Any(d =>
+        !string.IsNullOrEmpty(d.FotoUrlConsagracao) ||
+        !string.IsNullOrEmpty(d.FotoUrl5Anos) ||
+        !string.IsNullOrEmpty(d.FotoUrl10Anos) ||
+        !string.IsNullOrEmpty(d.FotoUrl15Anos) ||
+        !string.IsNullOrEmpty(d.FotoUrl20Anos) ||
+        !string.IsNullOrEmpty(d.FotoUrl25Anos)
+    );
 }
 
-@if (condecoracoes.Any())
+@if (possuiCertificados)
 {
-    if (condecoracoes.Count == 1)
+    if (condecoracoes.Any())
     {
-        <!-- Apenas 1 condecorado -->
-        var d = condecoracoes[0];
-        var recebidos = anosCondecorados(d);
-        <div id="carouselCondecoracao" class="carousel slide mt-3" data-bs-ride="carousel">
-            <div class="carousel-inner">
+        if (condecoracoes.Count == 1)
+        {
+            <!-- APENAS UM CONDECORADO -->
+            var d = condecoracoes[0];
+            var recebidos = anosCondecorados(d);
+            <div id="carouselCondecoracao" class="carousel slide mt-3" data-bs-ride="carousel">
+                <div class="carousel-inner">
 
-                <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100 mt-3">
-                    <p class="text-body">Condecoração</p>
-                    <img src="@(!string.IsNullOrEmpty(d.FotoUrl) ? d.FotoUrl : "~/images/home/foto_padrao.png")"
-                         alt="@d.NomeCompleto" class="slide-img rounded-circle">
-                    <p class="slide-text mb-0">@d.NomeCompleto</p>
-                    <small class="text-muted">Tempo de Ministério: @d.TempoMinisterio</small>
-                    @if (recebidos.Any())
-                    {
-                        <small class="text-muted">
-                            Foi condecorado @(recebidos.Count) vez(es): @string.Join(", ", recebidos.Select(a => $"{a} anos"))
-                        </small>
-                    }
+                    <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100 mt-3">
+                        <p class="text-body">Condecoração</p>
+                        <img src="@(!string.IsNullOrEmpty(d.FotoUrl) ? d.FotoUrl : "~/images/home/foto_padrao.png")"
+                             alt="@d.NomeCompleto" class="slide-img rounded-circle">
+                        <p class="slide-text mb-0">@d.NomeCompleto</p>
+                        <small class="text-muted">Tempo de Ministério: @d.TempoMinisterio</small>
+                        @if (recebidos.Any())
+                        {
+                            <small class="text-muted">
+                                Foi condecorado @(recebidos.Count) vez(es): @string.Join(", ", recebidos.Select(a => $"{a} anos"))
+                            </small>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-    else
-    {
-        <!-- Carrossel com vários condecorados -->
-        <div id="carouselCondecoracao" class="carousel slide mt-3" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                @for (int i = 0; i < condecoracoes.Count; i++)
-                {
-                    var d = condecoracoes[i];
-                    var recebidos = anosCondecorados(d);
-                    <div class="carousel-item @(i == 0 ? "active" : "")">
-                        <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
-                            <p class="text-body">Condecoração</p>
-                            <img src="@(!string.IsNullOrEmpty(d.FotoUrl) ? d.FotoUrl : "~/images/home/foto_padrao.png")"
-                                 alt="@d.NomeCompleto" class="slide-img rounded-circle">
-                            <p class="slide-text mb-0">@d.NomeCompleto</p>
-                            <small class="text-muted">Tempo de Ministério: @d.TempoMinisterio</small>
-                            @if (recebidos.Any())
-                            {
-                                <small class="text-muted">
-                                    Foi condecorado @(recebidos.Count) vez(es): @string.Join(", ", recebidos.Select(a => $"{a} anos"))
-                                </small>
-                            }
+        }
+        else
+        {
+            <!-- VÁRIOS CONDECORADOS -->
+            <div id="carouselCondecoracao" class="carousel slide mt-3" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @for (int i = 0; i < condecoracoes.Count; i++)
+                    {
+                        var d = condecoracoes[i];
+                        var recebidos = anosCondecorados(d);
+                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                                <p class="text-body">Condecoração</p>
+                                <img src="@(!string.IsNullOrEmpty(d.FotoUrl) ? d.FotoUrl : "~/images/home/foto_padrao.png")"
+                                     alt="@d.NomeCompleto" class="slide-img rounded-circle">
+                                <p class="slide-text mb-0">@d.NomeCompleto</p>
+                                <small class="text-muted">Tempo de Ministério: @d.TempoMinisterio</small>
+                                @if (recebidos.Any())
+                                {
+                                    <small class="text-muted">
+                                        Foi condecorado @(recebidos.Count) vez(es): @string.Join(", ", recebidos.Select(a => $"{a} anos"))
+                                    </small>
+                                }
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselCondecoracao" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon custom-arrow"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselCondecoracao" data-bs-slide="next">
+                    <span class="carousel-control-next-icon custom-arrow"></span>
+                    <span class="visually-hidden">Próximo</span>
+                </button>
             </div>
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselCondecoracao" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon custom-arrow"></span>
-                <span class="visually-hidden">Anterior</span>
-            </button>
-
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselCondecoracao" data-bs-slide="next">
-                <span class="carousel-control-next-icon custom-arrow"></span>
-                <span class="visually-hidden">Próximo</span>
-            </button>
-        </div>
+        }
     }
-}
-else
-{
-    <p class="text-center text-muted mt-3">Não há condecorações neste período.</p>
 }
 
 <style>
-    /* === CARD DO CARROSSEL === */
     #carouselCondecoracao {
         margin-left: 40px;
         margin-right: 40px;

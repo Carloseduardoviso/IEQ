@@ -7,22 +7,32 @@
 
 <div class="container mt-4">
     <div class="card border-0 shadow-lg p-3 mb-5 rounded">
-        <div class="d-flex justify-content-between p-3 border-bottom">
-            <h4 class="card-title text-muted"><strong>Diaconato</strong></h4>
-            <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Diaconato")" class="btn btn-primary">
-                <i class="fa-solid fa-plus"></i>
-                Novo
-            </button>
+        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+            <h4 class="card-title text-muted m-0">
+                <strong>Diaconato</strong>
+            </h4>
+
+            <div class="d-flex gap-2">
+                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Diaconato")" class="btn btn-primary">
+                    <i class="fa-solid fa-plus"></i> Novo
+                </button>
+
+                <a href="@Url.Action("Index", "Diaconato")" class="btn btn-light btn-sm">
+                    <i class="fa-solid fa-arrow-left"></i> Voltar
+                </a>
+            </div>
         </div>
-        <div class="card-body table-responsive">
+
+        <div class="card-body">
+
+            <!-- FILTRO -->
             <section class="conteudo-inicial mx-auto mb-4">
                 <form asp-action="Index" asp-controller="Diaconato" method="get" class="row g-3">
-                 
+
                     <div class="col-12 col-md-8 col-lg-9" style="flex-grow: 4;">
                         <label class="form-label"><strong>Busca Por</strong></label>
                         <input type="text" class="form-control" name="search" asp-for="@filtroDiaconato.Search" placeholder="Digite o Nome" />
                     </div>
-
 
                     <div class="col-12 col-md-4 col-lg-3 d-flex gap-2 align-items-end">
                         <button type="submit" class="btn btn-primary w-100">Pesquisar</button>
@@ -31,90 +41,126 @@
 
                 </form>
             </section>
-            <table id="tableEstado" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nome</th>
-                        <th>Igreja</th>
-                        <th>Região</th>
-                        <th>Cargo</th>
-                        <th>Ativo</th>
-                        <th width="15%">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model != null && Model.Any())
-                    {
-                        foreach (var item in Model)
+            <div class="table-responsive">
+                <!-- TABELA -->
+                <table id="tableEstado" class="table table-striped align-middle">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>Igreja</th>
+                            <th>Região</th>
+                            <th>Cargo</th>
+                            <th>Ativo</th>
+                            <th class="text-center" width="15%">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <!-- FOTO -->
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.FotoUrl))
+                                        {
+                                            <img src="@item.FotoUrl" style="width:50px; height:50px; object-fit:cover; border-radius:6px;" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/images/Home/foto_padrao.png" style="width:50px; height:50px; object-fit:cover; border-radius:6px;" />
+                                        }
+                                    </td>
+
+                                    <!-- DADOS -->
+                                    <td>@item.NomeCompleto</td>
+                                    <td>@item.Igreja</td>
+                                    <td>@item.Regiao</td>
+                                    <td>@item.Cargo</td>
+
+                                    <!-- ATIVO -->
+                                    <td>
+                                        <span class="badge @(item.Ativo ? "bg-success" : "bg-danger") px-3">
+                                            @(item.Ativo ? "Sim" : "Não")
+                                        </span>
+                                    </td>
+
+                                    <!-- AÇÕES -->
+                                    <td class="text-center">
+                                        <div class="d-flex flex-wrap gap-2 justify-content-center">
+
+                                            @if (item.Ativo)
+                                            {
+                                                <!-- Editar -->
+                                                <a class="btn btn-light btn-sm edit-button"
+                                                   title="Editar"
+                                                   asp-action="Cadastrar" asp-controller="Diaconato"
+                                                   asp-route-DiaconatoId="@item.DiaconatoId">
+                                                    <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                                </a>
+
+                                                <!-- Inativar -->
+                                                <a class="btn btn-light btn-sm ativar-button"
+                                                   title="Inativar Obreiro"
+                                                   asp-action="ObreiroAtivo" asp-controller="Diaconato"
+                                                   asp-route-DiaconatoId="@item.DiaconatoId">
+                                                    <i class="fa-solid fa-check text-danger"></i>
+                                                </a>
+
+                                                <!-- Detalhes -->
+                                                <a class="btn btn-light btn-sm remove-button"
+                                                   title="Detalhes"
+                                                   asp-action="Detalhe" asp-controller="Diaconato"
+                                                   asp-route-DiaconatoId="@item.DiaconatoId">
+                                                    <i class="fa-solid fa-eye text-primary"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <!-- Ativar -->
+                                                <a class="btn btn-light btn-sm ativar-button"
+                                                   title="Ativar Obreiro"
+                                                   asp-action="ObreiroAtivo" asp-controller="Diaconato"
+                                                   asp-route-DiaconatoId="@item.DiaconatoId">
+                                                    <i class="fa-solid fa-check text-success"></i>
+                                                </a>
+
+                                                <!-- Detalhes -->
+                                                <a class="btn btn-light btn-sm remove-button"
+                                                   title="Detalhes"
+                                                   asp-action="Detalhe" asp-controller="Diaconato"
+                                                   asp-route-DiaconatoId="@item.DiaconatoId">
+                                                    <i class="fa-solid fa-eye text-primary"></i>
+                                                </a>
+                                            }
+
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
                         {
                             <tr>
-                                <td>
-                                    @if (!string.IsNullOrEmpty(item.FotoUrl))
-                                    {
-                                        <img src="@item.FotoUrl" style="width:50px; height:50px; object-fit:cover; border-radius:6px;" />
-                                    }
-                                    else
-                                    {
-                                        <img src="~/images/Home/foto_padrao.png" style="width:50px; height:50px; object-fit:cover; border-radius:6px;" />
-                                    }
-                                </td>
-                                <td>@item.NomeCompleto</td>
-                                <td>@item.Igreja</td>
-                                <td>@item.Regiao</td>
-                                <td>@item.Cargo</td>
-                                <td>
-                                    <span class="badge @(item.Ativo ? "bg-success" : "bg-danger") px-3">
-                                        @(item.Ativo ? "Sim" : "Não")
-                                    </span>
-                                </td>
-                                <td>
-                                    @if (item.Ativo)
-                                    {
-                                        <a class="btn btn-light btn-sm edit-button" title="Editar"
-                                           asp-action="Cadastrar" asp-controller="Diaconato" asp-route-DiaconatoId="@item.DiaconatoId">
-                                            <i class="fa-solid fa-pen-to-square text-primary"></i>
-                                        </a>
-
-                                        <a class="btn btn-light btn-sm ativar-button" title="Inativar Obreiro"
-                                           asp-action="ObreiroAtivo" asp-controller="Diaconato" asp-route-DiaconatoId="@item.DiaconatoId">
-                                            <i class="fa-solid fa-check text-danger"></i>
-                                        </a>
-
-                                        <a class="btn btn-light btn-sm remove-button" title="Excluír"
-                                           asp-action="Detalhe" asp-controller="Diaconato" asp-route-DiaconatoId="@item.DiaconatoId">
-                                            <i class="fa-solid fa-eye text-primary"></i>
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a class="btn btn-light btn-sm ativar-button" title="Inativar Obreiro"
-                                           asp-action="ObreiroAtivo" asp-controller="Diaconato" asp-route-DiaconatoId="@item.DiaconatoId">
-                                            <i class="fa-solid fa-check text-danger"></i>
-                                        </a>
-                                        <a class="btn btn-light btn-sm remove-button" title="Excluír"
-                                           asp-action="Detalhe" asp-controller="Diaconato" asp-route-DiaconatoId="@item.DiaconatoId">
-                                            <i class="fa-solid fa-eye text-primary"></i>
-                                        </a>
-                                    }
-                                </td>
+                                <td colspan="7" class="text-center text-muted">Nenhum resultado encontrado</td>
                             </tr>
                         }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="9" class="text-center text-muted">Nenhum resultado encontrado</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
-@section Scripts {   
-    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
-    <script src="~/js/diaconato.js"></script>
+@section Scripts {
+        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" asp-append-version="true"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js" asp-append-version="true"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+
+        <script src="~/js/diaconato.js"></script>
 }

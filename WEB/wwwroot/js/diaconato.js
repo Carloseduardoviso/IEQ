@@ -8,6 +8,7 @@
                 modal = new bootstrap.Modal($('#modalAdicionar'));
                 modal.show();
                 rebindValidators($('#modal'))
+                $('#Contato').mask('(00) 00000-0000');
             }
         })
     })
@@ -23,6 +24,7 @@
                 modal = new bootstrap.Modal($('#modalAdicionar'));
                 modal.show();
                 rebindValidators($('#modal'))
+                $('#Contato').mask('(00) 00000-0000');
             },
             error: function () {
                 notification('error', 'Erro ao carregar formulário de edição.');
