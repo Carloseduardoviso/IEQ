@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using System.Text;
+using System.Text.RegularExpressions;
 using WEB.Helpers.Builder.Filtro;
 using WEB.Helpers.Messages;
 using WEB.Models.ViewModels;
@@ -17,15 +21,20 @@ namespace WEB.Controllers
 
         public async Task<IActionResult> Index(FiltroDiaconatoVm filtroDiaconatoVm, int pagina = 1)
         {
+            filtroDiaconatoVm.Search = NormalizeSearch(filtroDiaconatoVm.Search ?? string.Empty);
             var filtroFinal = FiltroDiaconatoBuilder.Construir(filtroDiaconatoVm);
+
             var (lista, count) = await _diaconatoService.GetAllPaginationAsync(filtroFinal, (pagina - 1) * 5);
             int numeroTotalPaginas = (int)Math.Ceiling(count / (double)5);
             pagina = Math.Clamp(pagina, 0, numeroTotalPaginas);
+
+
 
             ViewBag.FiltroDiaconato = filtroDiaconatoVm;
             ViewBag.NumeroTotalPaginas = numeroTotalPaginas;
             ViewBag.PaginaAtual = pagina;
             ViewBag.TotalRegistro = count;
+            ViewBag.TotalExibido = (await _diaconatoService.GetAllAsync()).Count();
             return View(lista);
         }
 
@@ -256,6 +265,34 @@ namespace WEB.Controllers
             }
 
             return RedirectToAction("Index", "Diaconato").Success(mensagemSucesso);
-        }       
+        }
+
+        private string NormalizeSearch(string search)
+        {
+            if (string.IsNullOrWhiteSpace(search))
+                return string.Empty;
+
+            // Remove acentos
+            search = RemoverAcentos(search);
+
+            // Remove espaços duplicados
+            search = Regex.Replace(search, @"\s+", " ");
+
+            // Remove espaços no início e no fim
+            search = search.Trim();
+
+            return search;
+        }
+
+        private string RemoverAcentos(string texto)
+        {
+            return new string(
+                texto
+                    .Normalize(NormalizationForm.FormD)
+                    .Where(ch => CharUnicodeInfo.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark)
+                    .ToArray()
+            ).Normalize(NormalizationForm.FormC);
+        }
+
     }
 }

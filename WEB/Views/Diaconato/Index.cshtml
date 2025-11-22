@@ -17,7 +17,7 @@
                     <i class="fa-solid fa-plus"></i> Novo
                 </button>
 
-                <a href="@Url.Action("Index", "Diaconato")" class="btn btn-light btn-sm">
+                <a href="@Url.Action("Index", "Diaconato")" class="btn btn-secondary">
                     <i class="fa-solid fa-arrow-left"></i> Voltar
                 </a>
             </div>
@@ -46,7 +46,7 @@
                 <table id="tableEstado" class="table table-striped align-middle">
                     <thead class="table-primary">
                         <tr>
-                            <th>#</th>
+                            <th>@ViewBag.TotalExibido</th>
                             <th>Nome</th>
                             <th>Igreja</th>
                             <th>Região</th>
@@ -151,6 +151,39 @@
                         }
                     </tbody>
                 </table>
+                <!-- Paginação -->
+                @if (ViewBag.NumeroTotalPaginas > 1)
+                {
+                    <nav aria-label="Navegação de página">
+                        <ul class="pagination justify-content-end mt-4">
+                            <li class="page-item @(ViewBag.PaginaAtual == 1 ? "disabled" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-pagina="@(ViewBag.PaginaAtual - 1)"
+                                   asp-route-NomeProduto="@filtroDiaconato.Search">Anterior</a>
+                            </li>
+
+                            @for (int i = 1; i <= ViewBag.NumeroTotalPaginas; i++)
+                            {
+                                <li class="page-item @(ViewBag.PaginaAtual == i ? "active" : "")">
+                                    <a class="page-link"
+                                       asp-action="Index"
+                                       asp-route-pagina="@i"
+                                       asp-route-NomeProduto="@filtroDiaconato.Search">
+                                        @i
+                                    </a>
+                                </li>
+                            }
+
+                            <li class="page-item @(ViewBag.PaginaAtual == ViewBag.NumeroTotalPaginas ? "disabled" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-pagina="@(ViewBag.PaginaAtual + 1)"
+                                   asp-route-NomeProduto="@filtroDiaconato.Search">Próxima</a>
+                            </li>
+                        </ul>
+                    </nav>
+                }
             </div>
         </div>
     </div>
