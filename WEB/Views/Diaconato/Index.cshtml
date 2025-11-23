@@ -2,7 +2,6 @@
 @model IEnumerable<DiaconatoVm>
 @{
     FiltroDiaconatoVm filtroDiaconato = ViewBag.FiltroDiaconato;
-
 }
 
 <div class="container mt-4">
@@ -42,6 +41,7 @@
                 </form>
             </section>
             <div class="table-responsive">
+
                 <!-- TABELA -->
                 <table id="tableEstado" class="table table-striped align-middle">
                     <thead class="table-primary">
@@ -67,11 +67,15 @@
                                     <td>
                                         @if (!string.IsNullOrEmpty(item.FotoUrl))
                                         {
-                                            <img src="@item.FotoUrl" style="width:50px; height:50px; object-fit:cover; border-radius:6px;" />
+                                            <img src="@item.FotoUrl"
+                                                 class="foto-click"
+                                                 style="width:50px; height:50px; object-fit:cover; border-radius:6px; cursor:pointer;" />
                                         }
                                         else
                                         {
-                                            <img src="~/images/Home/foto_padrao.png" style="width:50px; height:50px; object-fit:cover; border-radius:6px;" />
+                                            <img src="~/images/Home/foto_padrao.png"
+                                                 class="foto-click"
+                                                 style="width:50px; height:50px; object-fit:cover; border-radius:6px; cursor:pointer;" />
                                         }
                                     </td>
 
@@ -151,6 +155,7 @@
                         }
                     </tbody>
                 </table>
+
                 <!-- Paginação -->
                 @if (ViewBag.NumeroTotalPaginas > 1)
                 {
@@ -187,13 +192,63 @@
             </div>
         </div>
     </div>
+</div>
+
+
+<style>
+    .modal-img-full {
+        width: 100%;
+        height: 65vh; /* imagem ocupa a altura total */
+    }
+
+    .btn-close-red-blink {
+    filter: invert(25%) sepia(95%) saturate(7480%) hue-rotate(350deg) brightness(90%) contrast(120%);
+    animation: blinkRed 1s infinite;
+}
+
+@@keyframes blinkRed {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+</style>
+
+<!-- ====================== -->
+<!-- MODAL DE IMAGEM GRANDE -->
+<!-- ====================== -->
+<div class="modal fade" id="modalFoto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">         
+           <div class="modal-header" style="background-color: #cfe2ff;">
+               <button type="button" class="btn-close btn-close-red-blink" data-bs-dismiss="modal"></button>
+           </div>
+            <img id="fotoModal" src="" class="modal-img-full rounded shadow" />
+        </div>
+    </div>
+</div>
+
 
 @section Scripts {
-        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
-        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" asp-append-version="true"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js" asp-append-version="true"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
 
-        <script src="~/js/diaconato.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+
+    <script src="~/js/diaconato.js"></script>
+
+    <!-- SCRIPT PARA AMPLIAR FOTO -->
+    <script>
+        $(document).on("click", ".foto-click", function () {
+
+            const src = $(this).attr("src");
+
+            $("#fotoModal").attr("src", src);
+
+            var modal = new bootstrap.Modal(document.getElementById('modalFoto'));
+            modal.show();
+        });
+    </script>
 }
