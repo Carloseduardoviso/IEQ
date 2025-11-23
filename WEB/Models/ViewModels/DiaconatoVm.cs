@@ -39,12 +39,13 @@ namespace WEB.Models.ViewModels
         public DateTime? DataMinisterio { get; set; }
 
         [Display(Name = "Data do Batismo")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório !")]
         public DateTime? DataBatismo { get; set; }
         public int TempoAcumuladoEmMeses { get; set; } = 0;
         public DateTime? DataReativacao { get; set; }
         public DateTime? DataInativacao { get; set; }
+        [Required(ErrorMessage = "O campo {0} é obrigatório !")]
         public string? Estado { get; set; }
+        [Required(ErrorMessage = "O campo {0} é obrigatório !")]
         public string? Cidade { get; set; }
         public bool Ativo { get; set; } = true;
 
