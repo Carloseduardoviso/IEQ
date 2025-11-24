@@ -30,6 +30,13 @@ namespace WEB.Models.ViewModels
         [MaxLength(100, ErrorMessage = "O limite máximo 100 caracter, foi atingido.")]
         [Required(ErrorMessage = "O campo {0} é obrigatório !")]
         public string? NomePastor { get; set; }
+        [Display(Name = "Nome do Pastor")]
+        [MaxLength(100, ErrorMessage = "O limite máximo 100 caracter, foi atingido.")]
+        public string? NomeSuperintendenteRegional { get; set; }
+
+        [Display(Name = "Nome do Pastor")]
+        [MaxLength(100, ErrorMessage = "O limite máximo 100 caracter, foi atingido.")]
+        public string? NomeSuperintendenteEstadual { get; set; }
 
         [Display(Name = "Data de Nascimento")]
         public DateTime? DataNascimento { get; set; }
