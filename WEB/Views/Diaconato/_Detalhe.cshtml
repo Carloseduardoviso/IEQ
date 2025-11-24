@@ -54,9 +54,9 @@
                         <div class="list-group-item">
                             <i class="fa-solid fa-user-tie me-2 text-primary"></i>
                             <strong>Pastor Titular:</strong> @Model.NomePastor
-                        </div>     
-                                         
-                     
+                        </div>
+
+
                         <div class="list-group-item">
                             <i class="fa-solid fa-briefcase me-2 text-primary"></i>
                             <strong>Cargo:</strong> @Model.Cargo
@@ -69,19 +69,14 @@
                             <i class="fa-solid fa-hourglass-half me-2 text-primary"></i>
                             <strong>Tempo no Ministério:</strong> @Model.TempoMinisterio
                         </div>
-                          <div class="list-group-item">
-                            <div class="row text-start text-md-start g-2">
-                                <div class="col-12 col-sm-4">
-                                    <i class="fa-solid fa-user-tie me-2 text-primary"></i>
-                                    <strong>Superintendente Regional:</strong> @Model.NomeSuperintendenteRegional
-                                </div>
-                                <div class="col-12 col-sm-4">
-                                    <i class="fa-solid fa-user-tie me-2 text-primary"></i>
-                                    <strong>Superintendente Estadual:</strong> @Model.NomeSuperintendenteEstadual
-                                </div>                                
-                            </div>
+                        <div class="list-group-item">
+                            <i class="fa-solid fa-user-tie me-2 text-primary"></i>
+                            <strong>Superintendente Regional:</strong> @Model.NomeSuperintendenteRegional
                         </div>
-                     
+                        <div class="list-group-item">
+                            <i class="fa-solid fa-user-tie me-2 text-primary"></i>
+                            <strong>Superintendente Estadual:</strong> @Model.NomeSuperintendenteEstadual
+                        </div>
                         <div class="list-group-item">
                             <div class="row text-start text-md-start g-2">
                                 <div class="col-12 col-sm-4">
@@ -118,11 +113,9 @@
                 </div>
             </div> <!-- row -->
         </div> <!-- card-body -->
-
-       
-        @if (!string.IsNullOrEmpty(Model.FotoUrlConsagracao) || !string.IsNullOrEmpty(Model.FotoUrl5Anos) 
-          || !string.IsNullOrEmpty(Model.FotoUrl10Anos) || !string.IsNullOrEmpty(Model.FotoUrl15Anos) 
-          || !string.IsNullOrEmpty(Model.FotoUrl20Anos) || !string.IsNullOrEmpty(Model.FotoUrl25Anos))
+        @if (!string.IsNullOrEmpty(Model.FotoUrlConsagracao) || !string.IsNullOrEmpty(Model.FotoUrl5Anos)
+                || !string.IsNullOrEmpty(Model.FotoUrl10Anos) || !string.IsNullOrEmpty(Model.FotoUrl15Anos)
+                || !string.IsNullOrEmpty(Model.FotoUrl20Anos) || !string.IsNullOrEmpty(Model.FotoUrl25Anos))
         {
             <div class="card-header bg-primary text-white d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-2">
                 <h3 class="mb-0"><i class="fa-solid fa-certificate"></i>  Certificações</h3>
