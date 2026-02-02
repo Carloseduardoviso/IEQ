@@ -11,9 +11,11 @@ namespace WEB.Helpers.Extensions
         {
             //Services
             services.AddScoped<IDiaconatoService, DiaconatoService>();
+            services.AddScoped<IGerenciamentoService, GerenciamentoService>();
 
             //Repositories
             services.AddScoped<IDiaconatoRepository, DiaconatoRepository>();
+            services.AddScoped<IGerenciamentoRepository, GerenciamentoRepository>();
 
             return services;
         }

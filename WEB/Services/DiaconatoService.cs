@@ -45,14 +45,14 @@ namespace WEB.Services
 
             if (item != null && item.Ativo && item.DataInativacao == null)
             {
-                DateTime inicio = item.DataReativacao ?? item.DataMinisterio ?? DateTime.Today;
+               // DateTime inicio = item.DataReativacao ?? item.DataMinisterio ?? DateTime.Today;
                 DateTime fim = DateTime.Today;
 
-                int meses = ((fim.Year - inicio.Year) * 12) + (fim.Month - inicio.Month);
-                if (fim.Day < inicio.Day)
-                    meses--;
+                //int meses = ((fim.Year - inicio.Year) * 12) + (fim.Month - inicio.Month);
+                //if (fim.Day < inicio.Day)
+                //    meses--;
 
-                vm.TempoAcumuladoEmMeses = item.TempoAcumuladoEmMeses + Math.Max(0, meses);
+                //vm.TempoAcumuladoEmMeses = item.TempoAcumuladoEmMeses + Math.Max(0, meses);
             }
 
             return vm;

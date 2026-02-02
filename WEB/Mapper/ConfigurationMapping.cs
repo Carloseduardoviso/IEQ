@@ -9,6 +9,13 @@ namespace WEB.Mapper
         public ConfigurationMapping()
         {
             CreateMap<Diaconato, DiaconatoVm>().ReverseMap().PreserveReferences();
+            CreateMap<Pastores, PastoresVm>().ReverseMap().PreserveReferences();
+            CreateMap<Regiao, RegiaoVm>().ReverseMap().PreserveReferences();
+            CreateMap<Igreja, IgrejaVm>().ReverseMap().PreserveReferences();
+            CreateMap<SuperintendenteEstadual, SuperintendenteEstadualVm>().ReverseMap().PreserveReferences();
+            CreateMap<SuperintendenteRegional, SuperintendenteRegionalVm>().ReverseMap().PreserveReferences();
+            CreateMap<SuperintendenteRegional, SuperintendenteRegionalVm>().ReverseMap().PreserveReferences();
+            CreateMap<Membro, MembroVm>().ReverseMap().PreserveReferences();
         }
     }
 }

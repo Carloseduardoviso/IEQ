@@ -8,27 +8,47 @@ namespace WEB.Data.Config
     {
         public void Configure(EntityTypeBuilder<Diaconato> builder)
         {
-            builder.ToTable(nameof(Diaconato));
+            builder.ToTable("Diaconato");
+
             builder.HasKey(d => d.DiaconatoId);
 
-            builder.Property(d => d.NomeCompleto).IsRequired();
-            builder.Property(d => d.Regiao).IsRequired();
-            builder.Property(d => d.Igreja).IsRequired();
-            builder.Property(d => d.Cargo).IsRequired();
-            builder.Property(d => d.Contato).IsRequired();
-            builder.Property(d => d.NomePastor).IsRequired();
-            builder.Property(d => d.DataNascimento).IsRequired();
-            builder.Property(d => d.DataMinisterio);
-            builder.Property(d => d.DataBatismo);
-            builder.Property(d => d.DataInativacao);
-            builder.Property(d => d.FotoUrl);
-            builder.Property(d => d.FotoUrlConsagracao);
-            builder.Property(d => d.FotoUrl5Anos);
-            builder.Property(d => d.FotoUrl10Anos);
-            builder.Property(d => d.FotoUrl15Anos);
-            builder.Property(d => d.FotoUrl20Anos);
-            builder.Property(d => d.FotoUrl25Anos);
-            builder.Property(d => d.Ativo);
+            builder.Property(d => d.NomeCompleto)
+                   .IsRequired()
+                   .HasMaxLength(100);
+
+            builder.Property(d => d.Cargo)
+                   .IsRequired()
+                   .HasMaxLength(80);
+
+            builder.Property(d => d.Contato)
+                   .IsRequired()
+                   .HasMaxLength(20);
+
+            builder.Property(d => d.Estado)
+                   .IsRequired()
+                   .HasMaxLength(2);
+
+            builder.Property(d => d.Cidade)
+                   .IsRequired()
+                   .HasMaxLength(100);
+
+            builder.Property(d => d.Ativo)
+                   .HasDefaultValue(true);
+
+            builder.HasOne(d => d.Igreja)
+                   .WithMany(i => i.Diaconos)
+                   .HasForeignKey(d => d.IgrejaId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(d => d.Regiao)
+                   .WithMany(r => r.Diaconos)
+                   .HasForeignKey(d => d.RegiaoId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(d => d.Pastor)
+                   .WithMany(p => p.Diaconos)
+                   .HasForeignKey(d => d.PastorId)
+                   .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

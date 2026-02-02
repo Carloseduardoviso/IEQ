@@ -60,12 +60,12 @@ namespace WEB.Data.Repositories
 
             var fim = DateTime.Today;
 
-            int meses = ((fim.Year - inicio.Value.Year) * 12) + fim.Month - inicio.Value.Month;
+            //int meses = ((fim.Year - inicio.Value.Year) * 12) + fim.Month - inicio.Value.Month;
 
-            if (fim.Day < inicio.Value.Day)
-                meses--;
+            //if (fim.Day < inicio.Value.Day)
+            //    meses--;
 
-            item.TempoAcumuladoEmMeses += Math.Max(0, meses);
+           // item.TempoAcumuladoEmMeses += Math.Max(0, meses);
 
             // Zera início para o próximo ciclo
             item.DataReativacao = null;
