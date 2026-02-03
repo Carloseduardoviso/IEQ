@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WEB.Helpers.Messages;
 using WEB.Services.Interfaces;
 
 namespace WEB.Controllers
@@ -13,11 +14,7 @@ namespace WEB.Controllers
         }
 
         #region GET
-        public IActionResult Regiao()
-        {
-            return View("Regiao/Index");
-        }
-
+     
         public IActionResult SuperintendenteRegional()
         {
             return View("SuperintendenteRegional/Index");
@@ -38,18 +35,7 @@ namespace WEB.Controllers
         }
         #endregion
 
-        #region Cadastros
-
-        public async Task<IActionResult> CadastroRegiao(Guid? regiaoId)
-        {
-            var novo = new RegiaoVm();
-            if (regiaoId != null) novo = await _gerenciamentoService.GetByIdRegiaoAsync(regiaoId.Value);
-
-            ViewBag.Title = regiaoId != null ? "Editar" : "Cadastrar";
-
-
-            return View("Regiao/_Cadastro", novo);
-        }
+        #region Cadastros    
 
         public IActionResult CadastroSuperintendenteRegional()
         {
@@ -68,7 +54,7 @@ namespace WEB.Controllers
         public IActionResult CadastroPastores()
         {
             return View("Pastores/Cadastro");
-        }
+        }       
         #endregion
     }
 }

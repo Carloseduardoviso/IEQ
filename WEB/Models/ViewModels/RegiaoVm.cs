@@ -9,8 +9,8 @@ public class RegiaoVm
     public string? Nome { get; set; }
 
     public Guid? SuperintendenteRegionalId { get; set; }
-    public SuperintendenteRegionalVm? SuperintendenteRegional { get; set; }
 
     public Guid? SuperintendenteEstadualId { get; set; }
+    public SuperintendenteRegionalVm? SuperintendenteRegional { get; set; }
     public SuperintendenteEstadualVm? SuperintendenteEstadual { get; set; }
 }

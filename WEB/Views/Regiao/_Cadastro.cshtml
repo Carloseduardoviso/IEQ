@@ -1,0 +1,66 @@
+﻿@using WEB.Models.ViewModels
+@model RegiaoVm
+@{
+    var title = ViewBag.Title;
+    var superintendentesRegionais = ViewBag.SuperintendentesRegionais;
+    var superintendentesEstaduais = ViewBag.SuperintendentesEstaduais;
+}
+
+<form asp-action="AlterarRegiao" enctype="multipart/form-data">
+    <div id="modalAdicionar" data-bs-backdrop="static" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- HEADER -->
+                <div class="modal-header" style="background-color: #628dbc;">
+                    <h5 class="modal-title text-white">@title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- BODY -->
+                <div class="modal-body">
+
+                    <input type="hidden" asp-for="RegiaoId" />             
+
+                    <!-- SEÇÃO 1 =============================== -->
+                    <h5 class="border-bottom pb-2 mb-3">Dados Pessoais</h5>                  
+
+                    <div class="mb-3">
+                        <label asp-for="Nome"></label><span class="text-danger"> *</span>
+                        <input asp-for="Nome" class="form-control" />
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div> 
+
+                    <div class="form-group mb-3">
+                        <label>Superintendente Estadual</label>
+                        <select asp-for="SuperintendenteEstadualId" class="input-custom form-select form-control select2bs4 p-2">
+                            <option value="" disabled selected>Selecione o estado</option>
+                            @foreach (var item in superintendentesEstaduais)
+                            {
+                                <option value="@item.SuperintendenteEstadualId">@item.Nome</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Superintendente Estadual</label>
+                        <select asp-for="SuperintendenteRegionalId" class="input-custom form-select form-control select2bs4 p-2">
+                            <option value="" disabled selected>Selecione o estado</option>
+                            @foreach (var item in superintendentesRegionais)
+                            {
+                                <option value="@item.SuperintendenteRegionalId">@item.Nome</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <!-- FOOTER -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
