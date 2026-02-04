@@ -7,24 +7,30 @@ namespace WEB.Controllers
     public class RegiaoController : Controller
     {
         private readonly IRegiaoService _regiaoService;
+        private readonly ISuperintendenteEstadualService _superintendenteEstadualService;
+        private readonly ISuperintendenteRegionalService _superintendenteRegionalService;
 
-        public RegiaoController(IRegiaoService regiaoService)
+        public RegiaoController(IRegiaoService regiaoService, ISuperintendenteEstadualService superintendenteEstadualService, ISuperintendenteRegionalService superintendenteRegionalService)
         {
             _regiaoService = regiaoService;
+            _superintendenteEstadualService = superintendenteEstadualService;
+            _superintendenteRegionalService = superintendenteRegionalService;
         }
 
-        public IActionResult Regiao()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var regiao = await _regiaoService.GetAllAsync();
+
+            return View(regiao);
         }
 
-        public async Task<IActionResult> CadastroRegiao(Guid? regiaoId)
+        public async Task<IActionResult> Cadastro(Guid? regiaoId)
         {
             var novo = new RegiaoVm();
             if (regiaoId != null) novo = await _regiaoService.GetByIdAsync(regiaoId.Value);
 
-            var superintendentesRegionais = await _regiaoService.GetAllAsync();
-            var superintendentesEstaduais = await _regiaoService.GetAllAsync();
+            var superintendentesRegionais = await _superintendenteRegionalService.GetAllAsync();
+            var superintendentesEstaduais = await _superintendenteEstadualService.GetAllAsync();
 
             ViewBag.SuperintendentesRegionais = superintendentesRegionais;
             ViewBag.SuperintendentesEstaduais = superintendentesEstaduais;

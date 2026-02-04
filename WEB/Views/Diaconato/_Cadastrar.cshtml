@@ -2,8 +2,10 @@
 @model DiaconatoVm
 
 @{
-    var paises = ViewBag.Pais;
     var title = ViewBag.Title;
+    var regiao = ViewBag.Regiao;
+    var superintendentesRegionais = ViewBag.SuperintendentesRegionais;
+    var superintendentesEstaduais = ViewBag.SuperintendentesEstaduais;
 }
 
 <form asp-action="AlterarDiaconato" enctype="multipart/form-data">
@@ -74,19 +76,31 @@
                     </div>
 
                     <!-- SEÇÃO 2 =============================== -->
-             @*        <h5 class="border-bottom pb-2 mb-3">Informações da Igreja</h5>                   
+                    <h5 class="border-bottom pb-2 mb-3">Informações da Igreja</h5>
                     <div class="row">
-                        <div class="col-md-12 mb-3">
+                      @*   <div class="col-md-12 mb-3">
                             <label asp-for="NomePastor"></label><span class="text-danger"> *</span>
                             <input asp-for="NomePastor" class="form-control" />
+                        </div> *@
+                        <div class="col-md-6 mb-3">
+                            <label>Superintendente Estadual</label>
+                            <select asp-for="Regiao.SuperintendenteEstadualId" class="input-custom form-select form-control select2bs4 p-2">
+                                <option value="" disabled selected>Selecione</option>
+                                @foreach (var item in superintendentesEstaduais)
+                                {
+                                    <option value="@item.SuperintendenteEstadualId">@item.Nome</option>
+                                }
+                            </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label asp-for="NomeSuperintendenteRegional"></label><span class="text-danger"> *</span>
-                            <input asp-for="NomeSuperintendenteRegional" class="form-control" />
-                        </div>
-                           <div class="col-md-6 mb-3">
-                            <label asp-for="NomeSuperintendenteEstadual"></label><span class="text-danger"> *</span>
-                            <input asp-for="NomeSuperintendenteEstadual" class="form-control" />
+                            <label>Superintendente Estadual</label>
+                            <select asp-for="Regiao.SuperintendenteRegionalId" class="input-custom form-select form-control select2bs4 p-2">
+                                <option value="" disabled selected>Selecione</option>
+                                @foreach (var item in superintendentesRegionais)
+                                {
+                                    <option value="@item.SuperintendenteRegionalId">@item.Nome</option>
+                                }
+                            </select>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label asp-for="Igreja"></label><span class="text-danger"> *</span>
@@ -94,10 +108,16 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label asp-for="Regiao"></label><span class="text-danger"> *</span>
-                            <input asp-for="Regiao" class="form-control" />
+                            <label>Região</label><span class="text-danger"> *</span>
+                            <select asp-for="RegiaoId" class="input-custom form-select form-control select2bs4 p-2">
+                                <option value="" disabled selected>Selecione</option>
+                                @foreach (var item in regiao)
+                                {
+                                    <option value="@item.RegiaoId">@item.Nome</option>
+                                }
+                            </select>
                         </div>
-                    </div>    *@            
+                    </div>
 
                     <!-- SEÇÃO 3 =============================== -->
                     <h5 class="border-bottom pb-2 mb-3">Datas Importantes</h5>

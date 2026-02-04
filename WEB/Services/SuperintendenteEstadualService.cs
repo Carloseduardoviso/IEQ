@@ -62,7 +62,7 @@ namespace WEB.Services
             return _mapper.Map<SuperintendenteEstadualVm>(result);
         }
 
-        public async Task Update(SuperintendenteEstadualVm vm)
+        public async Task UpdateAsync(SuperintendenteEstadualVm vm)
         {
             SuperintendenteEstadual result = _mapper.Map<SuperintendenteEstadual>(vm);
             await _superintendenteEstadualRepository.Update(result);

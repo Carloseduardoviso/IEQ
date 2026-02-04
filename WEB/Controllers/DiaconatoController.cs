@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -13,10 +12,17 @@ namespace WEB.Controllers
     public class DiaconatoController : Controller
     {
         public readonly IDiaconatoService _diaconatoService;
+        private readonly IRegiaoService _regiaoService;
+        private readonly ISuperintendenteEstadualService _superintendenteEstadualService;
+        private readonly ISuperintendenteRegionalService _superintendenteRegionalService;
 
-        public DiaconatoController(IDiaconatoService diaconatoService)
+
+        public DiaconatoController(IDiaconatoService diaconatoService, IRegiaoService regiaoService, ISuperintendenteEstadualService superintendenteEstadualService, ISuperintendenteRegionalService superintendenteRegionalService)
         {
             _diaconatoService = diaconatoService;
+            _regiaoService = regiaoService;
+            _superintendenteEstadualService = superintendenteEstadualService;
+            _superintendenteRegionalService = superintendenteRegionalService;
         }
 
         public async Task<IActionResult> Index(FiltroDiaconatoVm filtroDiaconatoVm, int pagina = 1)
@@ -70,6 +76,14 @@ namespace WEB.Controllers
             var novo = new DiaconatoVm();
             if (diaconatoId != null) novo = await _diaconatoService.GetByIdAsync(diaconatoId.Value);
 
+            var regiao = await _regiaoService.GetAllAsync();
+            var superintendentesRegionais = await _superintendenteRegionalService.GetAllAsync();
+            var superintendentesEstaduais = await _superintendenteEstadualService.GetAllAsync();
+
+
+            ViewBag.Regiao = regiao;
+            ViewBag.SuperintendentesRegionais = superintendentesRegionais;
+            ViewBag.SuperintendentesEstaduais = superintendentesEstaduais;
             ViewBag.Title = diaconatoId != null ? "Editar" : "Cadastrar";
 
             return PartialView("_Cadastrar", novo);

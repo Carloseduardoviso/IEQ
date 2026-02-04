@@ -20,10 +20,7 @@
                 <!-- BODY -->
                 <div class="modal-body">
 
-                    <input type="hidden" asp-for="RegiaoId" />             
-
-                    <!-- SEÇÃO 1 =============================== -->
-                    <h5 class="border-bottom pb-2 mb-3">Dados Pessoais</h5>                  
+                    <input type="hidden" asp-for="RegiaoId" />           
 
                     <div class="mb-3">
                         <label asp-for="Nome"></label><span class="text-danger"> *</span>
@@ -34,7 +31,7 @@
                     <div class="form-group mb-3">
                         <label>Superintendente Estadual</label>
                         <select asp-for="SuperintendenteEstadualId" class="input-custom form-select form-control select2bs4 p-2">
-                            <option value="" disabled selected>Selecione o estado</option>
+                            <option value="" disabled selected>Selecione</option>
                             @foreach (var item in superintendentesEstaduais)
                             {
                                 <option value="@item.SuperintendenteEstadualId">@item.Nome</option>
@@ -45,7 +42,7 @@
                     <div class="form-group mb-3">
                         <label>Superintendente Estadual</label>
                         <select asp-for="SuperintendenteRegionalId" class="input-custom form-select form-control select2bs4 p-2">
-                            <option value="" disabled selected>Selecione o estado</option>
+                            <option value="" disabled selected>Selecione</option>
                             @foreach (var item in superintendentesRegionais)
                             {
                                 <option value="@item.SuperintendenteRegionalId">@item.Nome</option>

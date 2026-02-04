@@ -53,7 +53,7 @@ namespace WEB.Models.ViewModels
         [Required]
         public string? Cidade { get; set; }
 
-        public bool Ativo { get; set; }
+        public bool Ativo { get; set; } = true;
 
         // 🔹 FOTOS
         public IFormFile? Foto { get; set; }

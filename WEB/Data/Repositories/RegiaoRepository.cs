@@ -25,6 +25,8 @@ namespace WEB.Data.Repositories
         {
             IQueryable<Regiao> query = _dataContext.Regioes.AsNoTracking();
 
+            query = IncludeAllProperties(query);
+
             if (expressions != null && expressions.Any())
             {
                 foreach (var include in expressions)
