@@ -27,7 +27,7 @@ namespace WEB.Models.ViewModels
         public Guid? IgrejaId { get; set; }
 
         [Required]
-        public Role Role { get; set; }
+        public Role Role { get; set; } = Role.Membro;
 
         public Regiao? Regiao { get; set; }
         public Igreja? Igreja { get; set; }

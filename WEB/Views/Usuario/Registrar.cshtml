@@ -67,13 +67,7 @@
                                     <option value="@item.IgrejaId">@item.Nome</option>
                                 }
                             </select>
-                        </div>
-
-                        <!-- Perfil -->
-                        <div class="mb-3">
-                            <label>Perfil</label>
-                            <select asp-for="Role" asp-items="Html.GetEnumSelectList<Role>()" class="form-select"></select>
-                        </div>
+                        </div>                  
 
                         <button type="submit" class="btn btn-success w-100">
                             Cadastrar
