@@ -33,8 +33,8 @@ namespace WEB.Data.Repositories
             var query = _dataContext.Diaconatos.AsNoTracking();
 
             if (expression != null) query = query.Where(expression);
-
-            var lista = await query.OrderBy(x => x.NomeCompleto).Skip(skip).Take(5).ToListAsync();
+            query.Include(x => x.Igreja).Include(x => x.Regiao);
+            var lista = await query.Where(x => x.Ativo).OrderBy(x => x.NomeCompleto).Skip(skip).Take(5).ToListAsync();
             var count = await query.CountAsync();
 
             return (lista, count);
@@ -60,12 +60,12 @@ namespace WEB.Data.Repositories
 
             var fim = DateTime.Today;
 
-            //int meses = ((fim.Year - inicio.Value.Year) * 12) + fim.Month - inicio.Value.Month;
+            int meses = ((fim.Year - inicio.Value.Year) * 12) + fim.Month - inicio.Value.Month;
 
-            //if (fim.Day < inicio.Value.Day)
-            //    meses--;
+            if (fim.Day < inicio.Value.Day)
+                meses--;
 
-           // item.TempoAcumuladoEmMeses += Math.Max(0, meses);
+            item.TempoAcumuladoEmMeses += Math.Max(0, meses);
 
             // Zera início para o próximo ciclo
             item.DataReativacao = null;

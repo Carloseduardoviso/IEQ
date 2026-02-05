@@ -3,6 +3,7 @@ using WEB.Models.ViewModels;
 
 public class IgrejaVm
 {
+    [Key]
     public Guid IgrejaId { get; set; }
 
     [Required]

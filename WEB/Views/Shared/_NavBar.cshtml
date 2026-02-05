@@ -1,97 +1,96 @@
 ﻿<nav class="navbar navbar-expand-lg navbar-dark ieq-navbar shadow">
     <div class="container-fluid">
+        @if (User.Identity!.IsAuthenticated)
+        {
 
-        <!-- Logo -->
-        <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
-            <img src="~/images/home/logo_ieq.png" class="nav-logo" alt="IEQ">
-            IEQ
-        </a>
+            <!-- Logo -->
+            <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
+                <img src="~/images/home/logo_ieq.png" class="nav-logo" alt="IEQ">
+                IEQ
+            </a>
 
-        <!-- Botão Mobile -->
-        <button class="navbar-toggler" type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarIEQ"
-                aria-controls="navbarIEQ"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <!-- Botão Mobile -->
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarIEQ"
+                    aria-controls="navbarIEQ"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <!-- Menu -->
-        <div class="collapse navbar-collapse" id="navbarIEQ">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <!-- Menu -->
+            <div class="collapse navbar-collapse" id="navbarIEQ">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-                <!-- Home -->
-                <li class="nav-item">
-                    <a class="nav-link nav-link-ieq"
-                       asp-controller="Home"
-                       asp-action="Index">
-                        Home
-                    </a>
-                </li>
+                    <!-- Home -->
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-ieq"
+                           asp-controller="Home"
+                           asp-action="Index">
+                            Home
+                        </a>
+                    </li>
 
-                <!-- Dropdown Igreja -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle nav-link-ieq"
-                       href="#"
-                       id="igrejaDropdown"
-                       role="button"
-                       data-bs-toggle="dropdown">
-                        Dados da Igreja
-                    </a>
+                    <!-- Dropdown Igreja -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle nav-link-ieq"
+                           href="#"
+                           id="igrejaDropdown"
+                           role="button"
+                           data-bs-toggle="dropdown">
+                            Dados da Igreja
+                        </a>
 
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" asp-controller="Igreja" asp-action="Index">
-                                Igrejas
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" asp-controller="SuperintendenteRegional" asp-action="Index">
-                                Superintendente Regional
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" asp-controller="SuperintendenteEstadual" asp-action="Index">
-                                Superintendente Estadual
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" asp-controller="Regiao" asp-action="Index">
-                                Região
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" asp-controller="Pastores" asp-action="Index">
-                                Pastores
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" asp-controller="Igreja" asp-action="Index">
+                                    Igrejas
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="SuperintendenteRegional" asp-action="Index">
+                                    Superintendente Regional
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="SuperintendenteEstadual" asp-action="Index">
+                                    Superintendente Estadual
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Regiao" asp-action="Index">
+                                    Região
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Pastores" asp-action="Index">
+                                    Pastores
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-                <!-- Ministérios -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle nav-link-ieq"
-                       href="#"
-                       id="MinisterioDropdown"
-                       role="button"
-                       data-bs-toggle="dropdown">
-                        Ministérios
-                    </a>
+                    <!-- Ministérios -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle nav-link-ieq"
+                           href="#"
+                           id="MinisterioDropdown"
+                           role="button"
+                           data-bs-toggle="dropdown">
+                            Ministérios
+                        </a>
 
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" asp-controller="Diaconato" asp-action="Index">
-                                Diaconato
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" asp-controller="Diaconato" asp-action="Index">
+                                    Diaconato
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-                @* ----------- ÁREA LOGIN / LOGOUT ----------- *@
-
-                @if (User.Identity!.IsAuthenticated)
-                {
+                    @* ----------- ÁREA LOGIN / LOGOUT ----------- *@
                     <li class="nav-item dropdown">
                         <a class="nav-link nav-link-ieq" href="#" data-bs-toggle="dropdown">
                             👤 @User.Identity.Name
@@ -113,16 +112,9 @@
                             </li>
                         </ul>
                     </li>
-                }
-                else
-                {
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-ieq" asp-controller="Usuario" asp-action="Login">
-                            🔐 Login
-                        </a>
-                    </li>
-                }
-            </ul>
-        </div>
+
+                </ul>
+            </div>
+        }
     </div>
 </nav>

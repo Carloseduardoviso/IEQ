@@ -5,7 +5,7 @@
         public Guid IgrejaId { get; set; }
         public Guid RegiaoId { get; set; }
 
-        public string Nome { get; set; } = null!;
+        public string? Nome { get; set; }
         public string? Endereco { get; set; }
         public bool Ativo { get; set; } = true;
 

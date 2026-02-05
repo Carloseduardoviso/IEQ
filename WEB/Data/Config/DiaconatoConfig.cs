@@ -44,11 +44,7 @@ namespace WEB.Data.Config
                    .WithMany(r => r.Diaconos)
                    .HasForeignKey(d => d.RegiaoId)
                    .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasOne(d => d.Pastor)
-                   .WithMany(p => p.Diaconos)
-                   .HasForeignKey(d => d.PastorId)
-                   .OnDelete(DeleteBehavior.SetNull);
+         
         }
     }
 }

@@ -12,8 +12,8 @@ using WEB.Data;
 namespace WEB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20260202155411_CriandoGerenciamento")]
-    partial class CriandoGerenciamento
+    [Migration("20260205192307_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -126,6 +126,9 @@ namespace WEB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Endereco")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -212,6 +215,9 @@ namespace WEB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Email")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
@@ -267,6 +273,9 @@ namespace WEB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -283,6 +292,9 @@ namespace WEB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -291,6 +303,57 @@ namespace WEB.Migrations
                     b.HasKey("SuperintendenteRegionalId");
 
                     b.ToTable("SuperintendenteRegional", (string)null);
+                });
+
+            modelBuilder.Entity("WEB.Models.Entities.Usuario", b =>
+                {
+                    b.Property<Guid>("UsuarioId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<Guid?>("IgrejaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<Guid?>("RegiaoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SenhaHash")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("UltimoLogin")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UsuarioId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("IgrejaId");
+
+                    b.HasIndex("RegiaoId");
+
+                    b.ToTable("Usuario", (string)null);
                 });
 
             modelBuilder.Entity("WEB.Models.Entities.Diaconato", b =>
@@ -369,11 +432,30 @@ namespace WEB.Migrations
                     b.Navigation("SuperintendenteRegional");
                 });
 
+            modelBuilder.Entity("WEB.Models.Entities.Usuario", b =>
+                {
+                    b.HasOne("WEB.Models.Entities.Igreja", "Igreja")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("IgrejaId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("WEB.Models.Entities.Regiao", "Regiao")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("RegiaoId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Igreja");
+
+                    b.Navigation("Regiao");
+                });
+
             modelBuilder.Entity("WEB.Models.Entities.Igreja", b =>
                 {
                     b.Navigation("Diaconos");
 
                     b.Navigation("Pastores");
+
+                    b.Navigation("Usuarios");
                 });
 
             modelBuilder.Entity("WEB.Models.Entities.Pastores", b =>
@@ -386,6 +468,8 @@ namespace WEB.Migrations
                     b.Navigation("Diaconos");
 
                     b.Navigation("Igrejas");
+
+                    b.Navigation("Usuarios");
                 });
 
             modelBuilder.Entity("WEB.Models.Entities.SuperintendenteEstadual", b =>

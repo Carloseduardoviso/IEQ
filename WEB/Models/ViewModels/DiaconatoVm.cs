@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WEB.Models.Entities;
 
 namespace WEB.Models.ViewModels
 {
@@ -15,18 +16,17 @@ namespace WEB.Models.ViewModels
         [Display(Name = "Igreja")]
         [Required]
         public Guid IgrejaId { get; set; }
-        public IgrejaVm? Igreja { get; set; }
+        public Guid? SuperintendenteEstadualId { get; set; }
+        public Guid? SuperintendenteRegionalId { get; set; }
 
         // 🔹 REGIÃO
         [Display(Name = "Região")]
         [Required]
         public Guid RegiaoId { get; set; }
-        public RegiaoVm? Regiao { get; set; }
 
         // 🔹 PASTOR
         [Display(Name = "Pastor")]
         public Guid? PastorId { get; set; }
-        public PastoresVm? Pastor { get; set; }
 
         [Required]
         public string? Cargo { get; set; }
@@ -76,6 +76,12 @@ namespace WEB.Models.ViewModels
 
         public IFormFile? Foto25Anos { get; set; }
         public string? FotoUrl25Anos { get; set; }
+
+        public Igreja? Igreja { get; set; }
+        public Regiao? Regiao { get; set; }
+        public Pastores? Pastor { get; set; }
+        public SuperintendenteEstadual? SuperintendenteEstadual { get; set; }
+        public SuperintendenteRegional? SuperintendenteRegional { get; set; }
 
         // 🔹 TEMPO MINISTÉRIO
         public string TempoMinisterio

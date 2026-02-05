@@ -9,5 +9,7 @@
 
 
         public ICollection<Regiao> Regioes { get; set; } = new List<Regiao>();
+        public ICollection<Diaconato>? Diaconos { get; set; } = new List<Diaconato>();
+
     }
 }
