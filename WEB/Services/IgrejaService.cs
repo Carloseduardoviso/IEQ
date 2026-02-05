@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using System.Linq.Expressions;
 using WEB.Data.Repositories;
 using WEB.Data.Repositories.Interfaces;
 using WEB.Models.Entities;
-using WEB.Models.ViewModels;
 using WEB.Services.Interfaces;
 
 namespace WEB.Services
@@ -13,6 +11,12 @@ namespace WEB.Services
     {
         private readonly IIgrejaRepository _igrejaRepository;
         private readonly IMapper _mapper;
+
+        public IgrejaService(IIgrejaRepository igrejaRepository, IMapper mapper)
+        {
+            _igrejaRepository = igrejaRepository;
+            _mapper = mapper;
+        }
 
         public async Task AddAsync(IgrejaVm igrejaVm)
         {
@@ -64,6 +68,16 @@ namespace WEB.Services
                                   _mapper.Map<Expression<Func<Igreja, bool>>>(expression),
                                   _mapper.Map<Expression<Func<Igreja, object>>[]>(includes));
             return _mapper.Map<IEnumerable<IgrejaVm>>(result);
+        }
+
+        public async Task InativarAsync(Guid id)
+        {
+            await _igrejaRepository.InativarAsync(id);
+        }
+
+        public async Task ReativarAsync(Guid id)
+        {
+            await _igrejaRepository.ReativarAsync(id);
         }
     }
 }

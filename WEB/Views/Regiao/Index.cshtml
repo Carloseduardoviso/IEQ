@@ -9,11 +9,11 @@
             </h4>
 
             <div class="d-flex gap-2">
-                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastro", "Regiao")" class="btn btn-primary">
+                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Regiao")" class="btn btn-primary">
                     <i class="fa-solid fa-plus"></i> Novo
                 </button>
 
-                <a href="@Url.Action("Regiao", "Gerenciamento")" class="btn btn-secondary">
+                <a href="@Url.Action("Index", "Regiao")" class="btn btn-secondary">
                     <i class="fa-solid fa-arrow-left"></i> Voltar
                 </a>
             </div>
@@ -32,7 +32,7 @@
 
                     <div class="col-12 col-md-4 col-lg-3 d-flex gap-2 align-items-end">
                         <button type="submit" class="btn btn-primary w-100">Pesquisar</button>
-                        <a href="@Url.Action("Regiao", "Gerenciamento")" class="btn btn-warning w-100">Limpar</a>
+                        <a href="@Url.Action("Index", "Regiao")" class="btn btn-warning w-100">Limpar</a>
                     </div>
 
                 </form>
@@ -56,29 +56,17 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-                                    <!-- DADOS -->
                                     <td>@item.Nome</td>
                                     <td>@item.SuperintendenteEstadual?.Nome</td>
                                     <td>@item.SuperintendenteRegional?.Nome</td>
-                                    <!-- AÇÕES -->
                                     <td class="text-center">
                                         <div class="d-flex flex-wrap gap-2 justify-content-center">
-                                            <!-- Editar -->
                                             <a class="btn btn-sm edit-button"
                                                title="Editar"
-                                               asp-action="CadastrarRegiao" asp-controller="Gerenciamento"
-                                               asp-route-DiaconatoId="@item.RegiaoId">
+                                               asp-action="Cadastrar" asp-controller="Regiao"
+                                               asp-route-RegiaoId="@item.RegiaoId">
                                                 <i class="fa-solid fa-pen-to-square text-primary"></i>
-                                            </a>
-
-                                            <!-- Inativar -->
-                                            <a class="btn  btn-sm ativar-button"
-                                               title="Inativar Obreiro"
-                                               asp-action="RemoverRegiao" asp-controller="Gerenciamento"
-                                               asp-route-DiaconatoId="@item.RegiaoId">
-                                                <i class="fa-solid fa-trash-can text-danger"></i>
-                                            </a>
-
+                                            </a>                                          
                                         </div>
                                     </td>
 

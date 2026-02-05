@@ -15,16 +15,17 @@ namespace WEB.Helpers.Extensions
             services.AddScoped<IRegiaoService, RegiaoService>();
             services.AddScoped<ISuperintendenteRegionalService, SuperintendenteRegionalService>();
             services.AddScoped<ISuperintendenteEstadualService, SuperintendenteEstadualService>();
+            services.AddScoped<IIgrejaService, IgrejaService>();
 
-            services.AddScoped<IGerenciamentoService, GerenciamentoService>();
 
             //Repositories
             services.AddScoped<IDiaconatoRepository, DiaconatoRepository>();
             services.AddScoped<IRegiaoRepository, RegiaoRepository>();
             services.AddScoped<ISuperintendenteRegionalRepository, SuperintendenteRegionalRepository>();
             services.AddScoped<ISuperintendenteEstadualRepository, SuperintendenteEstadualRepository>();
+            services.AddScoped<ISuperintendenteEstadualRepository, SuperintendenteEstadualRepository>();
+            services.AddScoped<IIgrejaRepository, IgrejaRepository>();
 
-            services.AddScoped<IGerenciamentoRepository, GerenciamentoRepository>();
 
             return services;
         }

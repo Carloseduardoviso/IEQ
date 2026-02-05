@@ -9,6 +9,8 @@
         public string? Email { get; set; }
 
         public Guid IgrejaId { get; set; }
+        public bool Ativo { get; set; } = true;
+
         public Igreja Igreja { get; set; } = null!;
 
         public ICollection<Diaconato> Diaconos { get; set; } = new List<Diaconato>();

@@ -10,7 +10,9 @@ namespace WEB.Data.Repositories.Interfaces
         Task<(IEnumerable<Igreja> lista, int count)> GetAllPaginationAsync(Expression<Func<Igreja, bool>>? expression, int skip);
         Task<Igreja?> GetByIdAllIncludesAsync(Guid id, Expression<Func<Igreja, bool>>? expression = null);
         Task<Igreja> GetByIdAsync(Guid igrejaId);
-        void Remover(Igreja result);
+        Task InativarAsync(Guid id);
+        Task ReativarAsync(Guid id);
+        Task Remover(Igreja result);
         Task Update(Igreja result);
     }
 }

@@ -1,10 +1,12 @@
 ﻿@using WEB.Models.ViewModels
-@model SuperintendenteRegionalVm
+@model IgrejaVm
+
 @{
     var title = ViewBag.Title;
+    var regiao = ViewBag.Regiao;
 }
 
-<form asp-action="Alterar" enctype="multipart/form-data">
+<form asp-action="AlterarIgreja" enctype="multipart/form-data">
     <div id="modalAdicionar" data-bs-backdrop="static" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -18,13 +20,30 @@
                 <!-- BODY -->
                 <div class="modal-body">
 
-                    <input type="hidden" asp-for="SuperintendenteRegionalId" />
+                    <input type="hidden" asp-for="IgrejaId" />
+
 
                     <div class="mb-3">
                         <label asp-for="Nome"></label><span class="text-danger"> *</span>
                         <input asp-for="Nome" class="form-control" />
                         <span asp-validation-for="Nome" class="text-danger"></span>
                     </div>
+                    <div>
+                        <label asp-for="Endereco"></label><span class="text-danger"> *</span>
+                        <input asp-for="Endereco" class="form-control" />
+                        <span asp-validation-for="Endereco" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label>Região</label>
+                        <select asp-for="RegiaoId" class="input-custom form-select form-control select2bs4 p-2">
+                            <option value="" disabled selected>Selecione</option>
+                            @foreach (var item in regiao)
+                            {
+                                <option value="@item.RegiaoId">@item.Nome</option>
+                            }
+                        </select>
+                    </div>
+
                 </div>
 
                 <!-- FOOTER -->

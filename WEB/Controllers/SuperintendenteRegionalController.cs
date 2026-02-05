@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WEB.Helpers.Messages;
 using WEB.Models.ViewModels;
+using WEB.Services;
 using WEB.Services.Interfaces;
 
 namespace WEB.Controllers
@@ -21,7 +22,7 @@ namespace WEB.Controllers
             return View(superintendentesRegionais);
         }
 
-        public async Task<IActionResult> Cadastro(Guid? superintendenteRegionalId)
+        public async Task<IActionResult> Cadastrar(Guid? superintendenteRegionalId)
         {
             var novo = new SuperintendenteRegionalVm();
             if (superintendenteRegionalId != null) novo = await _superintendenteRegionalService.GetByIdAsync(superintendenteRegionalId.Value);
@@ -29,7 +30,7 @@ namespace WEB.Controllers
             ViewBag.Title = superintendenteRegionalId != null ? "Editar" : "Cadastrar";
 
 
-            return View("_Cadastro", novo);
+            return PartialView("_Cadastrar", novo);
         }
 
         [HttpPost]
@@ -50,6 +51,30 @@ namespace WEB.Controllers
             }
 
             return RedirectToAction("Index", "SuperintendenteRegional").Success(mensagemSucess);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Excluir(Guid superintendenteRegionalId)
+        {
+            try
+            {
+                if (superintendenteRegionalId == Guid.Empty) return BadRequest($"Erro na alteração do cidade");
+
+                var paraRemover = await _superintendenteRegionalService.Remover(superintendenteRegionalId);
+
+                var menssagem = "Removido com sucesso!";
+
+                return Json(new
+                {
+                    id = superintendenteRegionalId,
+                    message = menssagem,
+                    view = paraRemover
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao remover");
+            }
         }
     }
 }

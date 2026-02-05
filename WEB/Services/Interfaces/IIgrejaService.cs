@@ -13,5 +13,7 @@ namespace WEB.Services.Interfaces
 
         Task<IEnumerable<IgrejaVm>> GetAllAsync(Expression<Func<IgrejaVm, bool>>? expression = null, params Expression<Func<IgrejaVm, object?>>[]? includes);
         Task<(IEnumerable<IgrejaVm> lista, int count)> GetAllPaginationAsync(Expression<Func<IgrejaVm, bool>>? filtragem, int skip);
+        Task InativarAsync(Guid id);
+        Task ReativarAsync(Guid id);
     }
 }

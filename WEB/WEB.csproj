@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Views\SuperintendenteEstadual\_Cadastro.cshtml~RF2485e5bb.TMP" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="wwwroot\images\diaconato\" />
     <Folder Include="wwwroot\images\diaconato\certificados\" />
     <Folder Include="wwwroot\images\diaconato\perfil\" />

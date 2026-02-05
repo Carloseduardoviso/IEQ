@@ -31,23 +31,30 @@
         });
     });
 
-    $(document).on('click', '.ativar-button', function (e) {
+    $(document).on('click', '.excluir-button', function (e) {
         e.preventDefault();
 
         let url = $(this).attr('href');
 
         Swal.fire({
-            title: "Deseja inativar este obreiro?",
+            title: "Deseja Excluir?",
             text: "Essa ação pode ser revertida depois.",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonText: "Sim, inativar",
+            confirmButtonText: "Sim, Excluir",
             cancelButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = url;
+
+                $.post(url, function (response) {
+                    Swal.fire("Excluído!", response.message, "success")
+                        .then(() => location.reload());
+                })
+                    .fail(function () {
+                        Swal.fire("Erro!", "Erro ao remover.", "error");
+                    });
+
             }
         });
     });
-
 });

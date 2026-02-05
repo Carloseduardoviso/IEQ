@@ -30,24 +30,4 @@
             }
         });
     });
-
-    $(document).on('click', '.ativar-button', function (e) {
-        e.preventDefault();
-
-        let url = $(this).attr('href');
-
-        Swal.fire({
-            title: "Deseja inativar este obreiro?",
-            text: "Essa ação pode ser revertida depois.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Sim, inativar",
-            cancelButtonText: "Cancelar"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = url;
-            }
-        });
-    });
-
 });

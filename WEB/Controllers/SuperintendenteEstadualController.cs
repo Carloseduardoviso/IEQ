@@ -30,7 +30,7 @@ namespace WEB.Controllers
             ViewBag.Title = superintendenteEstadualId != null ? "Editar" : "Cadastrar";
 
 
-            return View("_Cadastro", novo);
+            return PartialView("_Cadastrar", novo);
         }
 
         [HttpPost]
@@ -51,6 +51,30 @@ namespace WEB.Controllers
             }
 
             return RedirectToAction("Index", "SuperintendenteEstadual").Success(mensagemSucess);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Excluir(Guid superintendenteEstadualId)
+        {
+            try
+            {
+                if (superintendenteEstadualId == Guid.Empty) return BadRequest($"Erro na alteração do cidade");
+
+                var paraRemover = await _superintendenteEstadualService.Remover(superintendenteEstadualId);
+
+                var menssagem = "Removido com sucesso!";
+
+                return Json(new
+                {
+                    id = superintendenteEstadualId,
+                    message = menssagem,
+                    view = paraRemover
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao remover");
+            }
         }
     }
 }

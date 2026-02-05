@@ -9,7 +9,7 @@
             </h4>
 
             <div class="d-flex gap-2">
-                <button type="button" id="btnNovoTeste" data-url="@Url.Action("Cadastrar", "SuperintendenteEstadual")" class="btn btn-primary">
+                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "SuperintendenteEstadual")" class="btn btn-primary">
                     <i class="fa-solid fa-plus"></i> Novo
                 </button>
 
@@ -44,6 +44,7 @@
                     <thead class="table-primary">
                         <tr>
                             <th>Nome</th>
+                            <th>Ativo</th>
                             <th class="text-center" width="15%">Ações</th>
                         </tr>
                     </thead>
@@ -54,24 +55,25 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-                                    <!-- DADOS -->
                                     <td>@item.Nome</td>
-                                    <!-- AÇÕES -->
+                                    <td>
+                                        <span class="badge @(item.Ativo ? "bg-success" : "bg-danger") px-3">
+                                            @(item.Ativo ? "Sim" : "Não")
+                                        </span>
+                                    </td>
                                     <td class="text-center">
                                         <div class="d-flex flex-wrap gap-2 justify-content-center">
-                                            <!-- Editar -->
                                             <a class="btn btn-sm edit-button"
                                                title="Editar"
-                                               asp-action="CadastrarRegiao" asp-controller="Gerenciamento"
-                                               asp-route-DiaconatoId="@item.SuperintendenteEstadualId">
+                                               asp-action="Cadastrar" asp-controller="SuperintendenteEstadual"
+                                               asp-route-SuperintendenteEstadualId="@item.SuperintendenteEstadualId">
                                                 <i class="fa-solid fa-pen-to-square text-primary"></i>
                                             </a>
 
-                                            <!-- Inativar -->
-                                            <a class="btn  btn-sm ativar-button"
-                                               title="Inativar Obreiro"
-                                               asp-action="RemoverRegiao" asp-controller="Gerenciamento"
-                                               asp-route-DiaconatoId="@item.SuperintendenteEstadualId">
+                                            <a class="btn  btn-sm excluir-button"
+                                               title="Excluir Obreiro"
+                                               asp-action="Excluir" asp-controller="SuperintendenteEstadual"
+                                               asp-route-superintendenteEstadualId="@item.SuperintendenteEstadualId">
                                                 <i class="fa-solid fa-trash-can text-danger"></i>
                                             </a>
 

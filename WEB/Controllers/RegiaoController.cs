@@ -24,7 +24,7 @@ namespace WEB.Controllers
             return View(regiao);
         }
 
-        public async Task<IActionResult> Cadastro(Guid? regiaoId)
+        public async Task<IActionResult> Cadastrar(Guid? regiaoId)
         {
             var novo = new RegiaoVm();
             if (regiaoId != null) novo = await _regiaoService.GetByIdAsync(regiaoId.Value);
@@ -38,7 +38,7 @@ namespace WEB.Controllers
             ViewBag.Title = regiaoId != null ? "Editar" : "Cadastrar";
 
 
-            return View("_Cadastro", novo);
+            return PartialView("_Cadastrar", novo);
         }
 
         [HttpPost]

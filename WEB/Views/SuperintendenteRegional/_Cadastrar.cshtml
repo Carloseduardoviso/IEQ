@@ -1,11 +1,11 @@
 ﻿@using WEB.Models.ViewModels
-@model SuperintendenteEstadualVm
+@model SuperintendenteRegionalVm
 @{
     var title = ViewBag.Title;
 }
 
-<form asp-action="AlterarSuperintendenteEstadual" enctype="multipart/form-data">
-    <div id="modalSuperintendenteEstadual" data-bs-backdrop="static" class="modal fade" tabindex="-1">
+<form asp-action="Alterar" enctype="multipart/form-data">
+    <div id="modalAdicionar" data-bs-backdrop="static" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
@@ -18,12 +18,17 @@
                 <!-- BODY -->
                 <div class="modal-body">
 
-                    <input type="hidden" asp-for="SuperintendenteEstadualId" />
+                    <input type="hidden" asp-for="SuperintendenteRegionalId" />
 
                     <div class="mb-3">
                         <label asp-for="Nome"></label><span class="text-danger"> *</span>
                         <input asp-for="Nome" class="form-control" />
                         <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-check mt-2">
+                        <input asp-for="Ativo" class="form-check-input" type="checkbox">
+                        <label asp-for="Ativo" class="form-check-label"></label>
                     </div>
                 </div>
 
