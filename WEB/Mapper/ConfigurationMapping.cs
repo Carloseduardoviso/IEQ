@@ -16,6 +16,7 @@ namespace WEB.Mapper
             CreateMap<SuperintendenteRegional, SuperintendenteRegionalVm>().ReverseMap().PreserveReferences();
             CreateMap<SuperintendenteRegional, SuperintendenteRegionalVm>().ReverseMap().PreserveReferences();
             CreateMap<Membro, MembroVm>().ReverseMap().PreserveReferences();
+            CreateMap<Usuario, UsuarioVm>().ReverseMap().PreserveReferences();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace WEB.Data
         public DbSet<SuperintendenteEstadual> SuperintendenteEstaduals { get; set; }
         public DbSet<SuperintendenteRegional> SuperintendenteRegionals { get; set; }
         public DbSet<Membro> Membros { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +25,7 @@ namespace WEB.Data
             modelBuilder.ApplyConfiguration(new SuperintendenteEstadualConfig());
             modelBuilder.ApplyConfiguration(new SuperintendenteRegionalConfig());
             modelBuilder.ApplyConfiguration(new MembroConfig());            
+            modelBuilder.ApplyConfiguration(new UsuarioConfig());            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

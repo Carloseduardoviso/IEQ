@@ -1,0 +1,97 @@
+﻿@using WEB.Models.Enuns
+@model RegistrarVm
+@{
+    Layout = "_Layout";
+
+    var igreja = ViewBag.Igreja;
+    var regiao = ViewBag.Regiao;
+}
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+
+            <div class="card shadow">
+                <div class="card-body">
+
+                    <h3 class="text-center mb-4">Cadastro</h3>
+
+                    <form asp-action="Registrar" method="post">
+
+                        <div class="mb-3">
+                            <label>Nome</label>
+                            <input asp-for="Nome" class="form-control" placeholder="Digite seu nome" />
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input asp-for="Email" class="form-control" placeholder="Digite seu email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label>Senha</label>
+                                <input asp-for="Senha" class="form-control" placeholder="Digite sua senha" />
+                                <span asp-validation-for="Senha" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Confirmar Senha</label>
+                                <input asp-for="ConfirmarSenha" class="form-control" placeholder="Confirme a senha" />
+                                <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
+                            </div>
+                        </div>
+
+
+                        <!-- Região -->
+                        <div class="mb-3">
+                            <label>Região</label>
+                            <select asp-for="RegiaoId" class="input-custom form-select form-control select2bs4 p-2">
+                                <option value="" disabled selected>Selecione</option>
+                                @foreach (var item in regiao)
+                                {
+                                    <option value="@item.RegiaoId">@item.Nome</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Igreja -->
+                        <div class="mb-3">
+                            <label>Igreja</label>
+                            <select asp-for="IgrejaId" class="input-custom form-select form-control select2bs4 p-2">
+                                <option value="" disabled selected>Selecione</option>
+                                @foreach (var item in igreja)
+                                {
+                                    <option value="@item.IgrejaId">@item.Nome</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Perfil -->
+                        <div class="mb-3">
+                            <label>Perfil</label>
+                            <select asp-for="Role" asp-items="Html.GetEnumSelectList<Role>()" class="form-select"></select>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">
+                            Cadastrar
+                        </button>
+
+                        <div class="text-center mt-3">
+                            <a asp-action="Login">Já tenho conta</a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

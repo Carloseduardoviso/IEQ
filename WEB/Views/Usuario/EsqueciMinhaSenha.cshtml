@@ -1,0 +1,52 @@
+﻿@model EsqueciMinhaSenhaVm
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-4">
+
+            <div class="card shadow">
+                <div class="card-body">
+
+                    <h4 class="text-center mb-4">
+                        Recuperar Senha
+                    </h4>
+
+                    <form asp-action="ForgotPassword" method="post">
+
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input asp-for="Email" class="form-control" placeholder="Digite seu email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-warning w-100">
+                            Enviar link de recuperação
+                        </button>
+
+                        <div class="text-center mt-3">
+                            <a asp-action="Login">Voltar ao Login</a>
+                        </div>
+
+                        @if (TempData["msg"] != null)
+                        {
+                            <div class="alert alert-success mt-3 text-center">
+                                @TempData["msg"]
+                            </div>
+                        }
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

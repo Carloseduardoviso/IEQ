@@ -1,4 +1,5 @@
-using AutoMapper.Extensions.ExpressionMapping;
+﻿using AutoMapper.Extensions.ExpressionMapping;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
@@ -23,12 +24,27 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddScopeds();
 
+// ================= AUTOMAPPER =================
+
 builder.Services.AddAutoMapper(config =>
 {
     config.AddExpressionMapping();
 }, typeof(ConfigurationMapping));
 
-builder.Services.AddHttpContextAccessor();
+// ================= AUTH COOKIE (AQUI ESTAVA FALTANDO) =================
+
+builder.Services.AddAuthentication(
+    CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Usuario/Login";
+        options.LogoutPath = "/Usuario/Logout";
+        options.AccessDeniedPath = "/Usuario/Login";
+        options.ExpireTimeSpan = TimeSpan.FromHours(8);
+        options.SlidingExpiration = true;
+    });
+
+// ================= OUTROS =================
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
@@ -45,12 +61,9 @@ var requestLocalizationOptions = new RequestLocalizationOptions
     SupportedUICultures = new[] { cultureInfo }
 };
 
-app.UseRequestLocalization(requestLocalizationOptions);
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -62,6 +75,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Usuario}/{action=Login}/{id?}");
 
 app.Run();
