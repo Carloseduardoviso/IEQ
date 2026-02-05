@@ -6,6 +6,8 @@
     var regiao = ViewBag.Regiao;
     var superintendentesRegionais = ViewBag.SuperintendentesRegionais;
     var superintendentesEstaduais = ViewBag.SuperintendentesEstaduais;
+    var igreja = ViewBag.Igreja;
+    var pastores = ViewBag.Pastores;
 }
 
 <form asp-action="AlterarDiaconato" enctype="multipart/form-data">
@@ -78,10 +80,16 @@
                     <!-- SEÇÃO 2 =============================== -->
                     <h5 class="border-bottom pb-2 mb-3">Informações da Igreja</h5>
                     <div class="row">
-                      @*   <div class="col-md-12 mb-3">
-                            <label asp-for="NomePastor"></label><span class="text-danger"> *</span>
-                            <input asp-for="NomePastor" class="form-control" />
-                        </div> *@
+                        <div class="col-md-12 mb-3">
+                            <label>Pastor</label>
+                            <select asp-for="PastorId" class="input-custom form-select form-control select2bs4 p-2">
+                                <option value="" disabled selected>Selecione</option>
+                                @foreach (var item in pastores)
+                                {
+                                    <option value="@item.PastorId">@item.Nome</option>
+                                }
+                            </select>
+                        </div>
                         <div class="col-md-6 mb-3">
                             <label>Superintendente Estadual</label>
                             <select asp-for="Regiao.SuperintendenteEstadualId" class="input-custom form-select form-control select2bs4 p-2">
@@ -103,8 +111,14 @@
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label asp-for="Igreja"></label><span class="text-danger"> *</span>
-                            <input asp-for="Igreja" class="form-control" />
+                            <label>Igreja</label>
+                            <select asp-for="IgrejaId" class="input-custom form-select form-control select2bs4 p-2">
+                                <option value="" disabled selected>Selecione</option>
+                                @foreach (var item in igreja)
+                                {
+                                    <option value="@item.IgrejaId">@item.Nome</option>
+                                }
+                            </select>
                         </div>
 
                         <div class="col-md-6 mb-3">

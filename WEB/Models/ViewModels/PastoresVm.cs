@@ -2,7 +2,7 @@
 
 public class PastoresVm
 {
-    public Guid PastoresId { get; set; }
+    public Guid PastorId { get; set; }
 
     [Required]
     public string? Nome { get; set; }

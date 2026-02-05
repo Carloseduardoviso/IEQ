@@ -16,7 +16,7 @@ namespace WEB.Helpers.Extensions
             services.AddScoped<ISuperintendenteRegionalService, SuperintendenteRegionalService>();
             services.AddScoped<ISuperintendenteEstadualService, SuperintendenteEstadualService>();
             services.AddScoped<IIgrejaService, IgrejaService>();
-
+            services.AddScoped<IPastoresService, PastoresService>();
 
             //Repositories
             services.AddScoped<IDiaconatoRepository, DiaconatoRepository>();
@@ -25,7 +25,7 @@ namespace WEB.Helpers.Extensions
             services.AddScoped<ISuperintendenteEstadualRepository, SuperintendenteEstadualRepository>();
             services.AddScoped<ISuperintendenteEstadualRepository, SuperintendenteEstadualRepository>();
             services.AddScoped<IIgrejaRepository, IgrejaRepository>();
-
+            services.AddScoped<IPastoresRepository, PastoresRepository>();
 
             return services;
         }

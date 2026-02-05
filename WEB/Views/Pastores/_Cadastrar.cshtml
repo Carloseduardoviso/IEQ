@@ -1,0 +1,70 @@
+﻿@using WEB.Models.ViewModels
+@model PastoresVm
+
+@{
+    var title = ViewBag.Title;
+    var Igreja = ViewBag.Igreja;
+}
+
+<form asp-action="AlterarPastores" enctype="multipart/form-data">
+    <div id="modalAdicionar" data-bs-backdrop="static" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- HEADER -->
+                <div class="modal-header" style="background-color: #628dbc;">
+                    <h5 class="modal-title text-white">@title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- BODY -->
+                <div class="modal-body">
+
+                    <input type="hidden" asp-for="PastorId" />
+                    <input type="hidden" asp-for="IgrejaId" />
+                    <input type="hidden" asp-for="Igreja.RegiaoId" />
+
+
+                    <div class="mb-3">
+                        <label asp-for="Nome"></label><span class="text-danger"> *</span>
+                        <input asp-for="Nome" class="form-control" />
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Telefone"></label><span class="text-danger"> *</span>
+                        <input asp-for="Telefone" class="form-control" />
+                        <span asp-validation-for="Telefone" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Email"></label><span class="text-danger"> *</span>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label>Igreja</label>
+                        <select asp-for="IgrejaId" class="input-custom form-select form-control select2bs4 p-2">
+                            <option value="" disabled selected>Selecione</option>
+                            @foreach (var item in Igreja)
+                            {
+                                <option value="@item.IgrejaId">@item.Nome</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <input asp-for="Ativo" class="form-check-input" type="checkbox">
+                        <label asp-for="Ativo" class="form-check-label"></label>
+                    </div>
+
+                </div>
+
+                <!-- FOOTER -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>

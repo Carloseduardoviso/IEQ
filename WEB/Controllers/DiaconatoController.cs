@@ -15,14 +15,18 @@ namespace WEB.Controllers
         private readonly IRegiaoService _regiaoService;
         private readonly ISuperintendenteEstadualService _superintendenteEstadualService;
         private readonly ISuperintendenteRegionalService _superintendenteRegionalService;
+        private readonly IIgrejaService _igrejaService;
+        private readonly IPastoresService _pastoresService;
 
 
-        public DiaconatoController(IDiaconatoService diaconatoService, IRegiaoService regiaoService, ISuperintendenteEstadualService superintendenteEstadualService, ISuperintendenteRegionalService superintendenteRegionalService)
+        public DiaconatoController(IDiaconatoService diaconatoService, IRegiaoService regiaoService, ISuperintendenteEstadualService superintendenteEstadualService, ISuperintendenteRegionalService superintendenteRegionalService, IIgrejaService igrejaService, IPastoresService pastoresService)
         {
             _diaconatoService = diaconatoService;
             _regiaoService = regiaoService;
             _superintendenteEstadualService = superintendenteEstadualService;
             _superintendenteRegionalService = superintendenteRegionalService;
+            _igrejaService = igrejaService;
+            _pastoresService = pastoresService;
         }
 
         public async Task<IActionResult> Index(FiltroDiaconatoVm filtroDiaconatoVm, int pagina = 1)
@@ -79,11 +83,14 @@ namespace WEB.Controllers
             var regiao = await _regiaoService.GetAllAsync();
             var superintendentesRegionais = await _superintendenteRegionalService.GetAllAsync();
             var superintendentesEstaduais = await _superintendenteEstadualService.GetAllAsync();
-
+            var igreja = await _igrejaService.GetAllAsync();
+            var pastores = await _pastoresService.GetAllAsync();
 
             ViewBag.Regiao = regiao;
             ViewBag.SuperintendentesRegionais = superintendentesRegionais;
             ViewBag.SuperintendentesEstaduais = superintendentesEstaduais;
+            ViewBag.Igreja = igreja;
+            ViewBag.Pastores = pastores;
             ViewBag.Title = diaconatoId != null ? "Editar" : "Cadastrar";
 
             return PartialView("_Cadastrar", novo);
