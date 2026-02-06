@@ -1,13 +1,12 @@
 ﻿<nav class="navbar navbar-expand-lg navbar-dark ieq-navbar shadow">
     <div class="container-fluid">
 
-        <!-- Logo -->
+        <!-- Logo + Botão Mobile -->
         <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
             <img src="~/images/home/logo_ieq.png" class="nav-logo" alt="IEQ">
             IEQ
         </a>
 
-        <!-- Botão Mobile -->
         <button class="navbar-toggler" type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#navbarIEQ"
@@ -19,77 +18,53 @@
 
         <!-- Menu -->
         <div class="collapse navbar-collapse" id="navbarIEQ">
+
+            @* Menu à esquerda só se estiver logado *@
+            @if (User.Identity!.IsAuthenticated)
+            {
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-ieq"
+                           asp-controller="Home"
+                           asp-action="Index">
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle nav-link-ieq"
+                           href="#"
+                           id="igrejaDropdown"
+                           role="button"
+                           data-bs-toggle="dropdown">
+                            Dados da Igreja
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-controller="Igreja" asp-action="Index">Igrejas</a></li>
+                            <li><a class="dropdown-item" asp-controller="SuperintendenteRegional" asp-action="Index">Superintendente Regional</a></li>
+                            <li><a class="dropdown-item" asp-controller="SuperintendenteEstadual" asp-action="Index">Superintendente Estadual</a></li>
+                            <li><a class="dropdown-item" asp-controller="Regiao" asp-action="Index">Região</a></li>
+                            <li><a class="dropdown-item" asp-controller="Pastores" asp-action="Index">Pastores</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle nav-link-ieq"
+                           href="#"
+                           id="MinisterioDropdown"
+                           role="button"
+                           data-bs-toggle="dropdown">
+                            Ministérios
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-controller="Diaconato" asp-action="Index">Diaconato</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            }
+
+            <!-- Área login/logout à direita -->
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-
-                <!-- Home -->
-                <li class="nav-item">
-                    <a class="nav-link nav-link-ieq"
-                       asp-controller="Home"
-                       asp-action="Index">
-                        Home
-                    </a>
-                </li>
-
-                <!-- Dropdown Igreja -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle nav-link-ieq"
-                       href="#"
-                       id="igrejaDropdown"
-                       role="button"
-                       data-bs-toggle="dropdown">
-                        Dados da Igreja
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" asp-controller="Igreja" asp-action="Index">
-                                Igrejas
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" asp-controller="SuperintendenteRegional" asp-action="Index">
-                                Superintendente Regional
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" asp-controller="SuperintendenteEstadual" asp-action="Index">
-                                Superintendente Estadual
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" asp-controller="Regiao" asp-action="Index">
-                                Região
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" asp-controller="Pastores" asp-action="Index">
-                                Pastores
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Ministérios -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle nav-link-ieq"
-                       href="#"
-                       id="MinisterioDropdown"
-                       role="button"
-                       data-bs-toggle="dropdown">
-                        Ministérios
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" asp-controller="Diaconato" asp-action="Index">
-                                Diaconato
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                @* ----------- ÁREA LOGIN / LOGOUT ----------- *@
-
                 @if (User.Identity!.IsAuthenticated)
                 {
                     <li class="nav-item dropdown">
@@ -100,8 +75,6 @@
                                 @User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value
                             </small>
                         </a>
-
-
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <a class="dropdown-item"
