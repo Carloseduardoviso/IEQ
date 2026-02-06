@@ -31,9 +31,9 @@ namespace WEB.Data.Repositories
         public async Task<(IEnumerable<Diaconato> lista, int count)> GetAllPaginationAsync(Expression<Func<Diaconato, bool>>? expression, int skip)
         {
             var query = _dataContext.Diaconatos.AsNoTracking();
+            query = IncludeAllProperties(query);
 
             if (expression != null) query = query.Where(expression);
-            query.Include(x => x.Igreja).Include(x => x.Regiao);
             var lista = await query.Where(x => x.Ativo).OrderBy(x => x.NomeCompleto).Skip(skip).Take(5).ToListAsync();
             var count = await query.CountAsync();
 
@@ -91,6 +91,11 @@ namespace WEB.Data.Repositories
         {
             _dataContext.Diaconatos.Update(diaconato);
             await _dataContext.SaveChangesAsync();
+        }
+
+        private IQueryable<Diaconato> IncludeAllProperties(IQueryable<Diaconato> query)
+        {
+            return query.Include(x => x.Igreja).Include(x => x.Regiao);
         }
     }
 }
