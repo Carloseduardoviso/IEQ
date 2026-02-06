@@ -4,23 +4,26 @@
     {
         public Guid DiaconatoId { get; set; }
 
-        public string NomeCompleto { get; set; } = null!;
-
-        // 🔹 RELACIONAMENTOS
+        public string? NomeCompleto { get; set; }
         public Guid IgrejaId { get; set; }
-        public Igreja Igreja { get; set; } = null!;
 
         public Guid RegiaoId { get; set; }
-        public Regiao Regiao { get; set; } = null!;
-
-        public Guid? PastorId { get; set; }
+        public Igreja? Igreja { get; set; }
+        public Regiao? Regiao { get; set; }
         public Pastores? Pastor { get; set; }
+        public SuperintendenteEstadual? SuperintendenteEstadual { get; set; }
+        public SuperintendenteRegional? SuperintendenteRegional { get; set; }
+        public Guid? PastorId { get; set; }
 
-        public string Cargo { get; set; } = null!;
-        public string Contato { get; set; } = null!;
+        public Guid? SuperintendenteEstadualId { get; set; }
 
+        public Guid? SuperintendenteRegionalId { get; set; }
+       
+
+        public string? Cargo { get; set; }
+        public string? Contato { get; set; }
         public DateTime? DataNascimento { get; set; }
-        public DateTime DataMinisterio { get; set; }
+        public DateTime? DataMinisterio { get; set; }
         public DateTime? DataBatismo { get; set; }
 
         public int TempoAcumuladoEmMeses { get; set; } = 0;
@@ -28,8 +31,8 @@
         public DateTime? DataReativacao { get; set; }
         public DateTime? DataInativacao { get; set; }
 
-        public string Estado { get; set; } = null!;
-        public string Cidade { get; set; } = null!;
+        public string? Estado { get; set; }
+        public string? Cidade { get; set; }
 
         public bool Ativo { get; set; } = true;
 

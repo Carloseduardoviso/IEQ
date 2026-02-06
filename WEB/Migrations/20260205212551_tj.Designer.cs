@@ -12,8 +12,8 @@ using WEB.Data;
 namespace WEB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20260205165919_Login")]
-    partial class Login
+    [Migration("20260205212551_tj")]
+    partial class tj
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,7 +57,7 @@ namespace WEB.Migrations
                     b.Property<DateTime?>("DataInativacao")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DataMinisterio")
+                    b.Property<DateTime?>("DataMinisterio")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DataNascimento")
@@ -106,6 +106,12 @@ namespace WEB.Migrations
                     b.Property<Guid>("RegiaoId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("SuperintendenteEstadualId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("SuperintendenteRegionalId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("TempoAcumuladoEmMeses")
                         .HasColumnType("int");
 
@@ -116,6 +122,10 @@ namespace WEB.Migrations
                     b.HasIndex("PastorId");
 
                     b.HasIndex("RegiaoId");
+
+                    b.HasIndex("SuperintendenteEstadualId");
+
+                    b.HasIndex("SuperintendenteRegionalId");
 
                     b.ToTable("Diaconato", (string)null);
                 });
@@ -365,9 +375,8 @@ namespace WEB.Migrations
                         .IsRequired();
 
                     b.HasOne("WEB.Models.Entities.Pastores", "Pastor")
-                        .WithMany("Diaconos")
-                        .HasForeignKey("PastorId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .WithMany()
+                        .HasForeignKey("PastorId");
 
                     b.HasOne("WEB.Models.Entities.Regiao", "Regiao")
                         .WithMany("Diaconos")
@@ -375,11 +384,23 @@ namespace WEB.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("WEB.Models.Entities.SuperintendenteEstadual", "SuperintendenteEstadual")
+                        .WithMany("Diaconos")
+                        .HasForeignKey("SuperintendenteEstadualId");
+
+                    b.HasOne("WEB.Models.Entities.SuperintendenteRegional", "SuperintendenteRegional")
+                        .WithMany("Diaconos")
+                        .HasForeignKey("SuperintendenteRegionalId");
+
                     b.Navigation("Igreja");
 
                     b.Navigation("Pastor");
 
                     b.Navigation("Regiao");
+
+                    b.Navigation("SuperintendenteEstadual");
+
+                    b.Navigation("SuperintendenteRegional");
                 });
 
             modelBuilder.Entity("WEB.Models.Entities.Igreja", b =>
@@ -458,11 +479,6 @@ namespace WEB.Migrations
                     b.Navigation("Usuarios");
                 });
 
-            modelBuilder.Entity("WEB.Models.Entities.Pastores", b =>
-                {
-                    b.Navigation("Diaconos");
-                });
-
             modelBuilder.Entity("WEB.Models.Entities.Regiao", b =>
                 {
                     b.Navigation("Diaconos");
@@ -474,11 +490,15 @@ namespace WEB.Migrations
 
             modelBuilder.Entity("WEB.Models.Entities.SuperintendenteEstadual", b =>
                 {
+                    b.Navigation("Diaconos");
+
                     b.Navigation("Regioes");
                 });
 
             modelBuilder.Entity("WEB.Models.Entities.SuperintendenteRegional", b =>
                 {
+                    b.Navigation("Diaconos");
+
                     b.Navigation("Regioes");
                 });
 #pragma warning restore 612, 618

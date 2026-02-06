@@ -39,7 +39,6 @@ namespace WEB.Controllers
             pagina = Math.Clamp(pagina, 0, numeroTotalPaginas);
 
 
-
             ViewBag.FiltroDiaconato = filtroDiaconatoVm;
             ViewBag.NumeroTotalPaginas = numeroTotalPaginas;
             ViewBag.PaginaAtual = pagina;
