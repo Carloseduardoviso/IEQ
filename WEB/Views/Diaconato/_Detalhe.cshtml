@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "_Layout";
 
+    var ttt = Model;
     var partes = (Model.NomeCompleto ?? "").Trim().Split(' ');
     var nomeCurto = partes.Length >= 2
     ? $"{partes[0]} {partes[1]}"
@@ -49,13 +50,12 @@
                     <div class="list-group list-group-flush shadow-sm rounded">
                         <div class="list-group-item">
                             <i class="fa-solid fa-church me-2 text-primary"></i>
-                            <strong>Igreja:</strong> @Model.Igreja
+                            <strong>Igreja:</strong> @Model.Igreja?.Nome
                         </div>
-                 @*        <div class="list-group-item">
+                        <div class="list-group-item">
                             <i class="fa-solid fa-user-tie me-2 text-primary"></i>
-                            <strong>Pastor Titular:</strong> @Model.NomePastor
+                            <strong>Pastor Titular:</strong> @Model.Pastor?.Nome
                         </div>
- *@
 
                         <div class="list-group-item">
                             <i class="fa-solid fa-briefcase me-2 text-primary"></i>
@@ -69,11 +69,11 @@
                             <i class="fa-solid fa-hourglass-half me-2 text-primary"></i>
                             <strong>Tempo no Ministério:</strong> @Model.TempoMinisterio
                         </div>
-                @*         <div class="list-group-item">
-                            <i class="fa-solid fa-user-tie me-2 text-primary"></i>
-                            <strong>Superintendente Regional:</strong> @Model.NomeSuperintendenteRegional
-                        </div>
                         <div class="list-group-item">
+                            <i class="fa-solid fa-user-tie me-2 text-primary"></i>
+                            <strong>Superintendente Regional:</strong> @Model.SuperintendenteRegional?.Nome
+                        </div>
+                        @*<div class="list-group-item">
                             <i class="fa-solid fa-user-tie me-2 text-primary"></i>
                             <strong>Superintendente Estadual:</strong> @Model.NomeSuperintendenteEstadual
                         </div> *@
@@ -81,7 +81,7 @@
                             <div class="row text-start text-md-start g-2">
                                 <div class="col-12 col-sm-4">
                                     <i class="fa-solid fa-map-location-dot me-2 text-primary"></i>
-                                    <strong>Região:</strong>  @Model.Regiao
+                                    <strong>Região:</strong>  @Model.Regiao?.Nome
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <i class="fa-solid fa-map-location-dot me-2 text-primary"></i>

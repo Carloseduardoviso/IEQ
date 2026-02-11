@@ -8,7 +8,7 @@
 
         <!-- CARROSSEL PRINCIPAL -->
         <div class="col-lg-6 col-md-12 mb-3">
-                <div id="carouselexamplecontrols" class="carousel slide mt-3" data-bs-ride="carousel">
+            <div id="carouselexamplecontrols" class="carousel slide mt-3" data-bs-ride="carousel">
 
                 <div class="carousel-inner">
 
@@ -33,45 +33,55 @@
 
                     <!-- SLIDE 3 -->
                     <div class="carousel-item">
-                        <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
-                            <img src="~/images/home/logo_criancas.png" alt="Logo Crianças" class="slide-img">
-                            <p class="slide-text">Grupo Missionário de Crianças</p>
-                        </div>
+                        <a asp-controller="Crianca" asp-action="Index" class="w-100 h-100 text-decoration-none">
+                            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                                <img src="~/images/home/logo_criancas.png" alt="Logo Crianças" class="slide-img">
+                                <p class="slide-text">Grupo Missionário de Crianças</p>
+                            </div>
+                        </a>
                     </div>
 
                     <!-- SLIDE 4 -->
                     <div class="carousel-item">
-                        <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
-                            <img src="~/images/home/logo_juniores.png" alt="Logo Juniores" class="slide-img">
-                            <p class="slide-text">Grupo Missionário de Juniores</p>
-                        </div>
+                        <a asp-controller="JovemAdolecente" asp-action="Index" class="w-100 h-100 text-decoration-none">
+                            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                                <img src="~/images/home/logo_juniores.png" alt="Logo Juniores" class="slide-img">
+                                <p class="slide-text">Grupo Missionário de Juniores</p>
+                            </div>
+                        </a>
                     </div>
 
                     <!-- SLIDE 5 -->
                     <div class="carousel-item">
-                        <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
-                            <img src="~/images/home/logo_adolescentes.png" alt="Logo Adolescentes" class="slide-img">
-                            <p class="slide-text">Grupo Missionário de Adolescentes</p>
-                        </div>
+                        <a asp-controller="JovemAdolecente" asp-action="Index" class="w-100 h-100 text-decoration-none">
+                            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                                <img src="~/images/home/logo_adolescentes.png" alt="Logo Adolescentes" class="slide-img">
+                                <p class="slide-text">Grupo Missionário de Adolescentes</p>
+                            </div>
+                        </a>
                     </div>
 
                     <!-- SLIDE 6 -->
                     <div class="carousel-item">
-                        <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
-                            <img src="~/images/home/logo_homens.png" alt="Logo Homens" class="slide-img">
-                            <p class="slide-text">Grupo Missionário de Homens</p>
-                        </div>
+                        <a asp-controller="Homens" asp-action="Index" class="w-100 h-100 text-decoration-none">
+                            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                                <img src="~/images/home/logo_homens.png" alt="Logo Homens" class="slide-img">
+                                <p class="slide-text">Grupo Missionário de Homens</p>
+                            </div>
+                        </a>
                     </div>
 
                     <!-- SLIDE 7 -->
                     <div class="carousel-item">
-                        <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
-                            <img src="~/images/home/logo_mulheres.png" alt="Logo Mulheres" class="slide-img">
-                            <p class="slide-text">Grupo Missionário de Mulheres</p>
-                        </div>
+                        <a asp-controller="Mulheres" asp-action="Index" class="w-100 h-100 text-decoration-none">
+                            <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
+                                <img src="~/images/home/logo_mulheres.png" alt="Logo Mulheres" class="slide-img">
+                                <p class="slide-text">Grupo Missionário de Mulheres</p>
+                            </div>
+                        </a>
                     </div>
 
-                    <!-- SLIDE 8 -->
+                   @*  <!-- SLIDE 8 -->
                     <div class="carousel-item">
                         <div class="slide-content d-flex flex-column justify-content-center align-items-center w-100">
                             <img src="~/images/home/logo_jovens-casados.png" alt="Logo Casados" class="slide-img">
@@ -85,7 +95,7 @@
                             <img src="~/images/home/logo_melhor-idade.png" alt="Logo Melhor Idade" class="slide-img">
                             <p class="slide-text">Grupo Missionário da Melhor Idade</p>
                         </div>
-                    </div>
+                    </div> *@
                 </div>
 
                 <!-- controles -->

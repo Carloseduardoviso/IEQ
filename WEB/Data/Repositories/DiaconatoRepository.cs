@@ -42,7 +42,9 @@ namespace WEB.Data.Repositories
 
         public async Task<Diaconato?> GetByIdAsync(Guid diaconatoId)
         {
-            return await _dataContext.Diaconatos.AsNoTracking().FirstOrDefaultAsync(x => x.DiaconatoId == diaconatoId);
+            return await IncludeAllProperties(_dataContext.Diaconatos)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.DiaconatoId == diaconatoId);
         }
 
         public async Task InativarAsync(Guid diaconatoId)
@@ -95,7 +97,7 @@ namespace WEB.Data.Repositories
 
         private IQueryable<Diaconato> IncludeAllProperties(IQueryable<Diaconato> query)
         {
-            return query.Include(x => x.Igreja).Include(x => x.Regiao);
+            return query.Include(x => x.Igreja).Include(x => x.Regiao).Include(x => x.Pastor).Include(x => x.SuperintendenteRegional).Include(x => x.SuperintendenteEstadual);
         }
     }
 }

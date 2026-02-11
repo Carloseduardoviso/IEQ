@@ -90,7 +90,7 @@
                                 }
                             </select>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        @*<div class="col-md-6 mb-3">
                             <label>Superintendente Estadual</label>
                             <select asp-for="SuperintendenteEstadualId" class="input-custom form-select form-control select2bs4 p-2">
                                 <option value="" disabled selected>Selecione</option>
@@ -99,9 +99,9 @@
                                     <option value="@item.SuperintendenteEstadualId">@item.Nome</option>
                                 }
                             </select>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label>Superintendente Estadual</label>
+                        </div> *@
+                        <div class="col-md-12 mb-3">
+                            <label>Superintendente Regional</label>
                             <select asp-for="SuperintendenteRegionalId" class="input-custom form-select form-control select2bs4 p-2">
                                 <option value="" disabled selected>Selecione</option>
                                 @foreach (var item in superintendentesRegionais)

@@ -1,4 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Reflection;
 using WEB.Models.ViewModels;
 
@@ -9,11 +11,16 @@ namespace WEB.Helpers.Builder
         public ParameterExpression View { get; set; }
         public Expression Body { get; set; }
         public MethodInfo? MethodInfoContains { get; set; }
+
+        private MethodInfo _toLowerMethod;
+
         public DiaconatoExpressionBuilder(string obj)
         {
             View = Expression.Parameter(typeof(T), obj);
             Body = Expression.Equal(Expression.Constant(true), Expression.Constant(true)).Reduce();
+
             MethodInfoContains = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+            _toLowerMethod = typeof(string).GetMethod("ToLower", Type.EmptyTypes)!;
         }
 
         public DiaconatoExpressionBuilder<T> BuscarEmTudo(string? search)
@@ -21,36 +28,37 @@ namespace WEB.Helpers.Builder
             if (string.IsNullOrWhiteSpace(search))
                 return this;
 
-            // Lista das propriedades que queremos buscar
-            var props = new[]
-            {
-                nameof(DiaconatoVm.NomeCompleto),
-                nameof(DiaconatoVm.Igreja),
-                nameof(DiaconatoVm.Regiao),
-                nameof(DiaconatoVm.Cargo)
-            };
+            search = search.ToLower();
+            var searchConst = Expression.Constant(search);
 
             Expression? expressaoOr = null;
 
-            foreach (var prop in props)
+            var campos = new List<Expression>
             {
-                var propriedade = Expression.Property(View, prop);
-                var notNull = Expression.NotEqual(propriedade, Expression.Constant(null));
-                var contains = Expression.Call(propriedade, MethodInfoContains!, Expression.Constant(search));
+                Expression.Property(View, nameof(DiaconatoVm.NomeCompleto)),
+                Expression.Property(View, nameof(DiaconatoVm.Cargo)),
+                Expression.Property(Expression.Property(View, nameof(DiaconatoVm.Igreja)), nameof(IgrejaVm.Nome)),
+                Expression.Property(Expression.Property(View, nameof(DiaconatoVm.Regiao)), nameof(RegiaoVm.Nome)              )
+            };
+
+            foreach (var campo in campos)
+            {
+                var notNull = Expression.NotEqual(campo, Expression.Constant(null, typeof(string)));
+                var toLower = Expression.Call(campo, _toLowerMethod);
+                var contains = Expression.Call(toLower, MethodInfoContains!, searchConst);
                 var condicao = Expression.AndAlso(notNull, contains);
 
-                expressaoOr = expressaoOr == null
-                    ? condicao
-                    : Expression.OrElse(expressaoOr, condicao);
+                expressaoOr = expressaoOr == null ? condicao : Expression.OrElse(expressaoOr, condicao);
             }
 
-            // Adiciona ao Body final via AND
-            Body = Expression.AndAlso(Body, expressaoOr);
+            if (expressaoOr != null) Body = Expression.AndAlso(Body, expressaoOr);
 
             return this;
         }
 
-
-        public Expression<Func<T, bool>> Construir() => Expression.Lambda<Func<T, bool>>(Body, View);
+        public Expression<Func<T, bool>> Construir()
+        {
+            return Expression.Lambda<Func<T, bool>>(Body, View);
+        }
     }
 }

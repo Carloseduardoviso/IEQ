@@ -1,4 +1,16 @@
-﻿<nav class="navbar navbar-expand-lg navbar-dark ieq-navbar shadow">
+﻿@using WEB.Models.Enuns
+@{
+    var roleClaim = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+
+    string roleDisplay = "";
+
+    if (Enum.TryParse<Role>(roleClaim, out var roleEnum))
+    {
+        roleDisplay = roleEnum.GetDisplayName();
+    }
+}
+
+<nav class="navbar navbar-expand-lg navbar-dark ieq-navbar shadow">
     <div class="container-fluid">
         @if (User.Identity!.IsAuthenticated)
         {
@@ -53,11 +65,11 @@
                                     Superintendente Regional
                                 </a>
                             </li>
-                            <li>
+                            @*<li>
                                 <a class="dropdown-item" asp-controller="SuperintendenteEstadual" asp-action="Index">
                                     Superintendente Estadual
                                 </a>
-                            </li>
+                            </li> *@
                             <li>
                                 <a class="dropdown-item" asp-controller="Regiao" asp-action="Index">
                                     Região
@@ -87,20 +99,59 @@
                                     Diaconato
                                 </a>
                             </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Louvor" asp-action="Index">
+                                    Louvor
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="JovemAdolecente" asp-action="Index">
+                                    Jovens/Adolecentes
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Homens" asp-action="Index">
+                                    Homens
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Mulheres" asp-action="Index">
+                                    Mulheres
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Midia" asp-action="Index">
+                                    Midia
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Crianca" asp-action="Index">
+                                    Criança
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Teatro" asp-action="Index">
+                                    Teatro
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-ieq"
+                           asp-controller="Usuario"
+                           asp-action="Index">
+                            Usuário
+                        </a>
+                    </li>
+
                     @* ----------- ÁREA LOGIN / LOGOUT ----------- *@
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown">                   
                         <a class="nav-link nav-link-ieq" href="#" data-bs-toggle="dropdown">
                             👤 @User.Identity.Name
                             <br />
-                            <small>
-                                @User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value
-                            </small>
+                            <small>@roleDisplay</small>
                         </a>
-
-
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <a class="dropdown-item"
