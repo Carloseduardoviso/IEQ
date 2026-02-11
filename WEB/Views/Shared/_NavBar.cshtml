@@ -1,10 +1,13 @@
 ﻿@using WEB.Models.Enuns
+@using System.Security.Claims
+
 @{
-    var roleClaim = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+    var roleClaim = User.FindFirst(ClaimTypes.Role)?.Value;
 
     string roleDisplay = "";
 
-    if (Enum.TryParse<Role>(roleClaim, out var roleEnum))
+    if (!string.IsNullOrEmpty(roleClaim) &&
+        Enum.TryParse<Role>(roleClaim, out var roleEnum))
     {
         roleDisplay = roleEnum.GetDisplayName();
     }
@@ -13,28 +16,26 @@
 <nav class="navbar navbar-expand-lg navbar-dark ieq-navbar shadow">
     <div class="container-fluid">
 
-        <!-- Logo + Botão Mobile -->
+        <!-- Logo -->
         <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
             <img src="~/images/home/logo_ieq.png" class="nav-logo" alt="IEQ">
             IEQ
         </a>
 
+        <!-- Botão Mobile -->
         <button class="navbar-toggler" type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#navbarIEQ"
-                aria-controls="navbarIEQ"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
+                data-bs-target="#navbarIEQ">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Menu -->
         <div class="collapse navbar-collapse" id="navbarIEQ">
 
-            @* Menu à esquerda só se estiver logado *@
             @if (User.Identity!.IsAuthenticated)
             {
+                <!-- MENU ESQUERDA -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
                     <li class="nav-item">
                         <a class="nav-link nav-link-ieq"
                            asp-controller="Home"
@@ -43,35 +44,32 @@
                         </a>
                     </li>
 
+                    <!-- Dados da Igreja -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle nav-link-ieq"
-                           href="#"
-                           id="igrejaDropdown"
-                           role="button"
                            data-bs-toggle="dropdown">
                             Dados da Igreja
                         </a>
+
                         <ul class="dropdown-menu">
                             <li>
                                 <a class="dropdown-item" asp-controller="Igreja" asp-action="Index">
                                     Igrejas
                                 </a>
                             </li>
+
                             <li>
                                 <a class="dropdown-item" asp-controller="SuperintendenteRegional" asp-action="Index">
                                     Superintendente Regional
                                 </a>
                             </li>
-                            @*<li>
-                                <a class="dropdown-item" asp-controller="SuperintendenteEstadual" asp-action="Index">
-                                    Superintendente Estadual
-                                </a>
-                            </li> *@
+
                             <li>
                                 <a class="dropdown-item" asp-controller="Regiao" asp-action="Index">
                                     Região
                                 </a>
                             </li>
+
                             <li>
                                 <a class="dropdown-item" asp-controller="Pastores" asp-action="Index">
                                     Pastores
@@ -80,63 +78,24 @@
                         </ul>
                     </li>
 
+                    <!-- Ministérios -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle nav-link-ieq"
-                           href="#"
-                           id="MinisterioDropdown"
-                           role="button"
                            data-bs-toggle="dropdown">
                             Ministérios
                         </a>
+
                         <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" asp-controller="Diaconato" asp-action="Index">
-                                    Diaconato
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-controller="Louvor" asp-action="Index">
-                                    Louvor
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-controller="JovemAdolecente" asp-action="Index">
-                                    Jovens/Adolecentes
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-controller="Homens" asp-action="Index">
-                                    Homens
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-controller="Mulheres" asp-action="Index">
-                                    Mulheres
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-controller="Midia" asp-action="Index">
-                                    Midia
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-controller="Crianca" asp-action="Index">
-                                    Criança
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-controller="Teatro" asp-action="Index">
-                                    Teatro
-                                </a>
-                            </li>
+                            <li><a class="dropdown-item" asp-controller="Diaconato" asp-action="Index">Diaconato</a></li>
+                            <li><a class="dropdown-item" asp-controller="Louvor" asp-action="Index">Louvor</a></li>
+                            <li><a class="dropdown-item" asp-controller="JovemAdolecente" asp-action="Index">Jovens/Adolescentes</a></li>
+                            <li><a class="dropdown-item" asp-controller="Homens" asp-action="Index">Homens</a></li>
+                            <li><a class="dropdown-item" asp-controller="Mulheres" asp-action="Index">Mulheres</a></li>
+                            <li><a class="dropdown-item" asp-controller="Midia" asp-action="Index">Mídia</a></li>
+                            <li><a class="dropdown-item" asp-controller="Crianca" asp-action="Index">Criança</a></li>
+                            <li><a class="dropdown-item" asp-controller="Teatro" asp-action="Index">Teatro</a></li>
                         </ul>
                     </li>
-
-            <!-- Área login/logout à direita -->
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                @if (User.Identity!.IsAuthenticated)
-                {
-                    <li class="nav-item dropdown">
                     <li class="nav-item">
                         <a class="nav-link nav-link-ieq"
                            asp-controller="Usuario"
@@ -144,14 +103,22 @@
                             Usuário
                         </a>
                     </li>
+                </ul>
+            }
 
-                    @* ----------- ÁREA LOGIN / LOGOUT ----------- *@
-                    <li class="nav-item dropdown">                   
-                        <a class="nav-link nav-link-ieq" href="#" data-bs-toggle="dropdown">
+            <!-- MENU DIREITA -->
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                @if (User.Identity!.IsAuthenticated)
+                {                   
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-link-ieq dropdown-toggle"
+                           data-bs-toggle="dropdown">
                             👤 @User.Identity.Name
                             <br />
                             <small>@roleDisplay</small>
                         </a>
+
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <a class="dropdown-item"
@@ -167,12 +134,16 @@
                 else
                 {
                     <li class="nav-item">
-                        <a class="nav-link nav-link-ieq" asp-controller="Usuario" asp-action="Login">
+                        <a class="nav-link nav-link-ieq"
+                           asp-controller="Usuario"
+                           asp-action="Login">
                             🔐 Login
                         </a>
                     </li>
                 }
+
             </ul>
+
         </div>
     </div>
 </nav>
