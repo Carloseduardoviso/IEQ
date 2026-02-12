@@ -53,7 +53,14 @@
                             {
                                 <tr>
                                     <td>@item.Nome</td>
-                                    <td>@item.Cargo</td>
+                                    <td>
+                                        @item.CargoLocal.GetDisplayName()
+
+                                        @if (item.CargoRegional != null)
+                                        {
+                                            <text> / @item.CargoRegional.GetDisplayName()</text>
+                                        }
+                                    </td>
                                     <td>@item.Ministerio</td>
                                     <td>@item.Igreja</td>
                                     <td>@item.Regiao</td>
