@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using WEB.Data.Repositories.Interfaces;
 using WEB.Models.Entities;
 
@@ -53,9 +54,15 @@ namespace WEB.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public Task Update(Homens result)
+        public async Task Update(Homens result)
         {
-            throw new NotImplementedException();
+            _dataContext.Homens.Update(result);
+            await _dataContext.SaveChangesAsync();
+        }
+
+        private IQueryable<Homens> IncludeAllProperties(IQueryable<Homens> query)
+        {
+            return query.Include(x => x.Igreja).Include(x => x.Regiao).Include(x => x.Pastor).Include(x => x.SuperintendenteRegional).Include(x => x.SuperintendenteEstadual);
         }
     }
 }

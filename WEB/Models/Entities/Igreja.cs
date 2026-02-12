@@ -20,5 +20,6 @@
         public ICollection<Midia> Midias { get; set; } = new List<Midia>();
         public ICollection<Mulheres> Mulheres { get; set; } = new List<Mulheres>();
         public ICollection<Teatro> Teatros { get; set; } = new List<Teatro>();
+        public ICollection<Danca> Dancas { get; set; } = new List<Danca>();
     }
 }
