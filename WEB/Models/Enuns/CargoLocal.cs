@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using System.ComponentModel.DataAnnotations;
 
 namespace WEB.Models.Enuns
 {
@@ -65,6 +66,12 @@ namespace WEB.Models.Enuns
         Tesoureiro = 20,
 
         [Display(Name = "Tesoureira")]
-        Tesoureira = 21
+        Tesoureira = 21,
+
+        [Display(Name = "Pastor(a)")]
+        Pastor = 22,
+
+        [Display(Name = "Pastor(a) Auxiliar")]
+        PastorAuxiliar = 23
     }
 }
