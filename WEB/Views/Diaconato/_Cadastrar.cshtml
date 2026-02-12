@@ -1,4 +1,5 @@
-﻿@using WEB.Models.ViewModels
+﻿@using WEB.Models.Enuns
+@using WEB.Models.ViewModels
 @model DiaconatoVm
 
 @{
@@ -58,8 +59,8 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label asp-for="Cargo"></label><span class="text-danger"> *</span>
-                            <input asp-for="Cargo" class="form-control" />
+                            <label>Cargo</label><span class="text-danger"> *</span>
+                            <select asp-for="Cargos" asp-items="Html.GetEnumSelectList<Cargo>()" class="form-control select2" multiple="multiple"></select>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label asp-for="Contato"></label><span class="text-danger"> *</span>

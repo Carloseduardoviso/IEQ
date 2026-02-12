@@ -82,8 +82,7 @@
                                     <td>@item.NomeCompleto</td>
                                     <td>@item.Igreja!.Nome</td>
                                     <td>@item.Regiao!.Nome</td>
-                                    <td>@item.Cargo</td>
-
+                                    <td>@item.Cargos.GetDisplayNames()</td>
                                     <!-- ATIVO -->
                                     <td>
                                         <span class="badge @(item.Ativo ? "bg-success" : "bg-danger") px-3">

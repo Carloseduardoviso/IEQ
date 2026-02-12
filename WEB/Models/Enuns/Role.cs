@@ -4,11 +4,11 @@ namespace WEB.Models.Enuns
 {
     public enum Role
     {
-        [Display(Name = "Administrador")]
-        Administrador = 1,
-
-        [Display(Name = "Superintendente Estadual")]
-        SuperintendenteEstadual = 2,
+        [Display(Name = "Membro")]
+        Membro = 1,      
+     
+        //[Display(Name = "Superintendente Estadual")]
+        //SuperintendenteEstadual = 2,
 
         [Display(Name = "Superintendente Regional")]
         SuperintendenteRegional = 3,
@@ -36,7 +36,7 @@ namespace WEB.Models.Enuns
         CoordenadorRegionalCrianca = 10,
 
         [Display(Name = "Coordenador Regional Jovem/Adolescente")]
-        CoordenadorRegionalJovemAdolecente = 11,
+        CoordenadorRegionalJovemAdolescente = 11,
 
         [Display(Name = "Coordenador Regional Missão")]
         CoordenadorRegionalMissao = 12,
@@ -64,12 +64,9 @@ namespace WEB.Models.Enuns
         LiderCrianca = 19,
 
         [Display(Name = "Líder Jovem/Adolescente")]
-        LiderJovemAdolecente = 20,
+        LiderJovemAdolescente = 20,
 
         [Display(Name = "Líder Missão")]
-        LiderMissao = 21,
-
-        [Display(Name = "Membro")]
-        Membro = 22
+        LiderMissao = 21
     }
 }

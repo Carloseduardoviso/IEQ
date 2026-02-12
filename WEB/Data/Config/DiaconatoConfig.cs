@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WEB.Models.Entities;
+using WEB.Models.Enuns;
 
 namespace WEB.Data.Config
 {
@@ -16,13 +17,19 @@ namespace WEB.Data.Config
                    .IsRequired()
                    .HasMaxLength(100);
 
-            builder.Property(d => d.Cargo)
+            builder.Property(d => d.Cargos)
                    .IsRequired()
-                   .HasMaxLength(80);
+                   .HasMaxLength(200);
 
-            builder.Property(d => d.Contato)
-                   .IsRequired()
-                   .HasMaxLength(20);
+            builder.Property(d => d.Cargos)
+            .HasConversion(
+                v => string.Join(',', v),
+                v => string.IsNullOrWhiteSpace(v) || v == "[]"
+                        ? new List<Cargo>()
+                        : v.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                           .Select(s => Enum.Parse<Cargo>(s))
+                           .ToList()
+            );
 
             builder.Property(d => d.Estado)
                    .IsRequired()

@@ -9,6 +9,14 @@
                 modal.show();
                 rebindValidators($('#modal'))
                 $('#Contato').mask('(00) 00000-0000');
+                // Inicializa Select2 ao abrir modal
+                $('#modalAdicionar').on('shown.bs.modal', function () {
+                    $(this).find('.select2').select2({
+                        placeholder: "Selecione os cargos",
+                        width: '100%',
+                        allowClear: true
+                    });
+                });
             }
         })
     })
@@ -25,6 +33,12 @@
                 modal.show();
                 rebindValidators($('#modal'))
                 $('#Contato').mask('(00) 00000-0000');
+
+                $('.select2').select2({
+                    placeholder: "Selecione os cargos",
+                    width: '100%',
+                    allowClear: true
+                });
             },
             error: function () {
                 notification('error', 'Erro ao carregar formulário de edição.');

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using WEB.Models.Entities;
+using WEB.Models.Enuns;
 
 namespace WEB.Models.ViewModels
 {
@@ -29,7 +30,7 @@ namespace WEB.Models.ViewModels
         public Guid? PastorId { get; set; }
 
         [Required]
-        public string? Cargo { get; set; }
+        public List<Cargo> Cargos { get; set; } = new();
 
         [Required]
         [Phone]

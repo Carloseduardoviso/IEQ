@@ -1,4 +1,7 @@
-﻿namespace WEB.Models.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using WEB.Models.Enuns;
+
+namespace WEB.Models.Entities
 {
     public class Diaconato
     {
@@ -18,9 +21,9 @@
         public Guid? SuperintendenteEstadualId { get; set; }
 
         public Guid? SuperintendenteRegionalId { get; set; }
-       
 
-        public string? Cargo { get; set; }
+
+        public List<Cargo> Cargos { get; set; } = new();
         public string? Contato { get; set; }
         public DateTime? DataNascimento { get; set; }
         public DateTime? DataMinisterio { get; set; }
