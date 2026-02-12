@@ -8,7 +8,7 @@
                 <strong>Liderança 294</strong>
             </h4>
 
-            <div class="d-flex gap-2">           
+            <div class="d-flex gap-2">
                 <a href="@Url.Action("Index", "Regiao")" class="btn btn-secondary">
                     <i class="fa-solid fa-arrow-left"></i> Voltar
                 </a>
@@ -48,22 +48,35 @@
                     </thead>
 
                     <tbody>
-                          @if (Model != null && Model.Any())
+                        @if (Model != null && Model.Any())
                         {
                             foreach (var item in Model)
                             {
                                 <tr>
                                     <td>@item.Nome</td>
                                     <td>
-                                        @(((CargoLocal)item.CargoLocal).GetDisplayName())
+                                        @{
+                                            CargoLocal? cargoLocal = item.CargoLocal as CargoLocal?;
+                                            CargoRegional? cargoRegional = item.CargoRegional as CargoRegional?;
+                                            var cargosPermitidos = new[] { CargoLocal.Lider, CargoLocal.ViceLider, CargoLocal.Diretor, CargoLocal.Diretora };
+                                        }
 
-                                        @if (item.CargoRegional != null)
+                                        @if (cargoLocal != null && cargosPermitidos.Contains(cargoLocal.Value))
                                         {
-                                            <text>
-                                                / @(((CargoRegional)item.CargoRegional).GetDisplayName())
-                                            </text>
+                                            @cargoLocal.Value.GetDisplayName()
+                                        }
+
+                                        @if (cargoRegional != null)
+                                        {
+                                            if (cargoLocal != null && cargosPermitidos.Contains(cargoLocal.Value))
+                                            {
+                                                <text> / </text>
+                                            }
+
+                                            @cargoRegional.Value.GetDisplayName()
                                         }
                                     </td>
+
                                     <td>@item.Ministerio</td>
                                     <td>@item.Igreja</td>
                                     <td>@item.Regiao</td>
