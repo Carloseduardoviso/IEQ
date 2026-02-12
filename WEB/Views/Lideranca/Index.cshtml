@@ -1,4 +1,5 @@
-﻿@model IEnumerable<dynamic>
+﻿@using WEB.Models.Enuns
+@model IEnumerable<dynamic>
 
 <div class="container mt-4">
     <div class="card border-0 shadow-lg p-3 mb-5 rounded">
@@ -54,11 +55,13 @@
                                 <tr>
                                     <td>@item.Nome</td>
                                     <td>
-                                        @item.CargoLocal.GetDisplayName()
+                                        @(((CargoLocal)item.CargoLocal).GetDisplayName())
 
                                         @if (item.CargoRegional != null)
                                         {
-                                            <text> / @item.CargoRegional.GetDisplayName()</text>
+                                            <text>
+                                                / @(((CargoRegional)item.CargoRegional).GetDisplayName())
+                                            </text>
                                         }
                                     </td>
                                     <td>@item.Ministerio</td>

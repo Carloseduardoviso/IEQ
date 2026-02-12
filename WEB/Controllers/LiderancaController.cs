@@ -38,7 +38,8 @@ namespace WEB.Controllers
                 Ministerio = "Diaconato",
                 Igreja = x.Igreja?.Nome,
                 Regiao = x.Regiao?.Nome,
-                Cargo = x.CargoLocal.ToString()
+                CargoLocal = x.CargoLocal,
+                CargoRegional = x.CargoRegional
             }));
 
             //var criancas = await _criancaService.GetAllAsync(...);
