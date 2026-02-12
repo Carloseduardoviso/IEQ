@@ -13,7 +13,7 @@ namespace WEB.Data.Config
 
             builder.Property(d => d.NomeCompleto).IsRequired().HasMaxLength(100);
             builder.Property(d => d.CargoLocal).IsRequired().HasMaxLength(80);
-            builder.Property(d => d.CargoRegional).IsRequired().HasMaxLength(80);
+            builder.Property(d => d.CargoRegional).HasMaxLength(80);
             builder.Property(d => d.Estado).IsRequired().HasMaxLength(2);
             builder.Property(d => d.Cidade).IsRequired().HasMaxLength(100);
             builder.Property(d => d.Ativo).HasDefaultValue(true);

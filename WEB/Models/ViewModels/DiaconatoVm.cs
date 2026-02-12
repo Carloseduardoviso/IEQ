@@ -31,7 +31,7 @@ namespace WEB.Models.ViewModels
 
         [Required]
         public CargoLocal CargoLocal { get; set; }
-        public CargoRegional CargoRegional { get; set; }
+        public CargoRegional? CargoRegional { get; set; }
 
         [Required]
         [Phone]

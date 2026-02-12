@@ -13,7 +13,7 @@ namespace WEB.Models.Entities
         public Guid? SuperintendenteRegionalId { get; set; }
         public string? NomeCompleto { get; set; }
         public CargoLocal CargoLocal  { get; set; }
-        public CargoRegional CargoRegional { get; set; }
+        public CargoRegional? CargoRegional { get; set; }
         public string? Contato { get; set; }
         public DateTime? DataNascimento { get; set; }
         public DateTime? DataMinisterio { get; set; }
