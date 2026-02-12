@@ -23,9 +23,17 @@ namespace WEB.Data.Repositories
 
         public async Task<IEnumerable<Diaconato>> GetAllAsync(Expression<Func<Diaconato, bool>>? expression)
         {
-            if (expression is not null) return await _dataContext.Diaconatos.AsNoTracking().Where(expression).OrderBy(c => c.NomeCompleto).ToListAsync();
+            IQueryable<Diaconato> query = _dataContext.Diaconatos.AsNoTracking();
 
-            return await _dataContext.Diaconatos.AsNoTracking().OrderBy(c => c.NomeCompleto).ToListAsync();
+            // aplica includes
+            query = IncludeAllProperties(query);
+
+            if (expression is not null)
+                query = query.Where(expression);
+
+            return await query
+                .OrderBy(c => c.NomeCompleto)
+                .ToListAsync();
         }
 
         public async Task<(IEnumerable<Diaconato> lista, int count)> GetAllPaginationAsync(Expression<Func<Diaconato, bool>>? expression, int skip)
