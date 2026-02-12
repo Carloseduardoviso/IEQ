@@ -11,7 +11,7 @@ namespace WEB.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<int>(
-                name: "Cargo",
+                name: "CargoLocal",
                 table: "Diaconato",
                 type: "int",
                 nullable: false,
@@ -24,7 +24,7 @@ namespace WEB.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Cargo",
+                name: "CargoLocal",
                 table: "Diaconato",
                 type: "nvarchar(80)",
                 maxLength: 80,

@@ -11,7 +11,7 @@ namespace WEB.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Cargo",
+                name: "CargoLocal",
                 table: "Diaconato");
 
             migrationBuilder.AddColumn<string>(
@@ -30,7 +30,7 @@ namespace WEB.Migrations
                 table: "Diaconato");
 
             migrationBuilder.AddColumn<int>(
-                name: "Cargo",
+                name: "CargoLocal",
                 table: "Diaconato",
                 type: "int",
                 nullable: false,

@@ -36,7 +36,7 @@ namespace WEB.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
 
-                    b.Property<string>("Cargo")
+                    b.Property<string>("CargoLocal")
                         .IsRequired()
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)");

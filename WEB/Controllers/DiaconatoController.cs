@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using WEB.Helpers.Builder.Filtro;
 using WEB.Helpers.Messages;
 using WEB.Models.ViewModels;
+using WEB.Models.ViewModels.Filtro;
 using WEB.Services.Interfaces;
 
 namespace WEB.Controllers

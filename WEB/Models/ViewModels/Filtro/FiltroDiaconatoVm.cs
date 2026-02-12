@@ -1,4 +1,4 @@
-﻿namespace WEB.Models.ViewModels
+﻿namespace WEB.Models.ViewModels.Filtro
 {
     public class FiltroDiaconatoVm
     {

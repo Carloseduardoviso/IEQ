@@ -36,55 +36,24 @@
                 <!-- MENU ESQUERDA -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-ieq"
-                           asp-controller="Home"
-                           asp-action="Index">
-                            Home
-                        </a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link nav-link-ieq" asp-controller="Home" asp-action="Index">Home</a></li>
 
                     <!-- Dados da Igreja -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle nav-link-ieq"
-                           data-bs-toggle="dropdown">
-                            Dados da Igreja
-                        </a>
+                        <a class="nav-link dropdown-toggle nav-link-ieq" data-bs-toggle="dropdown">Dados da Igreja</a>
 
                         <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" asp-controller="Igreja" asp-action="Index">
-                                    Igrejas
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item" asp-controller="SuperintendenteRegional" asp-action="Index">
-                                    Superintendente Regional
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item" asp-controller="Regiao" asp-action="Index">
-                                    Região
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item" asp-controller="Pastores" asp-action="Index">
-                                    Pastores
-                                </a>
-                            </li>
+                            <li><a class="dropdown-item" asp-controller="Igreja" asp-action="Index">Igrejas</a></li>
+                            <li><a class="dropdown-item" asp-controller="SuperintendenteRegional" asp-action="Index">Superintendente Regional</a></li>
+                            <li><a class="dropdown-item" asp-controller="Regiao" asp-action="Index">Região</a></li>
+                            <li><a class="dropdown-item" asp-controller="Pastores" asp-action="Index">Pastores</a></li>
+                            <li><a class="dropdown-item" asp-controller="Lideranca" asp-action="Index">Liderança</a></li>
                         </ul>
                     </li>
 
                     <!-- Ministérios -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle nav-link-ieq"
-                           data-bs-toggle="dropdown">
-                            Ministérios
-                        </a>
-
+                        <a class="nav-link dropdown-toggle nav-link-ieq" data-bs-toggle="dropdown">Ministérios</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" asp-controller="Diaconato" asp-action="Index">Diaconato</a></li>
                             <li><a class="dropdown-item" asp-controller="Louvor" asp-action="Index">Louvor</a></li>
@@ -96,13 +65,7 @@
                             <li><a class="dropdown-item" asp-controller="Teatro" asp-action="Index">Teatro</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-ieq"
-                           asp-controller="Usuario"
-                           asp-action="Index">
-                            Usuário
-                        </a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link nav-link-ieq" asp-controller="Usuario" asp-action="Index">Usuário</a></li>
                 </ul>
             }
 

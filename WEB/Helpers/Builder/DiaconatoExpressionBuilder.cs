@@ -36,7 +36,7 @@ namespace WEB.Helpers.Builder
             var campos = new List<Expression>
             {
                 Expression.Property(View, nameof(DiaconatoVm.NomeCompleto)),
-                Expression.Property(View, nameof(DiaconatoVm.Cargos)),
+                Expression.Property(View, nameof(DiaconatoVm.CargoLocal)),
                 Expression.Property(Expression.Property(View, nameof(DiaconatoVm.Igreja)), nameof(IgrejaVm.Nome)),
                 Expression.Property(Expression.Property(View, nameof(DiaconatoVm.Regiao)), nameof(RegiaoVm.Nome)              )
             };

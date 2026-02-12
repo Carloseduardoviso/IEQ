@@ -36,7 +36,7 @@ namespace WEB.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
 
-                    b.Property<int>("Cargo")
+                    b.Property<int>("CargoLocal")
                         .HasColumnType("int");
 
                     b.Property<string>("Cidade")

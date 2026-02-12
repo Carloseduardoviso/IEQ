@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using WEB.Models.Entities;
 using WEB.Models.ViewModels;
+using WEB.Models.ViewModels.Filtro;
 
 namespace WEB.Helpers.Builder.Filtro
 {

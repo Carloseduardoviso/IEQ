@@ -30,7 +30,8 @@ namespace WEB.Models.ViewModels
         public Guid? PastorId { get; set; }
 
         [Required]
-        public List<Cargo> Cargos { get; set; } = new();
+        public CargoLocal CargoLocal { get; set; }
+        public CargoRegional CargoRegional { get; set; }
 
         [Required]
         [Phone]
