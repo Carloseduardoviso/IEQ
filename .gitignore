@@ -483,4 +483,4 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 /.vs/SIEG/v17/.suo
-/WEB/Models/Enuns/CargoLocal.cs
+
