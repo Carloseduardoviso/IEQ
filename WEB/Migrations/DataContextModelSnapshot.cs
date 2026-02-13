@@ -24,7 +24,7 @@ namespace WEB.Migrations
 
             modelBuilder.Entity("WEB.Models.Entities.Crianca", b =>
                 {
-                    b.Property<Guid>("CriancaId")
+                    b.Property<Guid>("LouvorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -95,7 +95,7 @@ namespace WEB.Migrations
                     b.Property<int>("TempoAcumuladoEmMeses")
                         .HasColumnType("int");
 
-                    b.HasKey("CriancaId");
+                    b.HasKey("LouvorId");
 
                     b.HasIndex("IgrejaId");
 
@@ -422,7 +422,7 @@ namespace WEB.Migrations
 
             modelBuilder.Entity("WEB.Models.Entities.Louvor", b =>
                 {
-                    b.Property<Guid>("CriancaId")
+                    b.Property<Guid>("LouvorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -493,7 +493,7 @@ namespace WEB.Migrations
                     b.Property<int>("TempoAcumuladoEmMeses")
                         .HasColumnType("int");
 
-                    b.HasKey("CriancaId");
+                    b.HasKey("LouvorId");
 
                     b.HasIndex("IgrejaId");
 

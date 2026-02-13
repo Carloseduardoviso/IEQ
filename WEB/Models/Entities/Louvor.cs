@@ -4,7 +4,7 @@ namespace WEB.Models.Entities
 {
     public class Louvor
     {
-        public Guid CriancaId { get; set; }
+        public Guid LouvorId { get; set; }
         public Guid IgrejaId { get; set; }
         public Guid RegiaoId { get; set; }
         public Guid? PastorId { get; set; }

@@ -9,7 +9,7 @@ namespace WEB.Data.Config
         public void Configure(EntityTypeBuilder<Louvor> builder)
         {
             builder.ToTable(nameof(Louvor));
-            builder.HasKey(l => l.CriancaId);
+            builder.HasKey(l => l.LouvorId);
 
             builder.Property(d => d.NomeCompleto).IsRequired().HasMaxLength(100);
             builder.Property(d => d.CargoLocal).IsRequired().HasMaxLength(80);

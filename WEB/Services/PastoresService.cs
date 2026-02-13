@@ -3,8 +3,9 @@ using System.Linq.Expressions;
 using WEB.Data.Repositories;
 using WEB.Data.Repositories.Interfaces;
 using WEB.Models.Entities;
+using WEB.Services.Interfaces;
 
-namespace WEB.Services.Interfaces
+namespace WEB.Services
 {
     public class PastoresService : IPastoresService
     {
