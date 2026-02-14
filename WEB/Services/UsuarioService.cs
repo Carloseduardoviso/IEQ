@@ -19,10 +19,10 @@ namespace WEB.Services
             _mapper = mapper;
         }
 
-        public Task AddAsync(UsuarioVm vm)
+        public async Task AddAsync(UsuarioVm vm)
         {
-            var result = _mapper.Map<Crianca>(vm);
-            await _criancaRepository.AddAsync(result);
+            var result = _mapper.Map<Usuario>(vm);
+            await _usuarioRepository.AddAsync(result);
         }
 
         public async Task<bool> ExisteEmailAsync(string email)
@@ -30,36 +30,36 @@ namespace WEB.Services
             return await _usuarioRepository.GetByEmailAsync(email) != null;
         }
 
-        public Task<IEnumerable<UsuarioVm>> GetAllAsync(Expression<Func<UsuarioVm, bool>>? expression = null, params Expression<Func<UsuarioVm, object?>>[]? includes)
+        public async Task<IEnumerable<UsuarioVm>> GetAllAsync(Expression<Func<UsuarioVm, bool>>? expression = null, params Expression<Func<UsuarioVm, object?>>[]? includes)
         {
-            var result = await _criancaRepository.GetAllAsync(
-             _mapper.Map<Expression<Func<Crianca, bool>>>(expression),
-             _mapper.Map<Expression<Func<Crianca, object>>[]>(includes));
-            return _mapper.Map<IEnumerable<CriancaVm>>(result);
+            var result = await _usuarioRepository.GetAllAsync(
+             _mapper.Map<Expression<Func<Usuario, bool>>>(expression),
+             _mapper.Map<Expression<Func<Usuario, object>>[]>(includes));
+            return _mapper.Map<IEnumerable<UsuarioVm>>(result);
         }
 
-        public Task<(IEnumerable<UsuarioVm> lista, int count)> GetAllPaginationAsync(Expression<Func<UsuarioVm, bool>>? filtragem, int skip)
+        public async Task<(IEnumerable<UsuarioVm> lista, int count)> GetAllPaginationAsync(Expression<Func<UsuarioVm, bool>>? filtragem, int skip)
         {
-            var expressionMap = _mapper.Map<Expression<Func<Crianca, bool>>>(filtragem);
-            var (lista, count) = await _criancaRepository.GetAllPaginationAsync(expressionMap, skip);
+            var expressionMap = _mapper.Map<Expression<Func<Usuario, bool>>>(filtragem);
+            var (lista, count) = await _usuarioRepository.GetAllPaginationAsync(expressionMap, skip);
 
-            return (_mapper.Map<IEnumerable<CriancaVm>>(lista), count);
+            return (_mapper.Map<IEnumerable<UsuarioVm>>(lista), count);
         }
 
-        public Task<UsuarioVm?> GetByIdAllIncludesAsync(Guid id, Expression<Func<UsuarioVm, bool>>? expression = null)
+        public async Task<UsuarioVm?> GetByIdAllIncludesAsync(Guid id, Expression<Func<UsuarioVm, bool>>? expression = null)
         {
-            var result = await _criancaRepository.GetByIdAllIncludesAsync(id, _mapper.Map<Expression<Func<Crianca, bool>>>(expression));
-            return _mapper.Map<CriancaVm>(result);
+            var result = await _usuarioRepository.GetByIdAllIncludesAsync(id, _mapper.Map<Expression<Func<Usuario, bool>>>(expression));
+            return _mapper.Map<UsuarioVm>(result);
         }
 
-        public Task<UsuarioVm> GetByIdAsync(Guid id)
+        public async Task<UsuarioVm> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<CriancaVm>(await _criancaRepository.GetByIdAsync(id));
+            return _mapper.Map<UsuarioVm>(await _usuarioRepository.GetByIdAsync(id));
         }
 
-        public Task InativarAsync(Guid id)
+        public async Task InativarAsync(Guid id)
         {
-            await _criancaRepository.InativarAsync(id);
+            await _usuarioRepository.InativarAsync(id);
         }
 
         public async Task<Usuario?> LoginAsync(string email, string senha)
@@ -74,9 +74,9 @@ namespace WEB.Services
             return senhaOk ? usuario : null;
         }
 
-        public Task ReativarAsync(Guid id)
+        public async Task ReativarAsync(Guid id)
         {
-            await _criancaRepository.ReativarAsync(id);
+            await _usuarioRepository.ReativarAsync(id);
         }
 
         public async Task RegistrarAsync(RegistrarVm vm)
@@ -97,21 +97,21 @@ namespace WEB.Services
             await _usuarioRepository.SaveAsync();
         }
 
-        public Task<UsuarioVm> Remover(Guid id)
+        public async Task<UsuarioVm> Remover(Guid id)
         {
-            var result = await _igrejaRepository.GetByIdAsync(igrejaId);
+            var result = await _usuarioRepository.GetByIdAsync(id);
             if (result != null)
             {
-                _igrejaRepository.Remover(result);
+                _usuarioRepository.Remover(result);
             }
 
-            return _mapper.Map<IgrejaVm>(result);
+            return _mapper.Map<UsuarioVm>(result);
         }
 
-        public Task UpdateAsync(UsuarioVm vm)
+        public async Task UpdateAsync(UsuarioVm vm)
         {
-            Crianca result = _mapper.Map<Crianca>(vm);
-            await _criancaRepository.Update(result);
-        }
+            Usuario result = _mapper.Map<Usuario>(vm);
+            await _usuarioRepository.Update(result);
+        }      
     }
 }

@@ -30,7 +30,7 @@ namespace WEB.Data.Repositories
                 query = query.Where(expression);
 
             return await query
-                .OrderBy(c => c.NomeCompleto)
+                .OrderBy(c => c.Nome)
                 .ToListAsync();
         }
 
@@ -40,7 +40,7 @@ namespace WEB.Data.Repositories
             query = IncludeAllProperties(query);
 
             if (expression != null) query = query.Where(expression);
-            var lista = await query.Where(x => x.Ativo).OrderBy(x => x.NomeCompleto).Skip(skip).Take(5).ToListAsync();
+            var lista = await query.Where(x => x.Ativo).OrderBy(x => x.Nome).Skip(skip).Take(5).ToListAsync();
             var count = await query.CountAsync();
 
             return (lista, count);
@@ -99,6 +99,11 @@ namespace WEB.Data.Repositories
         {
             _dataContext.Usuarios.Update(result);
             await _dataContext.SaveChangesAsync();
+        }
+
+        private IQueryable<Usuario> IncludeAllProperties(IQueryable<Usuario> query)
+        {
+            return query.Include(x => x.Igreja).Include(x => x.Regiao);
         }
     }
 }

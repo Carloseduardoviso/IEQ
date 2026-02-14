@@ -19,58 +19,58 @@ namespace WEB.Services
             _mapper = mapper;
         }
 
-        public Task AddAsync(MidiaVm vm)
+        public async Task AddAsync(MidiaVm vm)
         {
-            var result = _mapper.Map<Crianca>(vm);
-            await _criancaRepository.AddAsync(result);
+            var result = _mapper.Map<Midia>(vm);
+            await _midiaRepository.AddAsync(result);
         }
 
-        public Task<IEnumerable<MidiaVm>> GetAllAsync(Expression<Func<MidiaVm, bool>>? expression = null, params Expression<Func<MidiaVm, object?>>[]? includes)
+        public async Task<IEnumerable<MidiaVm>> GetAllAsync(Expression<Func<MidiaVm, bool>>? expression = null, params Expression<Func<MidiaVm, object?>>[]? includes)
         {
-            var result = await _criancaRepository.GetAllAsync(
-             _mapper.Map<Expression<Func<Crianca, bool>>>(expression),
-             _mapper.Map<Expression<Func<Crianca, object>>[]>(includes));
-            return _mapper.Map<IEnumerable<CriancaVm>>(result);
+            var result = await _midiaRepository.GetAllAsync(
+             _mapper.Map<Expression<Func<Midia, bool>>>(expression),
+             _mapper.Map<Expression<Func<Midia, object>>[]>(includes));
+            return _mapper.Map<IEnumerable<MidiaVm>>(result);
         }
 
-        public Task<(IEnumerable<MidiaVm> lista, int count)> GetAllPaginationAsync(Expression<Func<MidiaVm, bool>>? filtragem, int skip)
+        public async Task<(IEnumerable<MidiaVm> lista, int count)> GetAllPaginationAsync(Expression<Func<MidiaVm, bool>>? filtragem, int skip)
         {
-            var expressionMap = _mapper.Map<Expression<Func<Crianca, bool>>>(filtragem);
-            var (lista, count) = await _criancaRepository.GetAllPaginationAsync(expressionMap, skip);
+            var expressionMap = _mapper.Map<Expression<Func<Midia, bool>>>(filtragem);
+            var (lista, count) = await _midiaRepository.GetAllPaginationAsync(expressionMap, skip);
 
-            return (_mapper.Map<IEnumerable<CriancaVm>>(lista), count);
+            return (_mapper.Map<IEnumerable<MidiaVm>>(lista), count);
         }
 
-        public Task<MidiaVm?> GetByIdAllIncludesAsync(Guid id, Expression<Func<MidiaVm, bool>>? expression = null)
+        public async Task<MidiaVm?> GetByIdAllIncludesAsync(Guid id, Expression<Func<MidiaVm, bool>>? expression = null)
         {
-            var result = await _criancaRepository.GetByIdAllIncludesAsync(id, _mapper.Map<Expression<Func<Crianca, bool>>>(expression));
-            return _mapper.Map<CriancaVm>(result);
+            var result = await _midiaRepository.GetByIdAllIncludesAsync(id, _mapper.Map<Expression<Func<Midia, bool>>>(expression));
+            return _mapper.Map<MidiaVm>(result);
         }
 
-        public Task<MidiaVm> GetByIdAsync(Guid id)
+        public async Task<MidiaVm> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<CriancaVm>(await _criancaRepository.GetByIdAsync(id));
+            return _mapper.Map<MidiaVm>(await _midiaRepository.GetByIdAsync(id));
         }
 
-        public Task InativarAsync(Guid id)
+        public async Task InativarAsync(Guid id)
         {
-            await _criancaRepository.InativarAsync(id);
+            await _midiaRepository.InativarAsync(id);
         }
 
-        public Task ReativarAsync(Guid id)
+        public async Task ReativarAsync(Guid id)
         {
-            await _criancaRepository.ReativarAsync(id);
+            await _midiaRepository.ReativarAsync(id);
         }
 
-        public Task<MidiaVm> Remover(Guid id)
+        public async Task<MidiaVm> Remover(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(MidiaVm vm)
+        public async Task UpdateAsync(MidiaVm vm)
         {
-            Crianca result = _mapper.Map<Crianca>(vm);
-            await _criancaRepository.Update(result);
+            Midia result = _mapper.Map<Midia>(vm);
+            await _midiaRepository.Update(result);
         }
     }
 }

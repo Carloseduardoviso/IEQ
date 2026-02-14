@@ -21,58 +21,58 @@ namespace WEB.Services
             _mapper = mapper;
         }
 
-        public Task AddAsync(TeatroVm vm)
+        public async Task AddAsync(TeatroVm vm)
         {
-            var result = _mapper.Map<Crianca>(vm);
-            await _criancaRepository.AddAsync(result);
+            var result = _mapper.Map<Teatro>(vm);
+            await _teatroRepository.AddAsync(result);
         }
 
-        public Task<IEnumerable<TeatroVm>> GetAllAsync(Expression<Func<TeatroVm, bool>>? expression = null, params Expression<Func<TeatroVm, object?>>[]? includes)
+        public async Task<IEnumerable<TeatroVm>> GetAllAsync(Expression<Func<TeatroVm, bool>>? expression = null, params Expression<Func<TeatroVm, object?>>[]? includes)
         {
-            var expressionMap = _mapper.Map<Expression<Func<Crianca, bool>>>(filtragem);
-            var (lista, count) = await _criancaRepository.GetAllPaginationAsync(expressionMap, skip);
-
-            return (_mapper.Map<IEnumerable<CriancaVm>>(lista), count);
+            var result = await _teatroRepository.GetAllAsync(
+             _mapper.Map<Expression<Func<Teatro, bool>>>(expression),
+             _mapper.Map<Expression<Func<Teatro, object>>[]>(includes));
+            return _mapper.Map<IEnumerable<TeatroVm>>(result);
         }
 
-        public Task<(IEnumerable<TeatroVm> lista, int count)> GetAllPaginationAsync(Expression<Func<TeatroVm, bool>>? filtragem, int skip)
+        public async Task<(IEnumerable<TeatroVm> lista, int count)> GetAllPaginationAsync(Expression<Func<TeatroVm, bool>>? filtragem, int skip)
         {
-            var expressionMap = _mapper.Map<Expression<Func<Crianca, bool>>>(filtragem);
-            var (lista, count) = await _criancaRepository.GetAllPaginationAsync(expressionMap, skip);
+            var expressionMap = _mapper.Map<Expression<Func<Teatro, bool>>>(filtragem);
+            var (lista, count) = await _teatroRepository.GetAllPaginationAsync(expressionMap, skip);
 
-            return (_mapper.Map<IEnumerable<CriancaVm>>(lista), count);
+            return (_mapper.Map<IEnumerable<TeatroVm>>(lista), count);
         }
 
-        public Task<TeatroVm?> GetByIdAllIncludesAsync(Guid id, Expression<Func<TeatroVm, bool>>? expression = null)
+        public async Task<TeatroVm?> GetByIdAllIncludesAsync(Guid id, Expression<Func<TeatroVm, bool>>? expression = null)
         {
-            var result = await _criancaRepository.GetByIdAllIncludesAsync(id, _mapper.Map<Expression<Func<Crianca, bool>>>(expression));
-            return _mapper.Map<CriancaVm>(result);
+            var result = await _teatroRepository.GetByIdAllIncludesAsync(id, _mapper.Map<Expression<Func<Teatro, bool>>>(expression));
+            return _mapper.Map<TeatroVm>(result);
         }
 
-        public Task<TeatroVm> GetByIdAsync(Guid id)
+        public async Task<TeatroVm> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<CriancaVm>(await _criancaRepository.GetByIdAsync(id));
+            return _mapper.Map<TeatroVm>(await _teatroRepository.GetByIdAsync(id));
         }
 
-        public Task InativarAsync(Guid id)
+        public async Task InativarAsync(Guid id)
         {
-            await _criancaRepository.InativarAsync(id);
+            await _teatroRepository.InativarAsync(id);
         }
 
-        public Task ReativarAsync(Guid id)
+        public async Task ReativarAsync(Guid id)
         {
-            await _criancaRepository.ReativarAsync(id);
+            await _teatroRepository.ReativarAsync(id);
         }
 
-        public Task<TeatroVm> Remover(Guid id)
+        public async Task<TeatroVm> Remover(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(TeatroVm vm)
+        public async Task UpdateAsync(TeatroVm vm)
         {
-            Crianca result = _mapper.Map<Crianca>(vm);
-            await _criancaRepository.Update(result);
+            Teatro result = _mapper.Map<Teatro>(vm);
+            await _teatroRepository.Update(result);
         }
     }
 }

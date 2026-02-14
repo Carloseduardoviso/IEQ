@@ -24,6 +24,7 @@ namespace WEB.Mapper
             CreateMap<Midia, MidiaVm>().ReverseMap().PreserveReferences();
             CreateMap<Mulheres, MulheresVm>().ReverseMap().PreserveReferences();
             CreateMap<Teatro, TeatroVm>().ReverseMap().PreserveReferences();
+            CreateMap<Danca, DancaVm>().ReverseMap().PreserveReferences();
         }
     }
 }

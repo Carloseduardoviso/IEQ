@@ -22,7 +22,8 @@ namespace WEB.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var usuario = _usuarioService.GetAllAsync();
+            return View(usuario);
         }
 
         public IActionResult Login() => View();

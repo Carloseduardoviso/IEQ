@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WEB.Helpers.Messages;
-using WEB.Models.Entities;
 using WEB.Models.ViewModels;
+using WEB.Services;
 using WEB.Services.Interfaces;
 
 namespace WEB.Controllers
 {
-    public class MidiaController : Controller
+    public class DancaController : Controller
     {
-        private readonly IMidiaService _midiaService;
+        private readonly IDancaService _dancaService;
         private readonly IRegiaoService _regiaoService;
         private readonly ISuperintendenteEstadualService _superintendenteEstadualService;
         private readonly ISuperintendenteRegionalService _superintendenteRegionalService;
         private readonly IIgrejaService _igrejaService;
         private readonly IPastoresService _pastoresService;
 
-        public MidiaController(IMidiaService criancaService, IRegiaoService regiaoService, ISuperintendenteEstadualService superintendenteEstadualService, ISuperintendenteRegionalService superintendenteRegionalService, IIgrejaService igrejaService, IPastoresService pastoresService)
+        public DancaController(IDancaService dancaService, IRegiaoService regiaoService, ISuperintendenteEstadualService superintendenteEstadualService, ISuperintendenteRegionalService superintendenteRegionalService, IIgrejaService igrejaService, IPastoresService pastoresService)
         {
-            _midiaService = criancaService;
+            _dancaService = dancaService;
             _regiaoService = regiaoService;
             _superintendenteEstadualService = superintendenteEstadualService;
             _superintendenteRegionalService = superintendenteRegionalService;
@@ -27,41 +27,41 @@ namespace WEB.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var result = await _midiaService.GetAllAsync();
+            var result = await _dancaService.GetAllAsync();
             return View(result);
         }
 
-        public async Task<IActionResult> Detalhe(Guid? midiaId)
+        public async Task<IActionResult> Detalhe(Guid? dancaId)
         {
-            var detalhe = await _midiaService.GetByIdAsync(midiaId.Value);
+            var detalhe = await _dancaService.GetByIdAsync(dancaId.Value);
             return PartialView("_Detalhe", detalhe);
         }
 
-        public async Task<IActionResult> Operacao(Guid? midiaId)
+        public async Task<IActionResult> Operacao(Guid? dancaId)
         {
-            if (midiaId == null)
+            if (dancaId == null)
                 return NotFound();
 
-            var item = await _midiaService.GetByIdAsync(midiaId.Value);
+            var item = await _dancaService.GetByIdAsync(dancaId.Value);
 
             if (item.Ativo)
             {
-                await _midiaService.InativarAsync(midiaId.Value);
+                await _dancaService.InativarAsync(dancaId.Value);
                 TempData["success"] = "Obreiro inativado e tempo de ministério congelado!";
             }
             else
             {
-                await _midiaService.ReativarAsync(midiaId.Value);
+                await _dancaService.ReativarAsync(dancaId.Value);
                 TempData["success"] = "Obreiro reativado! Tempo de ministério voltou a contar.";
             }
 
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Cadastrar(Guid? midiaId)
+        public async Task<IActionResult> Cadastrar(Guid? dancaId)
         {
-            var novo = new MidiaVm();
-            if (midiaId != null) novo = await _midiaService.GetByIdAsync(midiaId.Value);
+            var novo = new DancaVm();
+            if (dancaId != null) novo = await _dancaService.GetByIdAsync(dancaId.Value);
 
             var regiao = await _regiaoService.GetAllAsync();
             var superintendentesRegionais = await _superintendenteRegionalService.GetAllAsync();
@@ -74,30 +74,30 @@ namespace WEB.Controllers
             ViewBag.SuperintendentesEstaduais = superintendentesEstaduais;
             ViewBag.Igreja = igreja;
             ViewBag.Pastores = pastores;
-            ViewBag.Title = midiaId != null ? "Editar" : "Cadastrar";
+            ViewBag.Title = dancaId != null ? "Editar" : "Cadastrar";
 
             return PartialView("_Cadastrar", novo);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> AlterarIgreja(MidiaVm vm)
+        public async Task<IActionResult> AlterarIgreja(DancaVm vm)
         {
             string mensagemSucess = "";
-            var novo = await _midiaService.GetByIdAllIncludesAsync(vm.MidiaId);
+            var novo = await _dancaService.GetByIdAllIncludesAsync(vm.DancaId);
 
             if (novo != null)
             {
-                await _midiaService.UpdateAsync(vm);
+                await _dancaService.UpdateAsync(vm);
                 mensagemSucess = "Edição, efetuado com sucesso!";
             }
             else
             {
-                await _midiaService.AddAsync(vm);
+                await _dancaService.AddAsync(vm);
                 mensagemSucess = "Cadastro, efetuado com sucesso!";
             }
 
-            return RedirectToAction("Index", "Midia").Success(mensagemSucess);
+            return RedirectToAction("Index", "Danca").Success(mensagemSucess);
         }
     }
 }

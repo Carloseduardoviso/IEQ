@@ -9,11 +9,11 @@
             </h4>
 
             <div class="d-flex gap-2">
-                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "SuperintendenteRegional")" class="btn btn-primary">
+                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Usuario")" class="btn btn-primary">
                     <i class="fa-solid fa-plus"></i> Novo
                 </button>
 
-                <a href="@Url.Action("Regiao", "SuperintendenteRegional")" class="btn btn-secondary">
+                <a href="@Url.Action("Regiao", "Usuario")" class="btn btn-secondary">
                     <i class="fa-solid fa-arrow-left"></i> Voltar
                 </a>
             </div>
@@ -23,7 +23,7 @@
 
             <!-- FILTRO -->
             <section class="conteudo-inicial mx-auto mb-4">
-                <form asp-action="Index" asp-controller="SuperintendenteRegional" method="get" class="row g-3">
+                <form asp-action="Index" asp-controller="Usuario" method="get" class="row g-3">
 
                     <div class="col-12 col-md-8 col-lg-9" style="flex-grow: 4;">
                         <label class="form-label"><strong>Busca Por</strong></label>
@@ -32,7 +32,7 @@
 
                     <div class="col-12 col-md-4 col-lg-3 d-flex gap-2 align-items-end">
                         <button type="submit" class="btn btn-primary w-100">Pesquisar</button>
-                        <a href="@Url.Action("Regiao", "SuperintendenteRegional")" class="btn btn-warning w-100">Limpar</a>
+                        <a href="@Url.Action("Index", "Usuario")" class="btn btn-warning w-100">Limpar</a>
                     </div>
 
                 </form>
@@ -67,14 +67,14 @@
                                         <div class="d-flex flex-wrap gap-2 justify-content-center">
                                             <a class="btn btn-sm edit-button"
                                                title="Editar"
-                                               asp-action="Cadastrar" asp-controller="SuperintendenteRegional"
+                                               asp-action="Cadastrar" asp-controller="Usuario"
                                                asp-route-UsuarioId="@item.UsuarioId">
                                                 <i class="fa-solid fa-pen-to-square text-primary"></i>
                                             </a>
 
                                             <a class="btn  btn-sm excluir-button"
                                                title="Inativar Obreiro"
-                                               asp-action="Excluir" asp-controller="SuperintendenteRegional"
+                                               asp-action="Excluir" asp-controller="Usuario"
                                                asp-route-UsuarioId="@item.UsuarioId">
                                                 <i class="fa-solid fa-trash-can text-danger"></i>
                                             </a>

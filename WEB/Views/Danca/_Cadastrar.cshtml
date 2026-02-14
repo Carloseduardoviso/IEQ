@@ -1,0 +1,177 @@
+﻿@using WEB.Models.Enuns
+@using WEB.Models.ViewModels
+@model DancaVm
+
+@{
+    var title = ViewBag.Title;
+    var regiao = ViewBag.Regiao;
+    var superintendentesRegionais = ViewBag.SuperintendentesRegionais;
+    var superintendentesEstaduais = ViewBag.SuperintendentesEstaduais;
+    var igreja = ViewBag.Igreja;
+    var pastores = ViewBag.Pastores;
+}
+
+<form asp-action="AlterarDanca" enctype="multipart/form-data">
+    <div id="modalAdicionar" data-bs-backdrop="static" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- HEADER -->
+                <div class="modal-header" style="background-color: #628dbc;">
+                    <h5 class="modal-title text-white">@title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- BODY -->
+                <div class="modal-body">
+
+                    <input type="hidden" asp-for="DancaId" />
+                    <input type="hidden" asp-for="FotoUrl" />
+
+                    <!-- SEÇÃO 1 =============================== -->
+                    <h5 class="border-bottom pb-2 mb-3">Dados Pessoais</h5>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label asp-for="Foto"></label><span class="text-danger"> *</span>
+                            <input asp-for="Foto" type="file" class="form-control" accept="image/*" />
+                            <span asp-validation-for="Foto" class="text-danger"></span>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(Model?.FotoUrl))
+                        {
+                            <div class="col-md-6 d-flex align-items-end">
+                                <img src="@Model.FotoUrl" alt="Foto" class="border rounded" style="width:130px;" />
+                            </div>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="NomeCompleto"></label><span class="text-danger"> *</span>
+                        <input asp-for="NomeCompleto" class="form-control" />
+                        <span asp-validation-for="NomeCompleto" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Cargo</label><span class="text-danger"> *</span>
+                            <select asp-for="CargoLocal" asp-items="Html.GetEnumSelectList<CargoLocal>()" class="form-control select2"></select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>
+                                Cargo Regional (Opcional)
+                            </label>
+
+                            <select asp-for="CargoRegional"
+                                    asp-items="Html.GetEnumSelectList<CargoRegional>()"
+                                    class="form-control select2">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 mb-3">
+                            <label asp-for="Estado"></label><span class="text-danger"> *</span>
+                            <input asp-for="Estado" class="form-control" placeholder="Ro" />
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label asp-for="Cidade"></label><span class="text-danger"> *</span>
+                            <input asp-for="Cidade" class="form-control" placeholder="Porto Velho" />
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label asp-for="Contato"></label><span class="text-danger"> *</span>
+                            <input asp-for="Contato" id="Contato" data-mask="(00) 00000-0000" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!-- SEÇÃO 2 =============================== -->
+                    <h5 class="border-bottom pb-2 mb-3">Informações da Igreja</h5>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label>Pastor</label>
+                            <select asp-for="PastorId" class="input-custom form-select form-control select2bs4 p-2">
+                                <option value="" disabled selected>Selecione</option>
+                                @foreach (var item in pastores)
+                                {
+                                    <option value="@item.PastorId">@item.Nome</option>
+                                }
+                            </select>
+                        </div>
+                        @*<div class="col-md-6 mb-3">
+                            <label>Superintendente Estadual</label>
+                            <select asp-for="SuperintendenteEstadualId" class="input-custom form-select form-control select2bs4 p-2">
+                                <option value="" disabled selected>Selecione</option>
+                                @foreach (var item in superintendentesEstaduais)
+                                {
+                                    <option value="@item.SuperintendenteEstadualId">@item.Nome</option>
+                                }
+                            </select>
+                        </div> *@
+                        <div class="col-md-12 mb-3">
+                            <label>Superintendente Regional</label>
+                            <select asp-for="SuperintendenteRegionalId" class="input-custom form-select form-control select2bs4 p-2">
+                                <option value="" disabled selected>Selecione</option>
+                                @foreach (var item in superintendentesRegionais)
+                                {
+                                    <option value="@item.SuperintendenteRegionalId">@item.Nome</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Igreja</label>
+                            <select asp-for="IgrejaId" class="input-custom form-select form-control select2bs4 p-2">
+                                <option value="" disabled selected>Selecione</option>
+                                @foreach (var item in igreja)
+                                {
+                                    <option value="@item.IgrejaId">@item.Nome</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Região</label><span class="text-danger"> *</span>
+                            <select asp-for="RegiaoId" class="input-custom form-select form-control select2bs4 p-2">
+                                <option value="" disabled selected>Selecione</option>
+                                @foreach (var item in regiao)
+                                {
+                                    <option value="@item.RegiaoId">@item.Nome</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- SEÇÃO 3 =============================== -->
+                    <h5 class="border-bottom pb-2 mb-3">Datas Importantes</h5>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="DataNascimento"></label>
+                            <input asp-for="DataNascimento" type="date" class="form-control" />
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="DataMinisterio"></label><span class="text-danger"> *</span>
+                            <input asp-for="DataMinisterio" type="date" class="form-control" />
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="DataBatismo"></label>
+                            <input asp-for="DataBatismo" type="date" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-check mt-2">
+                        <input asp-for="Ativo" class="form-check-input" type="checkbox">
+                        <label asp-for="Ativo" class="form-check-label"></label>
+                    </div>
+                </div>
+
+                <!-- FOOTER -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>

@@ -10,67 +10,67 @@ namespace WEB.Services
 {
     public class JovemAdolescenteService : IJovemAdolescenteService
     {
-        private readonly IJovemAdolescenteRepository _repository;
+        private readonly IJovemAdolescenteRepository _jovemAdolescenteRepository;
         private readonly IMapper _mapper;
 
-        public JovemAdolescenteService(IJovemAdolescenteRepository repository, IMapper mapper)
+        public JovemAdolescenteService(IJovemAdolescenteRepository jovemAdolescenteRepository, IMapper mapper)
         {
-            _repository = repository;
+            _jovemAdolescenteRepository = jovemAdolescenteRepository;
             _mapper = mapper;
         }
 
-        public Task AddAsync(JovemAdolescenteVm vm)
+        public async Task AddAsync(JovemAdolescenteVm vm)
         {
-            var result = _mapper.Map<Crianca>(vm);
-            await _criancaRepository.AddAsync(result);
+            var result = _mapper.Map<JovemAdolescente>(vm);
+            await _jovemAdolescenteRepository.AddAsync(result);
         }
 
-        public Task<IEnumerable<JovemAdolescenteVm>> GetAllAsync(Expression<Func<JovemAdolescenteVm, bool>>? expression = null, params Expression<Func<JovemAdolescenteVm, object?>>[]? includes)
+        public async Task<IEnumerable<JovemAdolescenteVm>> GetAllAsync(Expression<Func<JovemAdolescenteVm, bool>>? expression = null, params Expression<Func<JovemAdolescenteVm, object?>>[]? includes)
         {
-            var result = await _criancaRepository.GetAllAsync(
-             _mapper.Map<Expression<Func<Crianca, bool>>>(expression),
-             _mapper.Map<Expression<Func<Crianca, object>>[]>(includes));
-            return _mapper.Map<IEnumerable<CriancaVm>>(result);
+            var result = await _jovemAdolescenteRepository.GetAllAsync(
+             _mapper.Map<Expression<Func<JovemAdolescente, bool>>>(expression),
+             _mapper.Map<Expression<Func<JovemAdolescente, object>>[]>(includes));
+            return _mapper.Map<IEnumerable<JovemAdolescenteVm>>(result);
         }
 
-        public Task<(IEnumerable<JovemAdolescenteVm> lista, int count)> GetAllPaginationAsync(Expression<Func<JovemAdolescenteVm, bool>>? filtragem, int skip)
+        public async Task<(IEnumerable<JovemAdolescenteVm> lista, int count)> GetAllPaginationAsync(Expression<Func<JovemAdolescenteVm, bool>>? filtragem, int skip)
         {
-            var expressionMap = _mapper.Map<Expression<Func<Crianca, bool>>>(filtragem);
-            var (lista, count) = await _criancaRepository.GetAllPaginationAsync(expressionMap, skip);
+            var expressionMap = _mapper.Map<Expression<Func<JovemAdolescente, bool>>>(filtragem);
+            var (lista, count) = await _jovemAdolescenteRepository.GetAllPaginationAsync(expressionMap, skip);
 
-            return (_mapper.Map<IEnumerable<CriancaVm>>(lista), count);
+            return (_mapper.Map<IEnumerable<JovemAdolescenteVm>>(lista), count);
         }
 
-        public Task<JovemAdolescenteVm?> GetByIdAllIncludesAsync(Guid id, Expression<Func<JovemAdolescenteVm, bool>>? expression = null)
+        public async Task<JovemAdolescenteVm?> GetByIdAllIncludesAsync(Guid id, Expression<Func<JovemAdolescenteVm, bool>>? expression = null)
         {
-            var result = await _criancaRepository.GetByIdAllIncludesAsync(id, _mapper.Map<Expression<Func<Crianca, bool>>>(expression));
-            return _mapper.Map<CriancaVm>(result);
+            var result = await _jovemAdolescenteRepository.GetByIdAllIncludesAsync(id, _mapper.Map<Expression<Func<JovemAdolescente, bool>>>(expression));
+            return _mapper.Map<JovemAdolescenteVm>(result);
         }
 
-        public Task<JovemAdolescenteVm> GetByIdAsync(Guid id)
+        public async Task<JovemAdolescenteVm> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<CriancaVm>(await _criancaRepository.GetByIdAsync(id));
+            return _mapper.Map<JovemAdolescenteVm>(await _jovemAdolescenteRepository.GetByIdAsync(id));
         }
 
-        public Task InativarAsync(Guid id)
+        public async Task InativarAsync(Guid id)
         {
-            await _criancaRepository.InativarAsync(id);
+            await _jovemAdolescenteRepository.InativarAsync(id);
         }
 
-        public Task ReativarAsync(Guid id)
+        public async Task ReativarAsync(Guid id)
         {
-            await _criancaRepository.ReativarAsync(id);
+            await _jovemAdolescenteRepository.ReativarAsync(id);
         }
 
-        public Task<JovemAdolescenteVm> Remover(Guid id)
+        public async Task<JovemAdolescenteVm> Remover(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(JovemAdolescenteVm vm)
+        public async Task UpdateAsync(JovemAdolescenteVm vm)
         {
-            Crianca result = _mapper.Map<Crianca>(vm);
-            await _criancaRepository.Update(result);
+            JovemAdolescente result = _mapper.Map<JovemAdolescente>(vm);
+            await _jovemAdolescenteRepository.Update(result);
         }
     }
 }

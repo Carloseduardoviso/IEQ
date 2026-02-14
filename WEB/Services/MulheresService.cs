@@ -19,58 +19,58 @@ namespace WEB.Services
             _mapper = mapper;
         }
 
-        public Task AddAsync(MulheresVm vm)
+        public async Task AddAsync(MulheresVm vm)
         {
-            var result = _mapper.Map<Crianca>(vm);
-            await _criancaRepository.AddAsync(result);
+            var result = _mapper.Map<Mulheres>(vm);
+            await _mulheresRepository.AddAsync(result);
         }
 
-        public Task<IEnumerable<MulheresVm>> GetAllAsync(Expression<Func<MulheresVm, bool>>? expression = null, params Expression<Func<MulheresVm, object?>>[]? includes)
+        public async Task<IEnumerable<MulheresVm>> GetAllAsync(Expression<Func<MulheresVm, bool>>? expression = null, params Expression<Func<MulheresVm, object?>>[]? includes)
         {
-            var result = await _criancaRepository.GetAllAsync(
-             _mapper.Map<Expression<Func<Crianca, bool>>>(expression),
-             _mapper.Map<Expression<Func<Crianca, object>>[]>(includes));
-            return _mapper.Map<IEnumerable<CriancaVm>>(result);
+            var result = await _mulheresRepository.GetAllAsync(
+             _mapper.Map<Expression<Func<Mulheres, bool>>>(expression),
+             _mapper.Map<Expression<Func<Mulheres, object>>[]>(includes));
+            return _mapper.Map<IEnumerable<MulheresVm>>(result);
         }
 
-        public Task<(IEnumerable<MulheresVm> lista, int count)> GetAllPaginationAsync(Expression<Func<MulheresVm, bool>>? filtragem, int skip)
+        public async Task<(IEnumerable<MulheresVm> lista, int count)> GetAllPaginationAsync(Expression<Func<MulheresVm, bool>>? filtragem, int skip)
         {
-            var expressionMap = _mapper.Map<Expression<Func<Crianca, bool>>>(filtragem);
-            var (lista, count) = await _criancaRepository.GetAllPaginationAsync(expressionMap, skip);
+            var expressionMap = _mapper.Map<Expression<Func<Mulheres, bool>>>(filtragem);
+            var (lista, count) = await _mulheresRepository.GetAllPaginationAsync(expressionMap, skip);
 
-            return (_mapper.Map<IEnumerable<CriancaVm>>(lista), count);
+            return (_mapper.Map<IEnumerable<MulheresVm>>(lista), count);
         }
 
-        public Task<MulheresVm?> GetByIdAllIncludesAsync(Guid id, Expression<Func<MulheresVm, bool>>? expression = null)
+        public async Task<MulheresVm?> GetByIdAllIncludesAsync(Guid id, Expression<Func<MulheresVm, bool>>? expression = null)
         {
-            var result = await _criancaRepository.GetByIdAllIncludesAsync(id, _mapper.Map<Expression<Func<Crianca, bool>>>(expression));
-            return _mapper.Map<CriancaVm>(result);
+            var result = await _mulheresRepository.GetByIdAllIncludesAsync(id, _mapper.Map<Expression<Func<Mulheres, bool>>>(expression));
+            return _mapper.Map<MulheresVm>(result);
         }
 
-        public Task<MulheresVm> GetByIdAsync(Guid id)
+        public async Task<MulheresVm> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<CriancaVm>(await _criancaRepository.GetByIdAsync(id));
+            return _mapper.Map<MulheresVm>(await _mulheresRepository.GetByIdAsync(id));
         }
 
-        public Task InativarAsync(Guid id)
-        {
-            await _criancaRepository.InativarAsync(id);
+        public async Task InativarAsync(Guid id)
+        { 
+            await _mulheresRepository.InativarAsync(id);
         }
 
-        public Task ReativarAsync(Guid id)
+        public async Task ReativarAsync(Guid id)
         {
-            await _criancaRepository.ReativarAsync(id);
+            await _mulheresRepository.ReativarAsync(id);
         }
 
-        public Task<MulheresVm> Remover(Guid id)
+        public async Task<MulheresVm> Remover(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(MulheresVm vm)
+        public async Task UpdateAsync(MulheresVm vm)
         {
-            Crianca result = _mapper.Map<Crianca>(vm);
-            await _criancaRepository.Update(result);
+            Mulheres result = _mapper.Map<Mulheres>(vm);
+            await _mulheresRepository.Update(result);
         }
     }
 }

@@ -1,5 +1,9 @@
 ﻿@using WEB.Models.ViewModels
-@model IEnumerable<UsuarioVm>
+@using WEB.Models.ViewModels.Filtro
+@model IEnumerable<CriancaVm>
+@{
+    FiltroCriancaVm filtroCrianca = ViewBag.FiltroCrianca;
+}
 
 <div class="container mt-4">
     <div class="card border-0 shadow-lg p-3 mb-5 rounded">
@@ -9,11 +13,11 @@
             </h4>
 
             <div class="d-flex gap-2">
-                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "SuperintendenteRegional")" class="btn btn-primary">
+                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Crianca")" class="btn btn-primary">
                     <i class="fa-solid fa-plus"></i> Novo
                 </button>
 
-                <a href="@Url.Action("Regiao", "SuperintendenteRegional")" class="btn btn-secondary">
+                <a href="@Url.Action("Index", "Crianca")" class="btn btn-secondary">
                     <i class="fa-solid fa-arrow-left"></i> Voltar
                 </a>
             </div>
@@ -23,16 +27,16 @@
 
             <!-- FILTRO -->
             <section class="conteudo-inicial mx-auto mb-4">
-                <form asp-action="Index" asp-controller="SuperintendenteRegional" method="get" class="row g-3">
+                <form asp-action="Index" asp-controller="Crianca" method="get" class="row g-3">
 
                     <div class="col-12 col-md-8 col-lg-9" style="flex-grow: 4;">
                         <label class="form-label"><strong>Busca Por</strong></label>
-                        <input type="text" class="form-control" name="search" @* asp-for="@filtroDiaconato.Search"  *@placeholder="Digite o Nome" />
+                        <input type="text" class="form-control" name="search" asp-for="@filtroCrianca.Search" placeholder="Digite o Nome" />
                     </div>
 
                     <div class="col-12 col-md-4 col-lg-3 d-flex gap-2 align-items-end">
                         <button type="submit" class="btn btn-primary w-100">Pesquisar</button>
-                        <a href="@Url.Action("Regiao", "SuperintendenteRegional")" class="btn btn-warning w-100">Limpar</a>
+                        <a href="@Url.Action("Index", "Crianca")" class="btn btn-warning w-100">Limpar</a>
                     </div>
 
                 </form>
@@ -58,28 +62,89 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@item.Nome</td>
-                                    <td>@item.Role</td>
+                                    <!-- FOTO -->
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.FotoUrl))
+                                        {
+                                            <img src="@item.FotoUrl"
+                                                 class="foto-click"
+                                                 style="width:50px; height:50px; object-fit:cover; border-radius:6px; cursor:pointer;" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/images/Home/foto_padrao.png"
+                                                 class="foto-click"
+                                                 style="width:50px; height:50px; object-fit:cover; border-radius:6px; cursor:pointer;" />
+                                        }
+                                    </td>
+
+                                    <!-- DADOS -->
+                                    <td>@item.NomeCompleto</td>
+                                    <td>@item.Igreja!.Nome</td>
+                                    <td>@item.Regiao!.Nome</td>
+                                    <td>
+                                        @item.CargoLocal.GetDisplayName()
+
+                                        @if (item.CargoRegional != null)
+                                        {
+                                            <text> / @item.CargoRegional.GetDisplayName()</text>
+                                        }
+                                    </td>
+                                    <!-- ATIVO -->
                                     <td>
                                         <span class="badge @(item.Ativo ? "bg-success" : "bg-danger") px-3">
                                             @(item.Ativo ? "Sim" : "Não")
                                         </span>
                                     </td>
+
+                                    <!-- AÇÕES -->
                                     <td class="text-center">
                                         <div class="d-flex flex-wrap gap-2 justify-content-center">
-                                            <a class="btn btn-sm edit-button"
-                                               title="Editar"
-                                               asp-action="Cadastrar" asp-controller="SuperintendenteRegional"
-                                               asp-route-UsuarioId="@item.UsuarioId">
-                                                <i class="fa-solid fa-pen-to-square text-primary"></i>
-                                            </a>
 
-                                            <a class="btn  btn-sm excluir-button"
-                                               title="Inativar Obreiro"
-                                               asp-action="Excluir" asp-controller="SuperintendenteRegional"
-                                               asp-route-UsuarioId="@item.UsuarioId">
-                                                <i class="fa-solid fa-trash-can text-danger"></i>
-                                            </a>
+                                            @if (item.Ativo)
+                                            {
+                                                <!-- Editar -->
+                                                <a class="btn btn-light btn-sm edit-button"
+                                                   title="Editar"
+                                                   asp-action="Cadastrar" asp-controller="Crianca"
+                                                   asp-route-CriancaId="@item.CriancaId">
+                                                    <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                                </a>
+
+                                                <!-- Inativar -->
+                                                <a class="btn btn-light btn-sm ativar-button"
+                                                   title="Inativar Obreiro"
+                                                   asp-action="ObreiroAtivo" asp-controller="Crianca"
+                                                   asp-route-CriancaId="@item.CriancaId">
+                                                    <i class="fa-solid fa-check text-danger"></i>
+                                                </a>
+
+                                                <!-- Detalhes -->
+                                                <a class="btn btn-light btn-sm remove-button"
+                                                   title="Detalhes"
+                                                   asp-action="Detalhe" asp-controller="Crianca"
+                                                   asp-route-CriancaId="@item.CriancaId">
+                                                    <i class="fa-solid fa-eye text-primary"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <!-- Ativar -->
+                                                <a class="btn btn-light btn-sm ativar-button"
+                                                   title="Ativar Obreiro"
+                                                   asp-action="ObreiroAtivo" asp-controller="Diaconato"
+                                                   asp-route-CriancaId="@item.CriancaId">
+                                                    <i class="fa-solid fa-check text-success"></i>
+                                                </a>
+
+                                                <!-- Detalhes -->
+                                                <a class="btn btn-light btn-sm remove-button"
+                                                   title="Detalhes"
+                                                   asp-action="Detalhe" asp-controller="Diaconato"
+                                                   asp-route-CriancaId="@item.CriancaId">
+                                                    <i class="fa-solid fa-eye text-primary"></i>
+                                                </a>
+                                            }
 
                                         </div>
                                     </td>
@@ -142,5 +207,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
 
-    <script src="~/js/usuario.js"></script>
+    <script src="~/js/crianca.js"></script>
 }
