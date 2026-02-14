@@ -9,22 +9,18 @@ namespace WEB.Models.Entities
         public Guid? RegiaoId { get; set; }
         public Guid? IgrejaId { get; set; }
 
-        [Required]
-        [MaxLength(150)]
         public string? Nome { get; set; }
 
-        [Required]
-        [MaxLength(150)]
         public string? Email { get; set; }
 
-        [Required]
+        // SOMENTE HASH
+        [MaxLength(500)]
         public string? SenhaHash { get; set; }
 
         public bool Ativo { get; set; } = true;
 
         [Required]
         public Role Role { get; set; }
-
 
         public DateTime DataCriacao { get; set; } = DateTime.Now;
         public DateTime? UltimoLogin { get; set; }

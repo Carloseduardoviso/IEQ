@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 using WEB.Helpers.Messages;
+using WEB.Models.Entities;
 using WEB.Models.ViewModels;
 using WEB.Services;
 using WEB.Services.Interfaces;
@@ -102,12 +105,7 @@ namespace WEB.Controllers
             {
                 await _usuarioService.UpdateAsync(vm);
                 mensagemSucess = "Edição, efetuado com sucesso!";
-            }
-            else
-            {
-                await _usuarioService.AddAsync(vm);
-                mensagemSucess = "Cadastro, efetuado com sucesso!";
-            }
+            }        
 
             return RedirectToAction("Index", "Usuario").Success(mensagemSucess);
         }
@@ -171,6 +169,14 @@ namespace WEB.Controllers
             {
                 return BadRequest("Erro ao remover");
             }
+        }
+
+        public string GerarHash(string senha)
+        {
+            using var sha = SHA256.Create();
+            var bytes = Encoding.UTF8.GetBytes(senha);
+            var hash = sha.ComputeHash(bytes);
+            return Convert.ToBase64String(hash);
         }
     }
 }

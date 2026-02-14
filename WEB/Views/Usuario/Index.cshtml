@@ -57,7 +57,7 @@
                             {
                                 <tr>
                                     <td>@item.Nome</td>
-                                    <td>@item.Role</td>
+                                    <td>@item.Role.GetDisplayName()</td>
                                     <td>
                                         <span class="badge @(item.Ativo ? "bg-success" : "bg-danger") px-3">
                                             @(item.Ativo ? "Sim" : "Não")

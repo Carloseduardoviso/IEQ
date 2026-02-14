@@ -12,7 +12,7 @@ namespace WEB.Data.Config
             builder.HasKey(u => u.UsuarioId);
             builder.Property(u => u.Nome).HasMaxLength(150).IsRequired();
             builder.HasIndex(u => u.Email).IsUnique();
-            builder.Property(u => u.SenhaHash).HasMaxLength(255).IsRequired();
+            builder.Property(u => u.SenhaHash).HasMaxLength(255);
             builder.Property(u => u.Ativo).IsRequired();
             builder.Property(u => u.Role).IsRequired().HasConversion<int>();
             builder.Property(u => u.DataCriacao).IsRequired();

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WEB.Models.Entities;
 using WEB.Models.Enuns;
 
 namespace WEB.Models.ViewModels
@@ -8,18 +7,20 @@ namespace WEB.Models.ViewModels
     {
         public Guid UsuarioId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Nome é obrigatório")]
         public string? Nome { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email é obrigatório")]
         [EmailAddress]
         public string? Email { get; set; }
 
-        [Required]
+        // Opcional na edição
         [DataType(DataType.Password)]
+        [MinLength(6, ErrorMessage = "Senha deve ter no mínimo 6 caracteres")]
         public string? Senha { get; set; }
 
-        [Compare("Senha")]
+        [DataType(DataType.Password)]
+        [Compare("Senha", ErrorMessage = "Senhas não conferem")]
         public string? ConfirmarSenha { get; set; }
 
         [Display(Name = "Região")]
@@ -30,10 +31,7 @@ namespace WEB.Models.ViewModels
 
         [Required]
         public Role Role { get; set; } = Role.Membro;
+
         public bool Ativo { get; set; } = true;
-
-        public Regiao? Regiao { get; set; }
-        public Igreja? Igreja { get; set; }
-
     }
 }
