@@ -8,7 +8,7 @@ namespace WEB.Services.Interfaces
     public interface IUsuarioService
     {
         Task<Usuario?> LoginAsync(string email, string senha);
-        Task RegistrarAsync(RegistrarVm vm);
+        Task RegistrarAsync(UsuarioVm vm);
         Task<bool> ExisteEmailAsync(string email);
 
         Task AddAsync(UsuarioVm vm);

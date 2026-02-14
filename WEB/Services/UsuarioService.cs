@@ -79,7 +79,7 @@ namespace WEB.Services
             await _usuarioRepository.ReativarAsync(id);
         }
 
-        public async Task RegistrarAsync(RegistrarVm vm)
+        public async Task RegistrarAsync(UsuarioVm vm)
         {
             var usuario = new Usuario
             {

@@ -1,23 +1,33 @@
 ﻿@using WEB.Models.Enuns
+@using WEB.Models.ViewModels
 @model UsuarioVm
-@{
-    Layout = "_LayoutLogin";
 
-    var igreja = ViewBag.Igreja;
+@{
+    var title = ViewBag.Title;
     var regiao = ViewBag.Regiao;
+    var igreja = ViewBag.Igreja;
 }
 
-<div class="container">
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-5">
+<form asp-action="AlterarUsuario" enctype="multipart/form-data">
+    <div id="modalAdicionar" data-bs-backdrop="static" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
 
-            <div class="card shadow">
-                <div class="card-body">
+                <!-- HEADER -->
+                <div class="modal-header" style="background-color: #628dbc;">
+                    <h5 class="modal-title text-white">@title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
-                    <h3 class="text-center mb-4">Cadastro</h3>
+                <!-- BODY -->
+                <div class="modal-body">
 
-                    <form asp-action="Registrar" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="UsuarioId" />
 
+                    <!-- SEÇÃO 1 =============================== -->
+                    <h5 class="border-bottom pb-2 mb-3">Dados Pessoais</h5>
+
+                    <div class="row mb-4">
                         <div class="mb-3">
                             <label>Nome</label>
                             <input asp-for="Nome" class="form-control" placeholder="Digite seu nome" />
@@ -67,25 +77,22 @@
                                     <option value="@item.IgrejaId">@item.Nome</option>
                                 }
                             </select>
-                        </div>                  
-
-                        <button type="submit" class="btn btn-success w-100">
-                            Cadastrar
-                        </button>
-
-                        <div class="text-center mt-3">
-                            <a asp-action="Login">Já tenho conta</a>
+                        </div>   
+                        
+                        <div class="mb-3">
+                            <label>Perfil</label>
+                            <select asp-for="Role" asp-items="Html.GetEnumSelectList<Role>()" class="form-select"></select>
                         </div>
+                    </div>
 
-                    </form>
+                    <!-- FOOTER -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
 
                 </div>
             </div>
-
         </div>
     </div>
-</div>
-
-@section Scripts{
-    <partial name="_ValidationScriptsPartial" />
-}
+</form>

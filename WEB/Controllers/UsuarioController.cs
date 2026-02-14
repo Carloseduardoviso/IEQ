@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using WEB.Helpers.Messages;
 using WEB.Models.ViewModels;
+using WEB.Services;
 using WEB.Services.Interfaces;
 
 namespace WEB.Controllers
@@ -20,9 +22,9 @@ namespace WEB.Controllers
             _regiaoService = regiaoService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var usuario = _usuarioService.GetAllAsync();
+            var usuario = await _usuarioService.GetAllAsync(x => x.Ativo);
             return View(usuario);
         }
 
@@ -74,16 +76,51 @@ namespace WEB.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public async Task<IActionResult> Editar(Guid? usuarioId)
+        {
+            var novo = new UsuarioVm();
+            if (usuarioId != null) novo = await _usuarioService.GetByIdAsync(usuarioId.Value);
+
+            var regiao = await _regiaoService.GetAllAsync();
+            var igreja = await _igrejaService.GetAllAsync();
+
+            ViewBag.Regiao = regiao;
+            ViewBag.Igreja = igreja;
+            ViewBag.Title = usuarioId != null ? "Editar" : "Cadastrar";
+
+            return PartialView("_Editar", novo);
+        }
+
+
         [HttpPost]
-        public async Task<IActionResult> Registrar(RegistrarVm vm)
+        public async Task<IActionResult> AlterarUsuario(UsuarioVm vm)
+        {
+            string mensagemSucess = "";
+            var novo = await _usuarioService.GetByIdAllIncludesAsync(vm.UsuarioId);
+
+            if (novo != null)
+            {
+                await _usuarioService.UpdateAsync(vm);
+                mensagemSucess = "Edição, efetuado com sucesso!";
+            }
+            else
+            {
+                await _usuarioService.AddAsync(vm);
+                mensagemSucess = "Cadastro, efetuado com sucesso!";
+            }
+
+            return RedirectToAction("Index", "Usuario").Success(mensagemSucess);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Registrar(UsuarioVm vm)
         {
             if (!ModelState.IsValid)
                 return View(vm);
 
             if (await _usuarioService.ExisteEmailAsync(vm.Email!))
             {
-                ModelState.AddModelError("", "Email já cadastrado");
-                return View(vm);
+                return View("Registrar", vm).Information("Email já cadastrado");
             }
 
             await _usuarioService.RegistrarAsync(vm);
@@ -110,6 +147,30 @@ namespace WEB.Controllers
                 CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Login", "Usuario");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Excluir(Guid usuarioId)
+        {
+            try
+            {
+                if (usuarioId == Guid.Empty) return BadRequest($"Erro na alteração do estado");
+
+                var paraRemover = await _usuarioService.Remover(usuarioId);
+
+                string menssagem = "Estado removido com sucesso!";
+
+                return Json(new
+                {
+                    id = usuarioId,
+                    message = menssagem,
+                    view = paraRemover
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao remover");
+            }
         }
     }
 }
