@@ -1,0 +1,125 @@
+﻿@{
+    Layout = "_Layout";
+
+    var ttt = Model;
+    var partes = (Model.NomeCompleto ?? "").Trim().Split(' ');
+    var nomeCurto = partes.Length >= 2
+    ? $"{partes[0]} {partes[1]}"
+    : partes[0];
+}
+
+@model LouvorVm
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded">
+        <!-- HEADER -->
+        <div class="card-header bg-primary text-white d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-2">
+            <h3 class="mb-0"><i class="fa-solid fa-user"></i> Detalhes do Diácono</h3>
+            <a href="@Url.Action("Index", "Louvor")" class="btn btn-light btn-sm">
+                <i class="fa-solid fa-arrow-left"></i> Voltar
+            </a>
+        </div>
+
+        <!-- BODY -->
+        <div class="card-body">
+            <div class="row g-4">
+                <!-- FOTO EM DESTAQUE -->
+                <div class="col-12 col-md-4 text-center">
+                    <div class="card border-0 shadow-sm">
+                        @if (!string.IsNullOrEmpty(Model.FotoUrl))
+                        {
+                            <img src="@Model.FotoUrl" class="img-fluid rounded-top" alt="Foto do Diácono" style="max-height: 300px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <img src="~/images/Home/foto_padrao.png" class="img-fluid rounded-top" alt="Foto padrão" style="max-height: 300px; object-fit: cover;">
+                        }
+                        <div class="card-body bg-light">
+                            <h5 class="card-title text-center">@Model.NomeCompleto</h5>
+                            <p class="text-center mb-0">
+                                <span class="badge @(Model.Ativo ? "bg-success" : "bg-danger")">
+                                    @(Model.Ativo ? "Ativo" : "Inativo")
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INFORMAÇÕES -->
+                <div class="col-12 col-md-8">
+                    <div class="list-group list-group-flush shadow-sm rounded">
+                        <div class="list-group-item">
+                            <i class="fa-solid fa-church me-2 text-primary"></i>
+                            <strong>Igreja:</strong> @Model.Igreja?.Nome
+                        </div>
+                        <div class="list-group-item">
+                            <i class="fa-solid fa-user-tie me-2 text-primary"></i>
+                            <strong>Pastor Titular:</strong> @Model.Pastor?.Nome
+                        </div>
+
+                        <div class="list-group-item">
+                            <i class="fa-solid fa-briefcase me-2 text-primary"></i>
+
+                            <strong>Cargo:</strong>
+                            @Model.CargoLocal.GetDisplayName() /
+
+                            @if (Model.CargoRegional != null)
+                            {
+                                @Model.CargoRegional.GetDisplayName()
+                            }
+                        </div>
+
+                        <div class="list-group-item">
+                            <i class="fa-solid fa-phone me-2 text-primary"></i>
+                            <strong>Contato:</strong> @Model.Contato
+                        </div>
+                        <div class="list-group-item">
+                            <i class="fa-solid fa-hourglass-half me-2 text-primary"></i>
+                            <strong>Tempo no Ministério:</strong> @Model.TempoMinisterio
+                        </div>
+                        <div class="list-group-item">
+                            <i class="fa-solid fa-user-tie me-2 text-primary"></i>
+                            <strong>Superintendente Regional:</strong> @Model.SuperintendenteRegional?.Nome
+                        </div>
+                        @*<div class="list-group-item">
+                            <i class="fa-solid fa-user-tie me-2 text-primary"></i>
+                            <strong>Superintendente Estadual:</strong> @Model.NomeSuperintendenteEstadual
+                        </div> *@
+                        <div class="list-group-item">
+                            <div class="row text-start text-md-start g-2">
+                                <div class="col-12 col-sm-4">
+                                    <i class="fa-solid fa-map-location-dot me-2 text-primary"></i>
+                                    <strong>Região:</strong>  @Model.Regiao?.Nome
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <i class="fa-solid fa-map-location-dot me-2 text-primary"></i>
+                                    <strong>Cidade:</strong> @Model.Cidade
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <i class="fa-solid fa-map-location-dot me-2 text-primary"></i>
+                                    <strong>Estado:</strong> @Model.Estado
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row text-start text-md-start g-2">
+                                <div class="col-12 col-sm-4">
+                                    <i class="fa-solid fa-birthday-cake me-2 text-primary"></i>
+                                    <strong>Nascimento:</strong> @Model.DataNascimento?.ToString("dd/MM/yyyy")
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <i class="fa-solid fa-hand-holding-hand me-2 text-primary"></i>
+                                    <strong>Ministério:</strong> @Model.DataMinisterio?.ToString("dd/MM/yyyy")
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <i class="fa-solid fa-water me-2 text-primary"></i>
+                                    <strong>Batismo:</strong> @Model.DataBatismo?.ToString("dd/MM/yyyy")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- row -->
+        </div> <!-- card-body -->
+    </div> <!-- card -->
+</div> <!-- container --
