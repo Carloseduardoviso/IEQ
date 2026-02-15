@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using System.Linq.Expressions;
+using System.Net;
+using System.Net.Mail;
 using WEB.Data.Repositories;
 using WEB.Data.Repositories.Interfaces;
 using WEB.Models.Entities;
@@ -12,11 +14,13 @@ namespace WEB.Services
     {
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _config;
 
-        public UsuarioService(IUsuarioRepository usuarioRepository, IMapper mapper)
+        public UsuarioService(IUsuarioRepository usuarioRepository, IMapper mapper, IConfiguration config)
         {
             _usuarioRepository = usuarioRepository;
             _mapper = mapper;
+            _config = config;
         }
 
         public async Task AddAsync(UsuarioVm vm)
@@ -25,6 +29,52 @@ namespace WEB.Services
             await _usuarioRepository.AddAsync(result);
         }
 
+        public async Task<bool> AlterarSenhaAsync(RedefinirSenhaVm vm)
+        {
+            var usuario = await _usuarioRepository.GetByEmailAsync(vm.Email);
+
+            if (usuario == null)
+                return false;
+
+            // gera hash da nova senha
+            usuario.SenhaHash = BCrypt.Net.BCrypt.HashPassword(vm.NovaSenha);
+
+            await _usuarioRepository.Update(usuario);
+
+            return true;
+        }
+
+        public async Task EnviarAsync(string para, string assunto, string mensagem)
+        {
+            if (string.IsNullOrWhiteSpace(para))
+                throw new Exception("Email destino é obrigatório");
+
+            var fromEmail = _config["Email:Usuario"];
+
+            if (string.IsNullOrWhiteSpace(fromEmail))
+                throw new Exception("Email remetente não configurado");
+
+            var smtp = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new NetworkCredential(
+                    fromEmail,
+                    _config["Email:Senha"]
+                ),
+                EnableSsl = true
+            };
+
+            var mail = new MailMessage
+            {
+                From = new MailAddress(fromEmail),
+                Subject = assunto,
+                Body = mensagem,
+                IsBodyHtml = true
+            };
+
+            mail.To.Add(para);
+
+            await smtp.SendMailAsync(mail);
+        }
         public async Task<bool> ExisteEmailAsync(string email)
         {
             return await _usuarioRepository.GetByEmailAsync(email) != null;

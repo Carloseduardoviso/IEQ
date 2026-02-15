@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -126,10 +127,45 @@ namespace WEB.Controllers
             return RedirectToAction("Login");
         }
 
+        public IActionResult RedefinirSenha(string email)
+        {
+            return View(new RedefinirSenhaVm { Email = email });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RedefinirSenha(RedefinirSenhaVm vm)
+        {
+            if (!ModelState.IsValid)
+                return View(vm);
+
+            var sucesso = await _usuarioService.AlterarSenhaAsync(vm);
+
+            if (!sucesso)
+            {
+                ModelState.AddModelError("", "Senha atual incorreta");
+                return View(vm);
+            }
+
+            TempData["msg"] = "Senha alterada com sucesso!";
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public async Task<IActionResult> EsqueciMinhaSenha(EsqueciMinhaSenhaVm vm)
         {
             var existe = await _usuarioService.ExisteEmailAsync(vm.Email);
+
+            var link = Url.Action(
+     "RedefinirSenha",   // action
+     "Usuario",        // controller
+     new { email = vm.Email }, // parâmetro
+     Request.Scheme);
+
+            await _usuarioService.EnviarAsync(
+                vm.Email,
+                "Redefinir senha",
+                $"Clique aqui para redefinir sua senha: {link}"
+            );
 
             if (existe)
                 TempData["msg"] = "Link enviado para o email!";

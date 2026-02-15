@@ -1,0 +1,49 @@
+﻿@model RedefinirSenhaVm
+
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-4">
+
+            <div class="card shadow">
+                <div class="card-body">
+
+                    <h4 class="text-center mb-4">
+                        Redefinir Senha
+                    </h4>
+
+                    <form asp-action="RedefinirSenha" method="post">
+
+                        <input type="hidden" asp-for="Email" />
+
+                        <div class="p-4">
+
+                            <div class="mb-3">
+                                <label>Nova Senha</label>
+                                <input asp-for="NovaSenha" type="password" class="form-control" />
+                                <span asp-validation-for="NovaSenha" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Confirmar Nova Senha</label>
+                                <input asp-for="ConfirmarSenha" type="password" class="form-control" />
+                                <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                Redefinir Senha
+                            </button>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -21,5 +21,7 @@ namespace WEB.Services.Interfaces
         Task<(IEnumerable<UsuarioVm> lista, int count)> GetAllPaginationAsync(Expression<Func<UsuarioVm, bool>>? filtragem, int skip);
         Task InativarAsync(Guid id);
         Task ReativarAsync(Guid id);
+        Task EnviarAsync(string para, string assunto, string mensagem);
+        Task<bool> AlterarSenhaAsync(RedefinirSenhaVm vm);
     }
 }
