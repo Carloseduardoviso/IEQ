@@ -42,7 +42,7 @@ namespace WEB.Controllers
                 CargoRegional = x.CargoRegional
             }));
 
-            //var criancas = await _criancaService.GetAllAsync(...);
+            //var criancas = await _casalService.GetAllAsync(...);
 
             //lista.AddRange(criancas.Select(x => new {
             //    Nome = x.Nome,

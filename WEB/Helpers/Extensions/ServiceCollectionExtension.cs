@@ -25,6 +25,7 @@ namespace WEB.Helpers.Extensions
             services.AddScoped<IMidiaService, MidiaService>();
             services.AddScoped<ITeatroService, TeatroService>();
             services.AddScoped<IDancaService, DancaService>();
+            services.AddScoped<ICasalService, CasalService>();
 
             //Repositories
             services.AddScoped<IDiaconatoRepository, DiaconatoRepository>();
@@ -43,6 +44,7 @@ namespace WEB.Helpers.Extensions
             services.AddScoped<IMidiaRepository, MidiaRepository>();
             services.AddScoped<ITeatroRepository, TeatroRepository>();
             services.AddScoped<IDancaRepository, DancaRepository>();
+            services.AddScoped<ICasalRepository, CasalRepository>();
 
             return services;
         }

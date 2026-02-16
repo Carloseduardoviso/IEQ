@@ -23,6 +23,7 @@ namespace WEB.Data
         public DbSet<Mulheres> Mulheres { get; set; }
         public DbSet<Teatro> Teatros { get; set; }
         public DbSet<Danca> Dancas { get; set; }
+        public DbSet<Casal> Casals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,6 +43,7 @@ namespace WEB.Data
             modelBuilder.ApplyConfiguration(new MulheresConfig());
             modelBuilder.ApplyConfiguration(new TeatroConfig());
             modelBuilder.ApplyConfiguration(new DancaConfig());
+            modelBuilder.ApplyConfiguration(new CasalConfig());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

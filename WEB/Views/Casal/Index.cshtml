@@ -1,19 +1,19 @@
 ﻿@using WEB.Models.ViewModels
 @using WEB.Models.ViewModels.Filtro
-@model IEnumerable<MulheresVm>
+@model IEnumerable<CasalVm>
 @{
-    FiltroMulheresVm filtroMulheres = ViewBag.FiltroMulheres;
+    FiltroCasalVm filtroCasal = ViewBag.FiltroCasal;
 }
 
 <div class="container mt-4">
     <div class="card border-0 shadow-lg p-3 mb-5 rounded">
         <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
             <h4 class="card-title text-muted m-0">
-                <strong>Mulheres</strong>
+                <strong>Casais</strong>
             </h4>
 
             <div class="d-flex gap-2">
-                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Mulheres")" class="btn btn-primary">
+                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Casal")" class="btn btn-primary">
                     <i class="fa-solid fa-plus"></i> Novo
                 </button>
 
@@ -27,16 +27,16 @@
 
             <!-- FILTRO -->
             <section class="conteudo-inicial mx-auto mb-4">
-                <form asp-action="Index" asp-controller="Mulheres" method="get" class="row g-3">
+                <form asp-action="Index" asp-controller="Casal" method="get" class="row g-3">
 
                     <div class="col-12 col-md-8 col-lg-9" style="flex-grow: 4;">
                         <label class="form-label"><strong>Busca Por</strong></label>
-                        <input type="text" class="form-control" name="search" asp-for="@filtroMulheres.Search" placeholder="Digite o Nome" />
+                        <input type="text" class="form-control" name="search" asp-for="@filtroCasal.Search" placeholder="Digite o Nome" />
                     </div>
 
                     <div class="col-12 col-md-4 col-lg-3 d-flex gap-2 align-items-end">
                         <button type="submit" class="btn btn-primary w-100">Pesquisar</button>
-                        <a href="@Url.Action("Index", "Mulheres")" class="btn btn-warning w-100">Limpar</a>
+                        <a href="@Url.Action("Index", "Casal")" class="btn btn-warning w-100">Limpar</a>
                     </div>
 
                 </form>
@@ -106,24 +106,24 @@
                                                 <!-- Editar -->
                                                 <a class="btn btn-light btn-sm edit-button"
                                                    title="Editar"
-                                                   asp-action="Cadastrar" asp-controller="Mulheres"
-                                                   asp-route-MulheresId="@item.MulheresId">
+                                                   asp-action="Cadastrar" asp-controller="Casal"
+                                                   asp-route-CasalId="@item.CasalId">
                                                     <i class="fa-solid fa-pen-to-square text-primary"></i>
                                                 </a>
 
                                                 <!-- Inativar -->
                                                 <a class="btn btn-light btn-sm ativar-button"
                                                    title="Inativar Obreiro"
-                                                   asp-action="ObreiroAtivo" asp-controller="Mulheres"
-                                                   asp-route-MulheresId="@item.MulheresId">
+                                                   asp-action="ObreiroAtivo" asp-controller="Casal"
+                                                   asp-route-CasalId="@item.CasalId">
                                                     <i class="fa-solid fa-check text-danger"></i>
                                                 </a>
 
                                                 <!-- Detalhes -->
                                                 <a class="btn btn-light btn-sm remove-button"
                                                    title="Detalhes"
-                                                   asp-action="Detalhe" asp-controller="Mulheres"
-                                                   asp-route-MulheresId="@item.MulheresId">
+                                                   asp-action="Detalhe" asp-controller="Casal"
+                                                   asp-route-CasalId="@item.CasalId">
                                                     <i class="fa-solid fa-eye text-primary"></i>
                                                 </a>
                                             }
@@ -132,16 +132,16 @@
                                                 <!-- Ativar -->
                                                 <a class="btn btn-light btn-sm ativar-button"
                                                    title="Ativar Obreiro"
-                                                   asp-action="ObreiroAtivo" asp-controller="Mulheres"
-                                                   asp-route-MulheresId="@item.MulheresId">
+                                                   asp-action="ObreiroAtivo" asp-controller="Diaconato"
+                                                   asp-route-CasalId="@item.CasalId">
                                                     <i class="fa-solid fa-check text-success"></i>
                                                 </a>
 
                                                 <!-- Detalhes -->
                                                 <a class="btn btn-light btn-sm remove-button"
                                                    title="Detalhes"
-                                                   asp-action="Detalhe" asp-controller="Mulheres"
-                                                   asp-route-MulheresId="@item.MulheresId">
+                                                   asp-action="Detalhe" asp-controller="Diaconato"
+                                                   asp-route-CasalId="@item.CasalId">
                                                     <i class="fa-solid fa-eye text-primary"></i>
                                                 </a>
                                             }
@@ -207,5 +207,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
 
-    <script src="~/js/mulheres.js"></script>
+    <script src="~/js/casal.js"></script>
 }
