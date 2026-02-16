@@ -65,7 +65,7 @@ namespace WEB.Models.Enuns
         [Display(Name = "Tesoureiro(a)")]
         Tesoureiro = 20,
 
-        [Display(Name = "Pastor(a)")]
+        [Display(Name = "Pastor(a) Titular")]
         Pastor = 21,
 
         [Display(Name = "Pastor(a) Auxiliar")]

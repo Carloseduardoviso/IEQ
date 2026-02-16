@@ -9,10 +9,12 @@
             </h4>
 
             <div class="d-flex gap-2">
-                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "SuperintendenteRegional")" class="btn btn-primary">
-                    <i class="fa-solid fa-plus"></i> Novo
-                </button>
-
+                @if (User.IsInRole("Superintendente Regional"))
+                {
+                    <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "SuperintendenteRegional")" class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i> Novo
+                    </button>
+                }
                 <a href="@Url.Action("Regiao", "SuperintendenteRegional")" class="btn btn-secondary">
                     <i class="fa-solid fa-arrow-left"></i> Voltar
                 </a>
@@ -44,8 +46,10 @@
                     <thead class="table-primary">
                         <tr>
                             <th>Nome</th>
-                            <th>Ativo</th>
-                            <th class="text-center" width="15%">Ações</th>
+                            <th>Ativo</th>@if (User.IsInRole("Superintendente Regional"))
+                            {
+                                <th class="text-center" width="15%">Ações</th>
+                            }
                         </tr>
                     </thead>
 
@@ -60,26 +64,27 @@
                                         <span class="badge @(item.Ativo ? "bg-success" : "bg-danger") px-3">
                                             @(item.Ativo ? "Sim" : "Não")
                                         </span>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="d-flex flex-wrap gap-2 justify-content-center">
-                                            <a class="btn btn-sm edit-button"
-                                               title="Editar"
-                                               asp-action="Cadastrar" asp-controller="SuperintendenteRegional"
-                                               asp-route-SuperintendenteRegionalId="@item.SuperintendenteRegionalId">
-                                                <i class="fa-solid fa-pen-to-square text-primary"></i>
-                                            </a>
+                                    </td>@if (User.IsInRole("Superintendente Regional"))
+                                    {
+                                        <td class="text-center">
+                                            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                                <a class="btn btn-sm edit-button"
+                                                   title="Editar"
+                                                   asp-action="Cadastrar" asp-controller="SuperintendenteRegional"
+                                                   asp-route-SuperintendenteRegionalId="@item.SuperintendenteRegionalId">
+                                                    <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                                </a>
 
-                                            <a class="btn  btn-sm excluir-button"
-                                               title="Inativar Obreiro"
-                                               asp-action="Excluir" asp-controller="SuperintendenteRegional"
-                                               asp-route-SuperintendenteRegionalId="@item.SuperintendenteRegionalId">
-                                                <i class="fa-solid fa-trash-can text-danger"></i>
-                                            </a>
+                                                <a class="btn  btn-sm excluir-button"
+                                                   title="Inativar Obreiro"
+                                                   asp-action="Excluir" asp-controller="SuperintendenteRegional"
+                                                   asp-route-SuperintendenteRegionalId="@item.SuperintendenteRegionalId">
+                                                    <i class="fa-solid fa-trash-can text-danger"></i>
+                                                </a>
 
-                                        </div>
-                                    </td>
-
+                                            </div>
+                                        </td>
+                                    }
                                 </tr>
                             }
                         }

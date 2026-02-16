@@ -9,9 +9,12 @@
             </h4>
 
             <div class="d-flex gap-2">
-                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Regiao")" class="btn btn-primary">
-                    <i class="fa-solid fa-plus"></i> Novo
-                </button>
+                @if (User.IsInRole("Superintendente Regional"))
+                {
+                    <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Regiao")" class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i> Novo
+                    </button>
+                }
 
                 <a href="@Url.Action("Index", "Regiao")" class="btn btn-secondary">
                     <i class="fa-solid fa-arrow-left"></i> Voltar
@@ -44,9 +47,12 @@
                     <thead class="table-primary">
                         <tr>
                             <th>Nome</th>
-                           @*<th>Superintendente Estadual</th> *@
+                            @*<th>Superintendente Estadual</th> *@
                             <th>Superintendente Regional</th>
-                            <th class="text-center" width="15%">Ações</th>
+                            @if (User.IsInRole("Superintendente Regional"))
+                            {
+                                <th class="text-center" width="15%">Ações</th>
+                            }
                         </tr>
                     </thead>
 
@@ -59,17 +65,19 @@
                                     <td>@item.Nome</td>
                                     @* <td>@item.SuperintendenteEstadual?.Nome</td> *@
                                     <td>@item.SuperintendenteRegional?.Nome</td>
-                                    <td class="text-center">
-                                        <div class="d-flex flex-wrap gap-2 justify-content-center">
-                                            <a class="btn btn-sm edit-button"
-                                               title="Editar"
-                                               asp-action="Cadastrar" asp-controller="Regiao"
-                                               asp-route-RegiaoId="@item.RegiaoId">
-                                                <i class="fa-solid fa-pen-to-square text-primary"></i>
-                                            </a>                                          
-                                        </div>
-                                    </td>
-
+                                    @if (User.IsInRole("Superintendente Regional"))
+                                    {
+                                        <td class="text-center">
+                                            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                                <a class="btn btn-sm edit-button"
+                                                   title="Editar"
+                                                   asp-action="Cadastrar" asp-controller="Regiao"
+                                                   asp-route-RegiaoId="@item.RegiaoId">
+                                                    <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    }
                                 </tr>
                             }
                         }

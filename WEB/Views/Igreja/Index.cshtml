@@ -12,9 +12,12 @@
             </h4>
 
             <div class="d-flex gap-2">
-                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Igreja")" class="btn btn-primary">
-                    <i class="fa-solid fa-plus"></i> Novo
-                </button>
+                @if (User.IsInRole("Superintendente Regional") || User.IsInRole("Pastor(a) Titular"))
+                {
+                    <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Igreja")" class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i> Novo
+                    </button>
+                }
 
                 <a href="@Url.Action("Index", "Igreja")" class="btn btn-secondary">
                     <i class="fa-solid fa-arrow-left"></i> Voltar
@@ -50,7 +53,10 @@
                             <th>Região</th>
                             <th>Endereço</th>
                             <th>Ativo</th>
-                            <th class="text-center" width="15%">Ações</th>
+                            @if (User.IsInRole("Superintendente Regional") || User.IsInRole("Pastor(a) Titular"))
+                            {
+                                <th class="text-center" width="15%">Ações</th>
+                            }
                         </tr>
                     </thead>
 
@@ -69,24 +75,26 @@
                                             @(item.Ativo ? "Sim" : "Não")
                                         </span>
                                     </td>
+                                    @if (User.IsInRole("Superintendente Regional") || User.IsInRole("Pastor(a) Titular"))
+                                    {
+                                        <td class="text-center">
+                                            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                                <a class="btn btn-light btn-sm edit-button"
+                                                   title="Editar"
+                                                   asp-action="Cadastrar" asp-controller="Igreja"
+                                                   asp-route-IgrejaId="@item.IgrejaId">
+                                                    <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                                </a>
 
-                                    <td class="text-center">
-                                        <div class="d-flex flex-wrap gap-2 justify-content-center">
-                                            <a class="btn btn-light btn-sm edit-button"
-                                               title="Editar"
-                                               asp-action="Cadastrar" asp-controller="Igreja"
-                                               asp-route-IgrejaId="@item.IgrejaId">
-                                                <i class="fa-solid fa-pen-to-square text-primary"></i>
-                                            </a>
-
-                                            <a class="btn btn-light btn-sm ativar-button"
-                                               title="Inativar Obreiro"
-                                               asp-action="Operacao" asp-controller="Igreja"
-                                               asp-route-IgrejaId="@item.IgrejaId">
-                                                <i class="fa-solid fa-check text-danger"></i>
-                                            </a>
-                                        </div>
-                                    </td>
+                                                <a class="btn btn-light btn-sm ativar-button"
+                                                   title="Inativar Obreiro"
+                                                   asp-action="Operacao" asp-controller="Igreja"
+                                                   asp-route-IgrejaId="@item.IgrejaId">
+                                                    <i class="fa-solid fa-check text-danger"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    }
                                 </tr>
                             }
                         }
