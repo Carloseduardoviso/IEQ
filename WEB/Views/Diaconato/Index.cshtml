@@ -13,10 +13,12 @@
             </h4>
 
             <div class="d-flex gap-2">
-                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Diaconato")" class="btn btn-primary">
-                    <i class="fa-solid fa-plus"></i> Novo
-                </button>
-
+                @if (User.IsInRole("SuperintendenteRegional") || User.IsInRole("PastorTitular") || User.IsInRole("CoordenadorRegionalDiaconato"))
+                {
+                    <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Diaconato")" class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i> Novo
+                    </button>
+                }
                 <a href="@Url.Action("Index", "Diaconato")" class="btn btn-secondary">
                     <i class="fa-solid fa-arrow-left"></i> Voltar
                 </a>
@@ -102,51 +104,35 @@
                                     <td class="text-center">
                                         <div class="d-flex flex-wrap gap-2 justify-content-center">
 
-                                            @if (item.Ativo)
+                                            @if (User.IsInRole("SuperintendenteRegional") || User.IsInRole("PastorTitular") || User.IsInRole("CoordenadorRegionalDiaconato"))
                                             {
-                                                <!-- Editar -->
-                                                <a class="btn btn-light btn-sm edit-button"
-                                                   title="Editar"
-                                                   asp-action="Cadastrar" asp-controller="Diaconato"
-                                                   asp-route-DiaconatoId="@item.DiaconatoId">
-                                                    <i class="fa-solid fa-pen-to-square text-primary"></i>
-                                                </a>
+                                                @if (item.Ativo)
+                                                {
+                                                    <!-- Editar -->
+                                                    <a class="btn btn-light btn-sm edit-button"
+                                                       title="Editar"
+                                                       asp-action="Cadastrar" asp-controller="Diaconato"
+                                                       asp-route-DiaconatoId="@item.DiaconatoId">
+                                                        <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                                    </a>
 
-                                                <!-- Inativar -->
-                                                <a class="btn btn-light btn-sm ativar-button"
-                                                   title="Inativar Obreiro"
-                                                   asp-action="ObreiroAtivo" asp-controller="Diaconato"
-                                                   asp-route-DiaconatoId="@item.DiaconatoId">
-                                                    <i class="fa-solid fa-check text-danger"></i>
-                                                </a>
-
-                                                <!-- Detalhes -->
-                                                <a class="btn btn-light btn-sm remove-button"
-                                                   title="Detalhes"
-                                                   asp-action="Detalhe" asp-controller="Diaconato"
-                                                   asp-route-DiaconatoId="@item.DiaconatoId">
-                                                    <i class="fa-solid fa-eye text-primary"></i>
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <!-- Ativar -->
-                                                <a class="btn btn-light btn-sm ativar-button"
-                                                   title="Ativar Obreiro"
-                                                   asp-action="ObreiroAtivo" asp-controller="Diaconato"
-                                                   asp-route-DiaconatoId="@item.DiaconatoId">
-                                                    <i class="fa-solid fa-check text-success"></i>
-                                                </a>
-
-                                                <!-- Detalhes -->
-                                                <a class="btn btn-light btn-sm remove-button"
-                                                   title="Detalhes"
-                                                   asp-action="Detalhe" asp-controller="Diaconato"
-                                                   asp-route-DiaconatoId="@item.DiaconatoId">
-                                                    <i class="fa-solid fa-eye text-primary"></i>
-                                                </a>
+                                                    <!-- Inativar -->
+                                                    <a class="btn btn-light btn-sm ativar-button"
+                                                       title="Inativar Obreiro"
+                                                       asp-action="ObreiroAtivo" asp-controller="Diaconato"
+                                                       asp-route-DiaconatoId="@item.DiaconatoId">
+                                                        <i class="fa-solid fa-check text-danger"></i>
+                                                    </a>
+                                                }
                                             }
 
+                                            <!-- Detalhes -->
+                                            <a class="btn btn-light btn-sm remove-button"
+                                               title="Detalhes"
+                                               asp-action="Detalhe" asp-controller="Diaconato"
+                                               asp-route-DiaconatoId="@item.DiaconatoId">
+                                                <i class="fa-solid fa-eye text-primary"></i>
+                                            </a>
                                         </div>
                                     </td>
 
@@ -208,15 +194,23 @@
     }
 
     .btn-close-red-blink {
-    filter: invert(25%) sepia(95%) saturate(7480%) hue-rotate(350deg) brightness(90%) contrast(120%);
-    animation: blinkRed 1s infinite;
-}
+        filter: invert(25%) sepia(95%) saturate(7480%) hue-rotate(350deg) brightness(90%) contrast(120%);
+        animation: blinkRed 1s infinite;
+    }
 
-@@keyframes blinkRed {
-    0% { opacity: 1; }
-    50% { opacity: 0.3; }
-    100% { opacity: 1; }
-}
+    @@keyframes blinkRed {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.3;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
 
 </style>
 
@@ -225,10 +219,10 @@
 <!-- ====================== -->
 <div class="modal fade" id="modalFoto" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">         
-           <div class="modal-header" style="background-color: #cfe2ff;">
-               <button type="button" class="btn-close btn-close-red-blink" data-bs-dismiss="modal"></button>
-           </div>
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #cfe2ff;">
+                <button type="button" class="btn-close btn-close-red-blink" data-bs-dismiss="modal"></button>
+            </div>
             <img id="fotoModal" src="" class="modal-img-full rounded shadow" />
         </div>
     </div>

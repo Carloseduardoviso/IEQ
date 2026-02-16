@@ -11,7 +11,7 @@
                 <strong>Pastores</strong>
             </h4>
             <div class="d-flex gap-2">
-                @if (User.IsInRole("Superintendente Regional") || User.IsInRole("Pastor(a) Titular"))
+                @if (User.IsInRole("SuperintendenteRegional") || User.IsInRole("PastorTitular"))
                 {
                     <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Pastores")" class="btn btn-primary">
                         <i class="fa-solid fa-plus"></i> Novo
@@ -51,7 +51,7 @@
                             <th>Igreja</th>
                             <th>Região</th>
                             <th>Ativo</th>
-                            @if (User.IsInRole("Superintendente Regional") || User.IsInRole("Pastor(a) Titular"))
+                            @if (User.IsInRole("SuperintendenteRegional") || User.IsInRole("PastorTitular"))
                             {
                                 <th class="text-center" width="15%">Ações</th>
                             }
@@ -72,7 +72,7 @@
                                             @(item.Ativo ? "Sim" : "Não")
                                         </span>
                                     </td>
-                                    @if (User.IsInRole("Superintendente Regional") || User.IsInRole("Pastor(a) Titular"))
+                                    @if (User.IsInRole("SuperintendenteRegional") || User.IsInRole("PastorTitular"))
                                     {
                                         <td class="text-center">
                                             <div class="d-flex flex-wrap gap-2 justify-content-center">

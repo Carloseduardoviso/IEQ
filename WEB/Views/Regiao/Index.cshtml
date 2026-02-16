@@ -9,7 +9,7 @@
             </h4>
 
             <div class="d-flex gap-2">
-                @if (User.IsInRole("Superintendente Regional"))
+                @if (User.IsInRole("SuperintendenteRegional"))
                 {
                     <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Regiao")" class="btn btn-primary">
                         <i class="fa-solid fa-plus"></i> Novo
@@ -49,7 +49,7 @@
                             <th>Nome</th>
                             @*<th>Superintendente Estadual</th> *@
                             <th>Superintendente Regional</th>
-                            @if (User.IsInRole("Superintendente Regional"))
+                            @if (User.IsInRole("SuperintendenteRegional"))
                             {
                                 <th class="text-center" width="15%">Ações</th>
                             }
@@ -65,7 +65,7 @@
                                     <td>@item.Nome</td>
                                     @* <td>@item.SuperintendenteEstadual?.Nome</td> *@
                                     <td>@item.SuperintendenteRegional?.Nome</td>
-                                    @if (User.IsInRole("Superintendente Regional"))
+                                    @if (User.IsInRole("SuperintendenteRegional"))
                                     {
                                         <td class="text-center">
                                             <div class="d-flex flex-wrap gap-2 justify-content-center">

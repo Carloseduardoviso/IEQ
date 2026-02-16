@@ -9,7 +9,7 @@
             </h4>
 
             <div class="d-flex gap-2">
-                @if (User.IsInRole("Superintendente Regional"))
+                @if (User.IsInRole("SuperintendenteRegional"))
                 {
                     <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "SuperintendenteRegional")" class="btn btn-primary">
                         <i class="fa-solid fa-plus"></i> Novo
@@ -46,7 +46,7 @@
                     <thead class="table-primary">
                         <tr>
                             <th>Nome</th>
-                            <th>Ativo</th>@if (User.IsInRole("Superintendente Regional"))
+                            <th>Ativo</th>@if (User.IsInRole("SuperintendenteRegional"))
                             {
                                 <th class="text-center" width="15%">Ações</th>
                             }
@@ -64,7 +64,7 @@
                                         <span class="badge @(item.Ativo ? "bg-success" : "bg-danger") px-3">
                                             @(item.Ativo ? "Sim" : "Não")
                                         </span>
-                                    </td>@if (User.IsInRole("Superintendente Regional"))
+                                    </td>@if (User.IsInRole("SuperintendenteRegional"))
                                     {
                                         <td class="text-center">
                                             <div class="d-flex flex-wrap gap-2 justify-content-center">
