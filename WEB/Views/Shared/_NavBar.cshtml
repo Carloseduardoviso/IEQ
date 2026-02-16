@@ -66,6 +66,13 @@
                             <li><a class="dropdown-item" asp-controller="Teatro" asp-action="Index">Teatro</a></li>
                         </ul>
                     </li>
+                    @if (User.IsInRole("SuperintendenteRegional") || User.IsInRole("PastorTitular") || User.IsInRole("PastorAuxiliar") || User.IsInRole("LiderLocal")
+                                    || User.IsInRole("ViceLider") || User.IsInRole("Diretor") || User.IsInRole("Diretora") || User.IsInRole("CoordenadorRegionalDiaconato") || User.IsInRole("CoordenadorRegionalLouvor")
+                                    || User.IsInRole("CoordenadorRegionalHomens") || User.IsInRole("CoordenadorRegionalMulher") || User.IsInRole("CoordenadorRegionalMidia") || User.IsInRole("CoordenadorRegionalTeatro") || User.IsInRole("CoordenadorRegionalCrianca") || User.IsInRole("CoordenadorRegionalJovemAdolescente")
+                                    || User.IsInRole("CoordenadorRegionalMissao") || User.IsInRole("CoordenadorRegionalCasal"))
+                    {
+
+                    }
                     <li class="nav-item"><a class="nav-link nav-link-ieq" asp-controller="Usuario" asp-action="Index">Usuário</a></li>
                 </ul>
             }
@@ -74,7 +81,7 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
                 @if (User.Identity!.IsAuthenticated)
-                {                   
+                {
                     <li class="nav-item dropdown">
                         <a class="nav-link nav-link-ieq dropdown-toggle"
                            data-bs-toggle="dropdown">

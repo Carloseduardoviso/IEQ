@@ -13,7 +13,7 @@
             </h4>
 
             <div class="d-flex gap-2">
-                @if (User.IsInRole("SuperintendenteRegional") || User.IsInRole("PastorTitular") || User.IsInRole("CoordenadorRegionalDiaconato"))
+                @if (User.IsInRole("SuperintendenteRegional") || User.IsInRole("PastorTitular") || User.IsInRole("CoordenadorRegionalDiaconato") || User.IsInRole("Diretor") || User.IsInRole("Diretora"))
                 {
                     <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Diaconato")" class="btn btn-primary">
                         <i class="fa-solid fa-plus"></i> Novo
@@ -104,7 +104,7 @@
                                     <td class="text-center">
                                         <div class="d-flex flex-wrap gap-2 justify-content-center">
 
-                                            @if (User.IsInRole("SuperintendenteRegional") || User.IsInRole("PastorTitular") || User.IsInRole("CoordenadorRegionalDiaconato"))
+                                            @if (User.IsInRole("SuperintendenteRegional") || User.IsInRole("PastorTitular") || User.IsInRole("CoordenadorRegionalDiaconato") || User.IsInRole("Diretor") || User.IsInRole("Diretora"))
                                             {
                                                 @if (item.Ativo)
                                                 {
