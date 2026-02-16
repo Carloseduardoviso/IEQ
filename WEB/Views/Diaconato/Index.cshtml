@@ -157,7 +157,7 @@
                                 <a class="page-link"
                                    asp-action="Index"
                                    asp-route-pagina="@(ViewBag.PaginaAtual - 1)"
-                                   asp-route-NomeProduto="@filtroDiaconato.Search">Anterior</a>
+                                   asp-route-Search="@filtroDiaconato.Search">Anterior</a>
                             </li>
 
                             @for (int i = 1; i <= ViewBag.NumeroTotalPaginas; i++)
@@ -166,7 +166,7 @@
                                     <a class="page-link"
                                        asp-action="Index"
                                        asp-route-pagina="@i"
-                                       asp-route-NomeProduto="@filtroDiaconato.Search">
+                                       asp-route-Search="@filtroDiaconato.Search">
                                         @i
                                     </a>
                                 </li>
@@ -176,7 +176,7 @@
                                 <a class="page-link"
                                    asp-action="Index"
                                    asp-route-pagina="@(ViewBag.PaginaAtual + 1)"
-                                   asp-route-NomeProduto="@filtroDiaconato.Search">Próxima</a>
+                                   asp-route-Search="@filtroDiaconato.Search">Próxima</a>
                             </li>
                         </ul>
                     </nav>

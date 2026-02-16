@@ -38,7 +38,7 @@ namespace WEB.Data.Repositories
 
         public async Task<(IEnumerable<Diaconato> lista, int count)> GetAllPaginationAsync(Expression<Func<Diaconato, bool>>? expression, int skip)
         {
-            var query = _dataContext.Diaconatos.AsNoTracking();
+            var query = _dataContext.Diaconatos.Where(x => x.Ativo).AsNoTracking();
             query = IncludeAllProperties(query);
 
             if (expression != null) query = query.Where(expression);

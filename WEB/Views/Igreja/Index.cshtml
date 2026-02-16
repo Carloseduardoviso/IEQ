@@ -1,7 +1,8 @@
 ﻿@using WEB.Models.ViewModels
+@using WEB.Models.ViewModels.Filtro
 @model IEnumerable<IgrejaVm>
 @{
-
+    FiltroIgrejaVm filtroIgreja = ViewBag.FiltroIgreja;
 }
 
 <div class="container mt-4">
@@ -108,7 +109,7 @@
                 </table>
 
                 <!-- Paginação -->
-                @*  @if (ViewBag.NumeroTotalPaginas > 1)
+                 @if (ViewBag.NumeroTotalPaginas > 1)
                 {
                     <nav aria-label="Navegação de página">
                         <ul class="pagination justify-content-end mt-4">
@@ -116,7 +117,7 @@
                                 <a class="page-link"
                                    asp-action="Index"
                                    asp-route-pagina="@(ViewBag.PaginaAtual - 1)"
-                                   asp-route-NomeProduto="@filtroDiaconato.Search">Anterior</a>
+                                   asp-route-Search="@filtroIgreja.Search">Anterior</a>
                             </li>
 
                             @for (int i = 1; i <= ViewBag.NumeroTotalPaginas; i++)
@@ -125,7 +126,7 @@
                                     <a class="page-link"
                                        asp-action="Index"
                                        asp-route-pagina="@i"
-                                       asp-route-NomeProduto="@filtroDiaconato.Search">
+                                       asp-route-Search="@filtroIgreja.Search">
                                         @i
                                     </a>
                                 </li>
@@ -135,11 +136,11 @@
                                 <a class="page-link"
                                    asp-action="Index"
                                    asp-route-pagina="@(ViewBag.PaginaAtual + 1)"
-                                   asp-route-NomeProduto="@filtroDiaconato.Search">Próxima</a>
+                                   asp-route-Search="@filtroIgreja.Search">Próxima</a>
                             </li>
                         </ul>
                     </nav>
-                } *@
+                }
             </div>
         </div>
     </div>

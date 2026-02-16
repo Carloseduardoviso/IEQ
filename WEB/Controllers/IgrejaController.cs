@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using System.Text;
+using System.Text.RegularExpressions;
+using WEB.Helpers.Builder.Filtro;
 using WEB.Helpers.Messages;
+using WEB.Models.ViewModels.Filtro;
 using WEB.Services;
 using WEB.Services.Interfaces;
 
@@ -16,10 +21,21 @@ namespace WEB.Controllers
             _regiaoService = regiaoService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FiltroIgrejaVm filtroIgrejaVm, int pagina = 1)
         {
-            var igrejas = await _igrejaService.GetAllAsync();
-            return View(igrejas);
+            filtroIgrejaVm.Search = NormalizeSearch(filtroIgrejaVm.Search ?? string.Empty);
+            var filtroFinal = FiltroIgrejaBuilder.Construir(filtroIgrejaVm);
+
+            var (lista, count) = await _igrejaService.GetAllPaginationAsync(filtroFinal, (pagina - 1) * 5);
+            int numeroTotalPaginas = (int)Math.Ceiling(count / (double)5);
+            pagina = Math.Clamp(pagina, 0, numeroTotalPaginas);
+
+            ViewBag.FiltroIgreja = filtroIgrejaVm;
+            ViewBag.NumeroTotalPaginas = numeroTotalPaginas;
+            ViewBag.PaginaAtual = pagina;
+            ViewBag.TotalRegistro = count;
+            ViewBag.TotalExibido = (await _igrejaService.GetAllAsync()).Count();
+            return View(lista);
         }
 
         public async Task<IActionResult> Cadastrar(Guid? igrejaId)
@@ -74,6 +90,33 @@ namespace WEB.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        private string NormalizeSearch(string search)
+        {
+            if (string.IsNullOrWhiteSpace(search))
+                return string.Empty;
+
+            // Remove acentos
+            search = RemoverAcentos(search);
+
+            // Remove espaços duplicados
+            search = Regex.Replace(search, @"\s+", " ");
+
+            // Remove espaços no início e no fim
+            search = search.Trim();
+
+            return search;
+        }
+
+        private string RemoverAcentos(string texto)
+        {
+            return new string(
+                texto
+                    .Normalize(NormalizationForm.FormD)
+                    .Where(ch => CharUnicodeInfo.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark)
+                    .ToArray()
+            ).Normalize(NormalizationForm.FormC);
         }
     }    
 }
