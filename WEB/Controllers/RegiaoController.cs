@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WEB.Helpers.Builder.Filtro;
 using WEB.Helpers.Messages;
+using WEB.Models.ViewModels.Filtro;
+using WEB.Services;
 using WEB.Services.Interfaces;
 
 namespace WEB.Controllers
@@ -17,11 +20,21 @@ namespace WEB.Controllers
             _superintendenteRegionalService = superintendenteRegionalService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FiltroRegiaoVm filtroRegiaoVm, int pagina = 1)
         {
-            var regiao = await _regiaoService.GetAllAsync();
+            filtroRegiaoVm.Search = filtroRegiaoVm.Search ?? string.Empty;
+            var filtroFinal = FiltroRegiaoBuilder.Construir(filtroRegiaoVm);
 
-            return View(regiao);
+            var (lista, count) = await _regiaoService.GetAllPaginationAsync(filtroFinal, (pagina - 1) * 5);
+            int numeroTotalPaginas = (int)Math.Ceiling(count / (double)5);
+            pagina = Math.Clamp(pagina, 0, numeroTotalPaginas);
+
+            ViewBag.FiltroRegiao = filtroRegiaoVm;
+            ViewBag.NumeroTotalPaginas = numeroTotalPaginas;
+            ViewBag.PaginaAtual = pagina;
+            ViewBag.TotalRegistro = count;
+            ViewBag.TotalExibido = (await _regiaoService.GetAllAsync()).Count();
+            return View(lista);
         }
 
         public async Task<IActionResult> Cadastrar(Guid? regiaoId)

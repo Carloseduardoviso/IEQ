@@ -21,5 +21,7 @@
         public ICollection<Mulheres> Mulheres { get; set; } = new List<Mulheres>();
         public ICollection<Teatro> Teatros { get; set; } = new List<Teatro>();
         public ICollection<Danca> Dancas { get; set; } = new List<Danca>();
+        public ICollection<Casal> Casals { get; set; } = new List<Casal>();
+        public ICollection<Membro> Membros { get; set; } = new List<Membro>();
     }
 }

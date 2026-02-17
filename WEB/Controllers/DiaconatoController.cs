@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
-using System.Text;
-using System.Text.RegularExpressions;
 using WEB.Helpers.Builder.Filtro;
 using WEB.Helpers.Messages;
 using WEB.Models.ViewModels;
@@ -32,7 +29,7 @@ namespace WEB.Controllers
 
         public async Task<IActionResult> Index(FiltroDiaconatoVm filtroDiaconatoVm, int pagina = 1)
         {
-            filtroDiaconatoVm.Search = NormalizeSearch(filtroDiaconatoVm.Search ?? string.Empty);
+            filtroDiaconatoVm.Search = filtroDiaconatoVm.Search ?? string.Empty;
             var filtroFinal = FiltroDiaconatoBuilder.Construir(filtroDiaconatoVm);
 
             var (lista, count) = await _diaconatoService.GetAllPaginationAsync(filtroFinal, (pagina - 1) * 5);
@@ -286,34 +283,6 @@ namespace WEB.Controllers
             }
 
             return RedirectToAction("Index", "Diaconato").Success(mensagemSucesso);
-        }
-
-        private string NormalizeSearch(string search)
-        {
-            if (string.IsNullOrWhiteSpace(search))
-                return string.Empty;
-
-            // Remove acentos
-            search = RemoverAcentos(search);
-
-            // Remove espaços duplicados
-            search = Regex.Replace(search, @"\s+", " ");
-
-            // Remove espaços no início e no fim
-            search = search.Trim();
-
-            return search;
-        }
-
-        private string RemoverAcentos(string texto)
-        {
-            return new string(
-                texto
-                    .Normalize(NormalizationForm.FormD)
-                    .Where(ch => CharUnicodeInfo.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark)
-                    .ToArray()
-            ).Normalize(NormalizationForm.FormC);
-        }
-
+        }  
     }
 }

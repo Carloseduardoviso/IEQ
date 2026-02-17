@@ -18,7 +18,7 @@ namespace WEB.Helpers.Builder.Filtro
 
         public static Expression<Func<RegiaoVm, bool>> ConstruirLambda(FiltroRegiaoVm filter)
         {
-            return new DiaconatoExpressionBuilder<RegiaoVm>(nameof(Regiao))
+            return new RegiaoExpressionBuilder<RegiaoVm>(nameof(Regiao))
                 .BuscarEmTudo(filter.Search)
                 .Construir();
         }

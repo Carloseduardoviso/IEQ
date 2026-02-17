@@ -1,5 +1,9 @@
 ﻿@using WEB.Models.ViewModels
+@using WEB.Models.ViewModels.Filtro
 @model IEnumerable<SuperintendenteRegionalVm>
+@{
+    FiltroSuperintendenteRegionalVm filtroSuperintendenteRegional = ViewBag.FiltroSuperintendenteRegional;
+}
 
 <div class="container mt-4">
     <div class="card border-0 shadow-lg p-3 mb-5 rounded">
@@ -15,7 +19,7 @@
                         <i class="fa-solid fa-plus"></i> Novo
                     </button>
                 }
-                <a href="@Url.Action("Regiao", "Home")" class="btn btn-secondary">
+                <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">
                     <i class="fa-solid fa-arrow-left"></i> Voltar
                 </a>
             </div>
@@ -29,7 +33,7 @@
 
                     <div class="col-12 col-md-8 col-lg-9" style="flex-grow: 4;">
                         <label class="form-label"><strong>Busca Por</strong></label>
-                        <input type="text" class="form-control" name="search" @* asp-for="@filtroDiaconato.Search"  *@placeholder="Digite o Nome" />
+                        <input type="text" class="form-control" name="search" asp-for="@filtroSuperintendenteRegional.Search" placeholder="Digite o Nome" />
                     </div>
 
                     <div class="col-12 col-md-4 col-lg-3 d-flex gap-2 align-items-end">
@@ -97,7 +101,7 @@
                     </tbody>
                 </table>
 
-                @*    <!-- Paginação -->
+                <!-- Paginação -->
                 @if (ViewBag.NumeroTotalPaginas > 1)
                 {
                     <nav aria-label="Navegação de página">
@@ -106,7 +110,7 @@
                                 <a class="page-link"
                                    asp-action="Index"
                                    asp-route-pagina="@(ViewBag.PaginaAtual - 1)"
-                                   asp-route-NomeProduto="@filtroDiaconato.Search">Anterior</a>
+                                   asp-route-Search="@filtroSuperintendenteRegional.Search">Anterior</a>
                             </li>
 
                             @for (int i = 1; i <= ViewBag.NumeroTotalPaginas; i++)
@@ -115,7 +119,7 @@
                                     <a class="page-link"
                                        asp-action="Index"
                                        asp-route-pagina="@i"
-                                       asp-route-NomeProduto="@filtroDiaconato.Search">
+                                       asp-route-Search="@filtroSuperintendenteRegional.Search">
                                         @i
                                     </a>
                                 </li>
@@ -125,23 +129,16 @@
                                 <a class="page-link"
                                    asp-action="Index"
                                    asp-route-pagina="@(ViewBag.PaginaAtual + 1)"
-                                   asp-route-NomeProduto="@filtroDiaconato.Search">Próxima</a>
+                                   asp-route-Search="@filtroSuperintendenteRegional.Search">Próxima</a>
                             </li>
                         </ul>
                     </nav>
-                } *@
+                } 
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
-
-    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" asp-append-version="true"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js" asp-append-version="true"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
-
     <script src="~/js/superintendenteRegional.js"></script>
 }

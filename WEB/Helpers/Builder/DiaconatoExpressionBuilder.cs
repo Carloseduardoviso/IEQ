@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using WEB.Models.Enuns;
 using WEB.Models.ViewModels;
 
 namespace WEB.Helpers.Builder
@@ -21,37 +22,44 @@ namespace WEB.Helpers.Builder
 
             MethodInfoContains = typeof(string).GetMethod("Contains", new[] { typeof(string) });
             _toLowerMethod = typeof(string).GetMethod("ToLower", Type.EmptyTypes)!;
-        }
+        }  
 
         public DiaconatoExpressionBuilder<T> BuscarEmTudo(string? search)
         {
-            if (string.IsNullOrWhiteSpace(search))
-                return this;
-
-            search = search.ToLower();
-            var searchConst = Expression.Constant(search);
-
-            Expression? expressaoOr = null;
-
-            var campos = new List<Expression>
+            if (!string.IsNullOrWhiteSpace(search))
             {
-                Expression.Property(View, nameof(DiaconatoVm.NomeCompleto)),
-                Expression.Property(View, nameof(DiaconatoVm.CargoLocal)),
-                Expression.Property(Expression.Property(View, nameof(DiaconatoVm.Igreja)), nameof(IgrejaVm.Nome)),
-                Expression.Property(Expression.Property(View, nameof(DiaconatoVm.Regiao)), nameof(RegiaoVm.Nome)              )
-            };
+                search = search.Trim();
 
-            foreach (var campo in campos)
-            {
-                var notNull = Expression.NotEqual(campo, Expression.Constant(null, typeof(string)));
-                var toLower = Expression.Call(campo, _toLowerMethod);
-                var contains = Expression.Call(toLower, MethodInfoContains!, searchConst);
-                var condicao = Expression.AndAlso(notNull, contains);
+                var nomeProperty = Expression.Property(View, nameof(DiaconatoVm.NomeCompleto));
+                var nome = Expression.Call( nomeProperty, MethodInfoContains!, Expression.Constant(search));
 
-                expressaoOr = expressaoOr == null ? condicao : Expression.OrElse(expressaoOr, condicao);
+                var regiaoProperty = Expression.Property(View, nameof(DiaconatoVm.Regiao));
+                var regiaoNome = Expression.Property(regiaoProperty, nameof(RegiaoVm.Nome));
+                var regiaoContains = Expression.Call(regiaoNome, MethodInfoContains!, Expression.Constant(search));
+
+                var igrejaProperty = Expression.Property(View, nameof(DiaconatoVm.Igreja));
+                var igrejaNome = Expression.Property(igrejaProperty, nameof(IgrejaVm.Nome));
+                var igrejaContains = Expression.Call(igrejaNome, MethodInfoContains!, Expression.Constant(search));
+
+                Expression filtroCombinado = Expression.OrElse(nome, regiaoContains);
+                filtroCombinado = Expression.OrElse(filtroCombinado, igrejaContains);
+
+                if (Enum.TryParse(typeof(CargoLocal), search, true, out var cargoLocalEnum))
+                {
+                    var cargoLocalProperty = Expression.Property(View, nameof(DiaconatoVm.CargoLocal));
+                    var cargoLocalEquals = Expression.Equal(cargoLocalProperty, Expression.Constant(cargoLocalEnum));
+                    filtroCombinado = Expression.OrElse(filtroCombinado, cargoLocalEquals);
+                }
+
+                if (Enum.TryParse(typeof(CargoRegional), search, true, out var cargoRegionalEnum))
+                {
+                    var cargoRegionalProperty = Expression.Property(View, nameof(DiaconatoVm.CargoRegional));
+                    var cargoRegionalEquals = Expression.Equal(cargoRegionalProperty, Expression.Constant(cargoRegionalEnum));
+                    filtroCombinado = Expression.OrElse(filtroCombinado, cargoRegionalEquals);
+                }
+
+                Body = Expression.AndAlso(Body, filtroCombinado);
             }
-
-            if (expressaoOr != null) Body = Expression.AndAlso(Body, expressaoOr);
 
             return this;
         }

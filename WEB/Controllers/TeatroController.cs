@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WEB.Helpers.Builder.Filtro;
 using WEB.Helpers.Messages;
 using WEB.Models.Entities;
 using WEB.Models.ViewModels;
+using WEB.Models.ViewModels.Filtro;
+using WEB.Services;
 using WEB.Services.Interfaces;
 
 namespace WEB.Controllers
@@ -25,10 +28,22 @@ namespace WEB.Controllers
             _pastoresService = pastoresService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FiltroTeatroVm filtroTeatroVm, int pagina = 1)
         {
-            var result = await _teatroService.GetAllAsync();
-            return View(result);
+            filtroTeatroVm.Search = filtroTeatroVm.Search ?? string.Empty;
+            var filtroFinal = FiltroTeatroBuilder.Construir(filtroTeatroVm);
+
+            var (lista, count) = await _teatroService.GetAllPaginationAsync(filtroFinal, (pagina - 1) * 5);
+            int numeroTotalPaginas = (int)Math.Ceiling(count / (double)5);
+            pagina = Math.Clamp(pagina, 0, numeroTotalPaginas);
+
+
+            ViewBag.FiltroTeatro = filtroTeatroVm;
+            ViewBag.NumeroTotalPaginas = numeroTotalPaginas;
+            ViewBag.PaginaAtual = pagina;
+            ViewBag.TotalRegistro = count;
+            ViewBag.TotalExibido = (await _teatroService.GetAllAsync()).Count();
+            return View(lista);
         }
 
         public async Task<IActionResult> Detalhe(Guid? teatroId)

@@ -19,7 +19,7 @@ namespace WEB.Helpers.Builder.Filtro
 
         public static Expression<Func<CriancaVm, bool>> ConstruirLambda(FiltroCriancaVm filter)
         {
-            return new DiaconatoExpressionBuilder<CriancaVm>(nameof(Crianca))
+            return new CriancaExpressionBuilder<CriancaVm>(nameof(Crianca))
                 .BuscarEmTudo(filter.Search)
                 .Construir();
         }

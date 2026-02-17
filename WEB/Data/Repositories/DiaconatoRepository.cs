@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using WEB.Data.Repositories.Interfaces;
 using WEB.Models.Entities;
+using WEB.Models.Enuns;
 
 namespace WEB.Data.Repositories
 {
@@ -42,9 +43,10 @@ namespace WEB.Data.Repositories
             query = IncludeAllProperties(query);
 
             if (expression != null) query = query.Where(expression);
+
             var lista = await query.Where(x => x.Ativo).OrderBy(x => x.NomeCompleto).Skip(skip).Take(5).ToListAsync();
             var count = await query.CountAsync();
-
+          
             return (lista, count);
         }
 

@@ -114,7 +114,7 @@
                                                 <!-- Inativar -->
                                                 <a class="btn btn-light btn-sm ativar-button"
                                                    title="Inativar Obreiro"
-                                                   asp-action="ObreiroAtivo" asp-controller="Louvor"
+                                                   asp-action="Operacao" asp-controller="Louvor"
                                                    asp-route-LouvorId="@item.LouvorId">
                                                     <i class="fa-solid fa-check text-danger"></i>
                                                 </a>
@@ -132,7 +132,7 @@
                                                 <!-- Ativar -->
                                                 <a class="btn btn-light btn-sm ativar-button"
                                                    title="Ativar Obreiro"
-                                                   asp-action="ObreiroAtivo" asp-controller="Louvor"
+                                                   asp-action="Operacao" asp-controller="Louvor"
                                                    asp-route-LouvorId="@item.LouvorId">
                                                     <i class="fa-solid fa-check text-success"></i>
                                                 </a>
@@ -161,7 +161,7 @@
                     </tbody>
                 </table>
 
-                @*    <!-- Paginação -->
+                <!-- Paginação -->
                 @if (ViewBag.NumeroTotalPaginas > 1)
                 {
                     <nav aria-label="Navegação de página">
@@ -170,7 +170,7 @@
                                 <a class="page-link"
                                    asp-action="Index"
                                    asp-route-pagina="@(ViewBag.PaginaAtual - 1)"
-                                   asp-route-NomeProduto="@filtroDiaconato.Search">Anterior</a>
+                                   asp-route-Search="@filtroLouvor.Search">Anterior</a>
                             </li>
 
                             @for (int i = 1; i <= ViewBag.NumeroTotalPaginas; i++)
@@ -179,7 +179,7 @@
                                     <a class="page-link"
                                        asp-action="Index"
                                        asp-route-pagina="@i"
-                                       asp-route-NomeProduto="@filtroDiaconato.Search">
+                                       asp-route-Search="@filtroLouvor.Search">
                                         @i
                                     </a>
                                 </li>
@@ -189,23 +189,16 @@
                                 <a class="page-link"
                                    asp-action="Index"
                                    asp-route-pagina="@(ViewBag.PaginaAtual + 1)"
-                                   asp-route-NomeProduto="@filtroDiaconato.Search">Próxima</a>
+                                   asp-route-Search="@filtroLouvor.Search">Próxima</a>
                             </li>
                         </ul>
                     </nav>
-                } *@
+                } 
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
-
-    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" asp-append-version="true"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js" asp-append-version="true"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
-
     <script src="~/js/louvor.js"></script>
 }

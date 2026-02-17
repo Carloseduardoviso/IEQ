@@ -1,0 +1,196 @@
+﻿@using WEB.Models.ViewModels
+@using WEB.Models.ViewModels.Filtro
+@model IEnumerable<MembroVm>
+@{
+    FiltroMembroVm filtroMembro = ViewBag.FiltroMembro;
+}
+
+<div class="container mt-4">
+    <div class="card border-0 shadow-lg p-3 mb-5 rounded">
+        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+            <h4 class="card-title text-muted m-0">
+                <strong>Membros</strong>
+            </h4>
+
+            <div class="d-flex gap-2">
+                <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Membro")" class="btn btn-primary">
+                    <i class="fa-solid fa-plus"></i> Novo
+                </button>
+
+                <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">
+                    <i class="fa-solid fa-arrow-left"></i> Voltar
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <!-- FILTRO -->
+            <section class="conteudo-inicial mx-auto mb-4">
+                <form asp-action="Index" asp-controller="Membro" method="get" class="row g-3">
+
+                    <div class="col-12 col-md-8 col-lg-9" style="flex-grow: 4;">
+                        <label class="form-label"><strong>Busca Por</strong></label>
+                        <input type="text" class="form-control" name="search" asp-for="@filtroMembro.Search" placeholder="Digite o Nome" />
+                    </div>
+
+                    <div class="col-12 col-md-4 col-lg-3 d-flex gap-2 align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Pesquisar</button>
+                        <a href="@Url.Action("Index", "Membro")" class="btn btn-warning w-100">Limpar</a>
+                    </div>
+
+                </form>
+            </section>
+            <div class="table-responsive">
+
+                <!-- TABELA -->
+                <table id="tableEstado" class="table table-striped align-middle">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Nome</th>
+                            <th>Igreja</th>
+                            <th>Região</th>
+                            <th>Cargo</th>
+                            <th>Ativo</th>
+                            <th class="text-center" width="15%">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <!-- FOTO -->
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.FotoUrl))
+                                        {
+                                            <img src="@item.FotoUrl"
+                                                 class="foto-click"
+                                                 style="width:50px; height:50px; object-fit:cover; border-radius:6px; cursor:pointer;" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/images/Home/foto_padrao.png"
+                                                 class="foto-click"
+                                                 style="width:50px; height:50px; object-fit:cover; border-radius:6px; cursor:pointer;" />
+                                        }
+                                    </td>
+
+                                    <!-- DADOS -->
+                                    <td>@item.NomeCompleto</td>
+                                    <td>@item.Igreja!.Nome</td>
+                                    <td>@item.Regiao!.Nome</td>                               
+                                    <!-- ATIVO -->
+                                    <td>
+                                        <span class="badge @(item.Ativo ? "bg-success" : "bg-danger") px-3">
+                                            @(item.Ativo ? "Sim" : "Não")
+                                        </span>
+                                    </td>
+
+                                    <!-- AÇÕES -->
+                                    <td class="text-center">
+                                        <div class="d-flex flex-wrap gap-2 justify-content-center">
+
+                                            @if (item.Ativo)
+                                            {
+                                                <!-- Editar -->
+                                                <a class="btn btn-light btn-sm edit-button"
+                                                   title="Editar"
+                                                   asp-action="Cadastrar" asp-controller="Membro"
+                                                   asp-route-MembroId="@item.MembroId">
+                                                    <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                                </a>
+
+                                                <!-- Inativar -->
+                                                <a class="btn btn-light btn-sm ativar-button"
+                                                   title="Inativar Obreiro"
+                                                   asp-action="Operacao" asp-controller="Membro"
+                                                   asp-route-MembroId="@item.MembroId">
+                                                    <i class="fa-solid fa-check text-danger"></i>
+                                                </a>
+
+                                                <!-- Detalhes -->
+                                                <a class="btn btn-light btn-sm remove-button"
+                                                   title="Detalhes"
+                                                   asp-action="Detalhe" asp-controller="Membro"
+                                                   asp-route-MembroId="@item.MembroId">
+                                                    <i class="fa-solid fa-eye text-primary"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <!-- Ativar -->
+                                                <a class="btn btn-light btn-sm ativar-button"
+                                                   title="Ativar Obreiro"
+                                                   asp-action="Operacao" asp-controller="Membro"
+                                                   asp-route-MembroId="@item.MembroId">
+                                                    <i class="fa-solid fa-check text-success"></i>
+                                                </a>
+
+                                                <!-- Detalhes -->
+                                                <a class="btn btn-light btn-sm remove-button"
+                                                   title="Detalhes"
+                                                   asp-action="Detalhe" asp-controller="Membro"
+                                                   asp-route-MembroId="@item.MembroId">
+                                                    <i class="fa-solid fa-eye text-primary"></i>
+                                                </a>
+                                            }
+
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center text-muted">Nenhum resultado encontrado</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <!-- Paginação -->
+                @if (ViewBag.NumeroTotalPaginas > 1)
+                {
+                    <nav aria-label="Navegação de página">
+                        <ul class="pagination justify-content-end mt-4">
+                            <li class="page-item @(ViewBag.PaginaAtual == 1 ? "disabled" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-pagina="@(ViewBag.PaginaAtual - 1)"
+                                   asp-route-Search="@filtroMembro.Search">Anterior</a>
+                            </li>
+
+                            @for (int i = 1; i <= ViewBag.NumeroTotalPaginas; i++)
+                            {
+                                <li class="page-item @(ViewBag.PaginaAtual == i ? "active" : "")">
+                                    <a class="page-link"
+                                       asp-action="Index"
+                                       asp-route-pagina="@i"
+                                       asp-route-Search="@filtroMembro.Search">
+                                        @i
+                                    </a>
+                                </li>
+                            }
+
+                            <li class="page-item @(ViewBag.PaginaAtual == ViewBag.NumeroTotalPaginas ? "disabled" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-pagina="@(ViewBag.PaginaAtual + 1)"
+                                   asp-route-Search="@filtroMembro.Search">Próxima</a>
+                            </li>
+                        </ul>
+                    </nav>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/membro.js"></script>
+}

@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WEB.Helpers.Builder.Filtro;
 using WEB.Helpers.Messages;
 using WEB.Models.ViewModels;
+using WEB.Models.ViewModels.Filtro;
+using WEB.Services;
 using WEB.Services.Interfaces;
 
 namespace WEB.Controllers
@@ -24,10 +27,21 @@ namespace WEB.Controllers
             _pastoresService = pastoresService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FiltroJovemAdolescenteVm filtroJovemAdolescenteVm, int pagina = 1)
         {
-            var result = await _jovemAdolescenteService.GetAllAsync();
-            return View(result);
+            filtroJovemAdolescenteVm.Search = filtroJovemAdolescenteVm.Search ?? string.Empty;
+            var filtroFinal = FiltroJovemAdolescenteBuilder.Construir(filtroJovemAdolescenteVm);
+
+            var (lista, count) = await _jovemAdolescenteService.GetAllPaginationAsync(filtroFinal, (pagina - 1) * 5);
+            int numeroTotalPaginas = (int)Math.Ceiling(count / (double)5);
+            pagina = Math.Clamp(pagina, 0, numeroTotalPaginas);
+
+            ViewBag.FiltroJovemAdolescente = filtroJovemAdolescenteVm;
+            ViewBag.NumeroTotalPaginas = numeroTotalPaginas;
+            ViewBag.PaginaAtual = pagina;
+            ViewBag.TotalRegistro = count;
+            ViewBag.TotalExibido = (await _jovemAdolescenteService.GetAllAsync()).Count();
+            return View(lista);
         }
 
         public async Task<IActionResult> Detalhe(Guid? jovemAdolecenteId)

@@ -19,7 +19,7 @@ namespace WEB.Helpers.Builder.Filtro
 
         public static Expression<Func<MidiaVm, bool>> ConstruirLambda(FiltroMidiaVm filter)
         {
-            return new DiaconatoExpressionBuilder<MidiaVm>(nameof(Midia))
+            return new MidiaExpressionBuilder<MidiaVm>(nameof(Midia))
                 .BuscarEmTudo(filter.Search)
                 .Construir();
         }

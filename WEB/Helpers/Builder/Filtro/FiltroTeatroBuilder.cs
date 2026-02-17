@@ -19,7 +19,7 @@ namespace WEB.Helpers.Builder.Filtro
 
         public static Expression<Func<TeatroVm, bool>> ConstruirLambda(FiltroTeatroVm filter)
         {
-            return new DiaconatoExpressionBuilder<TeatroVm>(nameof(Teatro))
+            return new TeatroExpressionBuilder<TeatroVm>(nameof(Teatro))
                 .BuscarEmTudo(filter.Search)
                 .Construir();
         }

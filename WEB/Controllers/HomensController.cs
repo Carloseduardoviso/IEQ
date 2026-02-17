@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WEB.Helpers.Builder.Filtro;
 using WEB.Helpers.Messages;
 using WEB.Models.Entities;
 using WEB.Models.ViewModels;
+using WEB.Models.ViewModels.Filtro;
+using WEB.Services;
 using WEB.Services.Interfaces;
 
 namespace WEB.Controllers
@@ -25,10 +28,21 @@ namespace WEB.Controllers
             _pastoresService = pastoresService;
         }    
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FiltroHomensVm filtroHomensVm, int pagina = 1)
         {
-            var result = await _homensService.GetAllAsync();
-            return View(result);
+            filtroHomensVm.Search = filtroHomensVm.Search ?? string.Empty;
+            var filtroFinal = FiltroHomensBuilder.Construir(filtroHomensVm);
+
+            var (lista, count) = await _homensService.GetAllPaginationAsync(filtroFinal, (pagina - 1) * 5);
+            int numeroTotalPaginas = (int)Math.Ceiling(count / (double)5);
+            pagina = Math.Clamp(pagina, 0, numeroTotalPaginas);
+
+            ViewBag.FiltroHomens = filtroHomensVm;
+            ViewBag.NumeroTotalPaginas = numeroTotalPaginas;
+            ViewBag.PaginaAtual = pagina;
+            ViewBag.TotalRegistro = count;
+            ViewBag.TotalExibido = (await _homensService.GetAllAsync()).Count();
+            return View(lista);
         }
 
         public async Task<IActionResult> Detalhe(Guid? homensId)

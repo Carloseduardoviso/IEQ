@@ -34,11 +34,13 @@ namespace WEB.Models.ViewModels
         [Phone]
         public string? Contato { get; set; }
 
+
+        [Display(Name = "Data de Nascimento")]
         public DateTime? DataNascimento { get; set; }
-
         [Required]
+        [Display(Name = "Data de Ministerio")]
         public DateTime? DataMinisterio { get; set; }
-
+        [Display(Name = "Data de Batismo")]
         public DateTime? DataBatismo { get; set; }
 
         public int TempoAcumuladoEmMeses { get; set; }

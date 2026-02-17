@@ -1,5 +1,9 @@
 ﻿@using WEB.Models.ViewModels
+@using WEB.Models.ViewModels.Filtro
 @model IEnumerable<UsuarioVm>
+@{
+    FiltroUsuarioVm filtroUsuario = ViewBag.FiltroUsuario;
+}
 
 <div class="container mt-4">
     <div class="card border-0 shadow-lg p-3 mb-5 rounded">
@@ -27,7 +31,7 @@
 
                     <div class="col-12 col-md-8 col-lg-9" style="flex-grow: 4;">
                         <label class="form-label"><strong>Busca Por</strong></label>
-                        <input type="text" class="form-control" name="search" @* asp-for="@filtroDiaconato.Search"  *@placeholder="Digite o Nome" />
+                        <input type="text" class="form-control" name="search" asp-for="@filtroUsuario.Search" placeholder="Digite o Nome" />
                     </div>
 
                     <div class="col-12 col-md-4 col-lg-3 d-flex gap-2 align-items-end">
@@ -94,7 +98,7 @@
                     </tbody>
                 </table>
 
-                @*    <!-- Paginação -->
+                <!-- Paginação -->
                 @if (ViewBag.NumeroTotalPaginas > 1)
                 {
                     <nav aria-label="Navegação de página">
@@ -103,7 +107,7 @@
                                 <a class="page-link"
                                    asp-action="Index"
                                    asp-route-pagina="@(ViewBag.PaginaAtual - 1)"
-                                   asp-route-NomeProduto="@filtroDiaconato.Search">Anterior</a>
+                                   asp-route-Search="@filtroUsuario.Search">Anterior</a>
                             </li>
 
                             @for (int i = 1; i <= ViewBag.NumeroTotalPaginas; i++)
@@ -112,7 +116,7 @@
                                     <a class="page-link"
                                        asp-action="Index"
                                        asp-route-pagina="@i"
-                                       asp-route-NomeProduto="@filtroDiaconato.Search">
+                                       asp-route-Search="@filtroUsuario.Search">
                                         @i
                                     </a>
                                 </li>
@@ -122,11 +126,11 @@
                                 <a class="page-link"
                                    asp-action="Index"
                                    asp-route-pagina="@(ViewBag.PaginaAtual + 1)"
-                                   asp-route-NomeProduto="@filtroDiaconato.Search">Próxima</a>
+                                   asp-route-Search="@filtroUsuario.Search">Próxima</a>
                             </li>
                         </ul>
                     </nav>
-                } *@
+                } 
             </div>
         </div>
     </div>

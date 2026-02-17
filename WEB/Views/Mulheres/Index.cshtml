@@ -114,7 +114,7 @@
                                                 <!-- Inativar -->
                                                 <a class="btn btn-light btn-sm ativar-button"
                                                    title="Inativar Obreiro"
-                                                   asp-action="ObreiroAtivo" asp-controller="Mulheres"
+                                                   asp-action="Operacao" asp-controller="Mulheres"
                                                    asp-route-MulheresId="@item.MulheresId">
                                                     <i class="fa-solid fa-check text-danger"></i>
                                                 </a>
@@ -132,7 +132,7 @@
                                                 <!-- Ativar -->
                                                 <a class="btn btn-light btn-sm ativar-button"
                                                    title="Ativar Obreiro"
-                                                   asp-action="ObreiroAtivo" asp-controller="Mulheres"
+                                                   asp-action="Operacao" asp-controller="Mulheres"
                                                    asp-route-MulheresId="@item.MulheresId">
                                                     <i class="fa-solid fa-check text-success"></i>
                                                 </a>
@@ -161,7 +161,7 @@
                     </tbody>
                 </table>
 
-                @*    <!-- Paginação -->
+                <!-- Paginação -->
                 @if (ViewBag.NumeroTotalPaginas > 1)
                 {
                     <nav aria-label="Navegação de página">
@@ -170,7 +170,7 @@
                                 <a class="page-link"
                                    asp-action="Index"
                                    asp-route-pagina="@(ViewBag.PaginaAtual - 1)"
-                                   asp-route-NomeProduto="@filtroDiaconato.Search">Anterior</a>
+                                   asp-route-Search="@filtroMulheres.Search">Anterior</a>
                             </li>
 
                             @for (int i = 1; i <= ViewBag.NumeroTotalPaginas; i++)
@@ -179,7 +179,7 @@
                                     <a class="page-link"
                                        asp-action="Index"
                                        asp-route-pagina="@i"
-                                       asp-route-NomeProduto="@filtroDiaconato.Search">
+                                       asp-route-Search="@filtroMulheres.Search">
                                         @i
                                     </a>
                                 </li>
@@ -189,11 +189,11 @@
                                 <a class="page-link"
                                    asp-action="Index"
                                    asp-route-pagina="@(ViewBag.PaginaAtual + 1)"
-                                   asp-route-NomeProduto="@filtroDiaconato.Search">Próxima</a>
+                                   asp-route-Search="@filtroMulheres.Search">Próxima</a>
                             </li>
                         </ul>
                     </nav>
-                } *@
+                }
             </div>
         </div>
     </div>

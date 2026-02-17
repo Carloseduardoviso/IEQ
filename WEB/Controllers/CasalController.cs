@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WEB.Helpers.Builder.Filtro;
 using WEB.Helpers.Messages;
 using WEB.Models.ViewModels;
+using WEB.Models.ViewModels.Filtro;
+using WEB.Services;
 using WEB.Services.Interfaces;
 
 namespace WEB.Controllers
@@ -24,10 +27,22 @@ namespace WEB.Controllers
             _pastoresService = pastoresService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FiltroCasalVm filtroCasalVm, int pagina = 1)
         {
-            var result = await _casalService.GetAllAsync();
-            return View(result);
+            filtroCasalVm.Search = filtroCasalVm.Search ?? string.Empty;
+            var filtroFinal = FiltroCasalBuilder.Construir(filtroCasalVm);
+
+            var (lista, count) = await _casalService.GetAllPaginationAsync(filtroFinal, (pagina - 1) * 5);
+            int numeroTotalPaginas = (int)Math.Ceiling(count / (double)5);
+            pagina = Math.Clamp(pagina, 0, numeroTotalPaginas);
+
+
+            ViewBag.FiltroCasal = filtroCasalVm;
+            ViewBag.NumeroTotalPaginas = numeroTotalPaginas;
+            ViewBag.PaginaAtual = pagina;
+            ViewBag.TotalRegistro = count;
+            ViewBag.TotalExibido = (await _casalService.GetAllAsync()).Count();
+            return View(lista);
         }
 
         public async Task<IActionResult> Detalhe(Guid? casaId)

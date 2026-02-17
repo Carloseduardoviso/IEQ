@@ -5,9 +5,11 @@ using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using WEB.Helpers.Builder.Filtro;
 using WEB.Helpers.Messages;
 using WEB.Models.Entities;
 using WEB.Models.ViewModels;
+using WEB.Models.ViewModels.Filtro;
 using WEB.Services;
 using WEB.Services.Interfaces;
 
@@ -26,10 +28,22 @@ namespace WEB.Controllers
             _regiaoService = regiaoService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FiltroUsuarioVm filtroUsuarioVm, int pagina = 1)
         {
-            var usuario = await _usuarioService.GetAllAsync(x => x.Ativo);
-            return View(usuario);
+            filtroUsuarioVm.Search = filtroUsuarioVm.Search ?? string.Empty;
+            var filtroFinal = FiltroUsuarioBuilder.Construir(filtroUsuarioVm);
+
+            var (lista, count) = await _usuarioService.GetAllPaginationAsync(filtroFinal, (pagina - 1) * 5);
+            int numeroTotalPaginas = (int)Math.Ceiling(count / (double)5);
+            pagina = Math.Clamp(pagina, 0, numeroTotalPaginas);
+
+
+            ViewBag.FiltroUsuario = filtroUsuarioVm;
+            ViewBag.NumeroTotalPaginas = numeroTotalPaginas;
+            ViewBag.PaginaAtual = pagina;
+            ViewBag.TotalRegistro = count;
+            ViewBag.TotalExibido = (await _usuarioService.GetAllAsync()).Count();
+            return View(lista);
         }
 
         public IActionResult Login() => View();

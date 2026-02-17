@@ -23,7 +23,7 @@ namespace WEB.Controllers
 
         public async Task<IActionResult> Index(FiltroIgrejaVm filtroIgrejaVm, int pagina = 1)
         {
-            filtroIgrejaVm.Search = NormalizeSearch(filtroIgrejaVm.Search ?? string.Empty);
+            filtroIgrejaVm.Search = filtroIgrejaVm.Search ?? string.Empty;
             var filtroFinal = FiltroIgrejaBuilder.Construir(filtroIgrejaVm);
 
             var (lista, count) = await _igrejaService.GetAllPaginationAsync(filtroFinal, (pagina - 1) * 5);

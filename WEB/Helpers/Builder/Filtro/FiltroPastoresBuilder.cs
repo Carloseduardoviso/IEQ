@@ -18,7 +18,7 @@ namespace WEB.Helpers.Builder.Filtro
 
         public static Expression<Func<PastoresVm, bool>> ConstruirLambda(FiltroPastoresVm filter)
         {
-            return new DiaconatoExpressionBuilder<PastoresVm>(nameof(Pastores))
+            return new PastoresExpressionBuilder<PastoresVm>(nameof(Pastores))
                 .BuscarEmTudo(filter.Search)
                 .Construir();
         }

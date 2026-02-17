@@ -7,7 +7,7 @@ namespace WEB.Helpers.Builder.Filtro
 {
     public class FiltroUsuarioBuilder
     {
-        public static Expression<Func<UsuarioVm, bool>>? Construir(FiltroCriancaVm filtro)
+        public static Expression<Func<UsuarioVm, bool>>? Construir(FiltroUsuarioVm filtro)
         {
             if (filtro is null)
             {
@@ -17,9 +17,9 @@ namespace WEB.Helpers.Builder.Filtro
             return ConstruirLambda(filtro);
         }
 
-        public static Expression<Func<UsuarioVm, bool>> ConstruirLambda(FiltroCriancaVm filter)
+        public static Expression<Func<UsuarioVm, bool>> ConstruirLambda(FiltroUsuarioVm filter)
         {
-            return new DiaconatoExpressionBuilder<UsuarioVm>(nameof(Usuario))
+            return new UsuarioExpressionBuilder<UsuarioVm>(nameof(Usuario))
                 .BuscarEmTudo(filter.Search)
                 .Construir();
         }

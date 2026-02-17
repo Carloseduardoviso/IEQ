@@ -31,6 +31,5 @@ namespace WEB.Models.Entities
         public Pastores? Pastor { get; set; }
         public SuperintendenteEstadual? SuperintendenteEstadual { get; set; }
         public SuperintendenteRegional? SuperintendenteRegional { get; set; }
-
     }
 }

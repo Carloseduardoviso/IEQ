@@ -23,33 +23,11 @@ namespace WEB.Helpers.Builder
 
         public SuperintendenteRegionalExpressionBuilder<T> BuscarEmTudo(string? search)
         {
-            if (string.IsNullOrWhiteSpace(search))
-                return this;
-
-            search = search.ToLower();
-            var searchConst = Expression.Constant(search);
-
-            Expression? expressaoOr = null;
-
-            var campos = new List<Expression>
+            if (!string.IsNullOrWhiteSpace(search))
             {
-                Expression.Property(View, nameof(DiaconatoVm.NomeCompleto)),
-                Expression.Property(View, nameof(DiaconatoVm.CargoLocal)),
-                Expression.Property(Expression.Property(View, nameof(DiaconatoVm.Igreja)), nameof(IgrejaVm.Nome)),
-                Expression.Property(Expression.Property(View, nameof(DiaconatoVm.Regiao)), nameof(RegiaoVm.Nome)              )
-            };
-
-            foreach (var campo in campos)
-            {
-                var notNull = Expression.NotEqual(campo, Expression.Constant(null, typeof(string)));
-                var toLower = Expression.Call(campo, _toLowerMethod);
-                var contains = Expression.Call(toLower, MethodInfoContains!, searchConst);
-                var condicao = Expression.AndAlso(notNull, contains);
-
-                expressaoOr = expressaoOr == null ? condicao : Expression.OrElse(expressaoOr, condicao);
+                search = search.Trim();
+                Body = Expression.AndAlso(Body, Expression.Call(Expression.Property(View, nameof(SuperintendenteRegionalVm.Nome)), MethodInfoContains!, Expression.Constant(search)));
             }
-
-            if (expressaoOr != null) Body = Expression.AndAlso(Body, expressaoOr);
 
             return this;
         }

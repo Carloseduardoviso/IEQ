@@ -19,7 +19,7 @@ namespace WEB.Helpers.Builder.Filtro
 
         public static Expression<Func<SuperintendenteEstadualVm, bool>> ConstruirLambda(FiltroSuperintendenteEstadualVm filter)
         {
-            return new DiaconatoExpressionBuilder<SuperintendenteEstadualVm>(nameof(SuperintendenteEstadual))
+            return new SuperintendenteEstadualExpressionBuilder<SuperintendenteEstadualVm>(nameof(SuperintendenteEstadual))
                 .BuscarEmTudo(filter.Search)
                 .Construir();
         }

@@ -8,41 +8,16 @@ namespace WEB.Data.Config
     {
         public void Configure(EntityTypeBuilder<Membro> builder)
         {
-            builder.ToTable("Membro");
-
+            builder.ToTable(nameof(Membro));
             builder.HasKey(m => m.MembroId);
 
-            builder.Property(m => m.NomeCompleto)
-                   .IsRequired()
-                   .HasMaxLength(150);
+            builder.Property(d => d.NomeCompleto).IsRequired().HasMaxLength(100);
+            builder.Property(d => d.Estado).IsRequired().HasMaxLength(2);
+            builder.Property(d => d.Cidade).IsRequired().HasMaxLength(100);
+            builder.Property(d => d.Ativo).HasDefaultValue(true);
 
-            builder.Property(m => m.CPF)
-                   .HasMaxLength(14);
-
-            builder.Property(m => m.Telefone)
-                   .HasMaxLength(20);
-
-            builder.Property(m => m.Email)
-                   .HasMaxLength(150);
-
-            builder.Property(m => m.Estado)
-                   .HasMaxLength(2);
-
-            builder.Property(m => m.Cidade)
-                   .HasMaxLength(100);
-
-            builder.Property(m => m.Ativo)
-                   .HasDefaultValue(true);
-
-            // 🔹 RELACIONAMENTO
-            builder.HasOne(m => m.Igreja)
-                   .WithMany()
-                   .HasForeignKey(m => m.IgrejaId)
-                   .OnDelete(DeleteBehavior.Restrict);
-
-            // 🔹 ÍNDICES
-            builder.HasIndex(m => m.NomeCompleto);
-            builder.HasIndex(m => m.CPF).IsUnique();
+            builder.HasOne(d => d.Igreja).WithMany(i => i.Membros).HasForeignKey(d => d.IgrejaId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(d => d.Regiao).WithMany(r => r.Membros).HasForeignKey(d => d.RegiaoId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

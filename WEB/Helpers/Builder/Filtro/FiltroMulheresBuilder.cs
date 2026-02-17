@@ -19,7 +19,7 @@ namespace WEB.Helpers.Builder.Filtro
 
         public static Expression<Func<MulheresVm, bool>> ConstruirLambda(FiltroMulheresVm filter)
         {
-            return new DiaconatoExpressionBuilder<MulheresVm>(nameof(Mulheres))
+            return new MulheresExpressionBuilder<MulheresVm>(nameof(Mulheres))
                 .BuscarEmTudo(filter.Search)
                 .Construir();
         }

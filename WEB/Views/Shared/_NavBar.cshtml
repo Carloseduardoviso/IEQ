@@ -58,7 +58,7 @@
                             <li><a class="dropdown-item" asp-controller="Diaconato" asp-action="Index">Diaconato</a></li>
                             <li><a class="dropdown-item" asp-controller="Louvor" asp-action="Index">Louvor</a></li>
                             <li><a class="dropdown-item" asp-controller="Danca" asp-action="Index">Dança</a></li>
-                            <li><a class="dropdown-item" asp-controller="JovemAdolecente" asp-action="Index">Jovens/Adolescentes</a></li>
+                            <li><a class="dropdown-item" asp-controller="JovemAdolescente" asp-action="Index">Jovens/Adolescentes</a></li>
                             <li><a class="dropdown-item" asp-controller="Homens" asp-action="Index">Homens</a></li>
                             <li><a class="dropdown-item" asp-controller="Mulheres" asp-action="Index">Mulheres</a></li>
                             <li><a class="dropdown-item" asp-controller="Midia" asp-action="Index">Mídia</a></li>
@@ -67,6 +67,9 @@
                             <li><a class="dropdown-item" asp-controller="Casal" asp-action="Index">Casal</a></li>
                         </ul>
                     </li>
+
+                    <li class="nav-item"><a class="nav-link nav-link-ieq" asp-controller="Membro" asp-action="Index">Membro</a></li>
+
                     @if (User.IsInRole("SuperintendenteRegional") || User.IsInRole("PastorTitular") || User.IsInRole("PastorAuxiliar") || User.IsInRole("LiderLocal")
                                     || User.IsInRole("ViceLider") || User.IsInRole("Diretor") || User.IsInRole("Diretora") || User.IsInRole("CoordenadorRegionalDiaconato") || User.IsInRole("CoordenadorRegionalLouvor")
                                     || User.IsInRole("CoordenadorRegionalHomens") || User.IsInRole("CoordenadorRegionalMulher") || User.IsInRole("CoordenadorRegionalMidia") || User.IsInRole("CoordenadorRegionalTeatro") || User.IsInRole("CoordenadorRegionalCrianca") || User.IsInRole("CoordenadorRegionalJovemAdolescente")

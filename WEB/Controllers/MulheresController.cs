@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WEB.Helpers.Builder.Filtro;
 using WEB.Helpers.Messages;
 using WEB.Models.Entities;
 using WEB.Models.ViewModels;
+using WEB.Models.ViewModels.Filtro;
+using WEB.Services;
 using WEB.Services.Interfaces;
 
 namespace WEB.Controllers
@@ -25,10 +28,21 @@ namespace WEB.Controllers
             _pastoresService = pastoresService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FiltroMulheresVm filtroMulheresVm, int pagina = 1)
         {
-            var result = await _mulheresService.GetAllAsync();
-            return View(result);
+            filtroMulheresVm.Search = filtroMulheresVm.Search ?? string.Empty;
+            var filtroFinal = FiltroMulheresBuilder.Construir(filtroMulheresVm);
+
+            var (lista, count) = await _mulheresService.GetAllPaginationAsync(filtroFinal, (pagina - 1) * 5);
+            int numeroTotalPaginas = (int)Math.Ceiling(count / (double)5);
+            pagina = Math.Clamp(pagina, 0, numeroTotalPaginas);
+             
+            ViewBag.FiltroMulheres = filtroMulheresVm;
+            ViewBag.NumeroTotalPaginas = numeroTotalPaginas;
+            ViewBag.PaginaAtual = pagina;
+            ViewBag.TotalRegistro = count;
+            ViewBag.TotalExibido = (await _mulheresService.GetAllAsync()).Count();
+            return View(lista);
         }
 
         public async Task<IActionResult> Detalhe(Guid? mulheresId)
