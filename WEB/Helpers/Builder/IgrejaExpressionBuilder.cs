@@ -33,10 +33,9 @@ namespace WEB.Helpers.Builder
 
             var campos = new List<Expression>
             {
-                Expression.Property(View, nameof(DiaconatoVm.NomeCompleto)),
-                Expression.Property(View, nameof(DiaconatoVm.CargoLocal)),
-                Expression.Property(Expression.Property(View, nameof(DiaconatoVm.Igreja)), nameof(IgrejaVm.Nome)),
-                Expression.Property(Expression.Property(View, nameof(DiaconatoVm.Regiao)), nameof(RegiaoVm.Nome)              )
+                Expression.Property(View, nameof(IgrejaVm.Nome)),
+                //Expression.Property(Expression.Property(View, nameof(DiaconatoVm.Igreja)), nameof(IgrejaVm.Nome)),
+                Expression.Property(Expression.Property(View, nameof(IgrejaVm.Regiao)), nameof(RegiaoVm.Nome))
             };
 
             foreach (var campo in campos)

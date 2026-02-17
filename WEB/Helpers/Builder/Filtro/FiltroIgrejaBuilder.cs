@@ -18,7 +18,7 @@ namespace WEB.Helpers.Builder.Filtro
 
         public static Expression<Func<IgrejaVm, bool>> ConstruirLambda(FiltroIgrejaVm filter)
         {
-            return new DiaconatoExpressionBuilder<IgrejaVm>(nameof(Igreja))
+            return new IgrejaExpressionBuilder<IgrejaVm>(nameof(Igreja))
                 .BuscarEmTudo(filter.Search)
                 .Construir();
         }
