@@ -69,7 +69,20 @@
                                 <tr>
                                     <td>@item.Nome</td>
                                     <td>@item.Regiao!.Nome</td>
-                                    <td>@item.Endereco</td>
+                                    <td>
+                                        @if (!string.IsNullOrWhiteSpace(item.Endereco))
+                                        {
+                                            <a href="https://www.google.com/maps/search/?api=1&query=@Uri.EscapeDataString(item.Endereco)"
+                                               target="_blank"
+                                               rel="noopener noreferrer">
+                                                <i class="fa-solid fa-location-dot text-danger"></i> @item.Endereco
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Não informado</span>
+                                        }
+                                    </td>
 
                                     <td>
                                         <span class="badge @(item.Ativo ? "bg-success" : "bg-danger") px-3">
