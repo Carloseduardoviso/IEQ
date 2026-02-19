@@ -172,6 +172,7 @@ namespace WEB.Services
             }
 
             usuario.Role = vm.Role;
+            usuario.FotoUrl = vm.FotoUrl;
 
             await _usuarioRepository.Update(usuario);
         }
