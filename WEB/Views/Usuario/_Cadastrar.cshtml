@@ -1,12 +1,14 @@
-﻿@using WEB.Models.ViewModels
-@model IgrejaVm
+﻿@using WEB.Models.Enuns
+@using WEB.Models.ViewModels
+@model UsuarioVm
 
 @{
     var title = ViewBag.Title;
     var regiao = ViewBag.Regiao;
+    var igreja = ViewBag.Igreja;
 }
 
-<form asp-action="AlterarIgreja" enctype="multipart/form-data">
+<form asp-action="AlterarUsuario" enctype="multipart/form-data">
     <div id="modalAdicionar" data-bs-backdrop="static" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -20,10 +22,14 @@
                 <!-- BODY -->
                 <div class="modal-body">
 
-                    <input type="hidden" asp-for="IgrejaId" />
+                    <input type="hidden" asp-for="UsuarioId" />
+                    <input type="hidden" asp-for="FotoUrl" />
+
+                    <!-- SEÇÃO 1 =============================== -->
+                    <h5 class="border-bottom pb-2 mb-3">Dados Pessoais</h5>
 
                     <div class="row mb-4">
-                        <div class="col-md-6">
+                        <div class="col-md-6">                         
                             <label asp-for="Foto"></label><span class="text-danger"> *</span>
                             <input asp-for="Foto" type="file" class="form-control" accept="image/*" />
                             <span asp-validation-for="Foto" class="text-danger"></span>
@@ -36,25 +42,41 @@
                             </div>
                         }
                     </div>
+
                     <div class="mb-3">
                         <label asp-for="Nome"></label><span class="text-danger"> *</span>
                         <input asp-for="Nome" class="form-control" />
                         <span asp-validation-for="Nome" class="text-danger"></span>
                     </div>
-                    <div>
-                        <label asp-for="Endereco"></label><span class="text-danger"> *</span>
-                        <input asp-for="Endereco" class="form-control" />
-                        <span asp-validation-for="Endereco" class="text-danger"></span>
-                    </div>
-             
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label asp-for="Codigo"></label><span class="text-danger"> *</span>
-                            <input asp-for="Codigo" class="form-control" />
-                            <span asp-validation-for="Codigo" class="text-danger"></span>
+                            <label>Senha</label>
+                            <input asp-for="Senha" class="form-control" placeholder="Digite sua senha" />
+                            <span asp-validation-for="Senha" class="text-danger"></span>
                         </div>
+
                         <div class="col-md-6 mb-3">
-                            <label>Região</label>
+                            <label>Confirmar Senha</label>
+                            <input asp-for="ConfirmarSenha" class="form-control" placeholder="Confirme a senha" />
+                            <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <!-- SEÇÃO 2 =============================== -->
+                    <h5 class="border-bottom pb-2 mb-3">Informações da Igreja</h5>
+                    <div class="row">                          
+                        <div class="col-md-6 mb-3">
+                            <label>Igreja</label>
+                            <select asp-for="IgrejaId" class="input-custom form-select form-control select2bs4 p-2">
+                                <option value="" disabled selected>Selecione</option>
+                                @foreach (var item in igreja)
+                                {
+                                    <option value="@item.IgrejaId">@item.Nome</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Região</label><span class="text-danger"> *</span>
                             <select asp-for="RegiaoId" class="input-custom form-select form-control select2bs4 p-2">
                                 <option value="" disabled selected>Selecione</option>
                                 @foreach (var item in regiao)
@@ -62,7 +84,12 @@
                                     <option value="@item.RegiaoId">@item.Nome</option>
                                 }
                             </select>
-                        </div>                      
+                        </div>
+                    </div>
+
+                    <div class="form-check mt-2">
+                        <input asp-for="Ativo" class="form-check-input" type="checkbox">
+                        <label asp-for="Ativo" class="form-check-label"></label>
                     </div>
                 </div>
 

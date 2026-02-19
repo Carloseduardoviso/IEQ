@@ -24,6 +24,7 @@ namespace WEB.Models.Entities
 
         public DateTime DataCriacao { get; set; } = DateTime.Now;
         public DateTime? UltimoLogin { get; set; }
+        public string? FotoUrl { get; set; }
 
         public Regiao? Regiao { get; set; }
         public Igreja? Igreja { get; set; }

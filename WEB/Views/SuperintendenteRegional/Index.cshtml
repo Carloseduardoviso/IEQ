@@ -49,6 +49,7 @@
                 <table id="tableEstado" class="table table-striped align-middle">
                     <thead class="table-primary">
                         <tr>
+                            <th>#</th>
                             <th>Nome</th>
                             <th>Ativo</th>@if (User.IsInRole("SuperintendenteRegional"))
                             {
@@ -63,6 +64,20 @@
                             foreach (var item in Model)
                             {
                                 <tr>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.FotoUrl))
+                                        {
+                                            <img src="@item.FotoUrl"
+                                                 class="foto-click"
+                                                 style="width:50px; height:50px; object-fit:cover; border-radius:6px; cursor:pointer;" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/images/Home/foto_padrao.png"
+                                                 class="foto-click"
+                                                 style="width:50px; height:50px; object-fit:cover; border-radius:6px; cursor:pointer;" />
+                                        }
+                                    </td>
                                     <td>@item.Nome</td>
                                     <td>
                                         <span class="badge @(item.Ativo ? "bg-success" : "bg-danger") px-3">

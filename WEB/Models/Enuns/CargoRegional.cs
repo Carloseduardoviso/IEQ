@@ -28,5 +28,7 @@ namespace WEB.Models.Enuns
         CoordenadorRegionalMissao = 10,
         [Display(Name = "Coordenador Regional Casais")]
         CoordenadorRegionalCasais = 11,
+        [Display(Name = "Coordenador Regional Dança")]
+        CoordenadorRegionalDanca = 12,
     }
 }

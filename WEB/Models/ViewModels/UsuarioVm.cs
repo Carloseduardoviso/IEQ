@@ -31,7 +31,8 @@ namespace WEB.Models.ViewModels
 
         [Required]
         public Role Role { get; set; } = Role.Membro;
-
+        public IFormFile? Foto { get; set; }
+        public string? FotoUrl { get; set; }
         public bool Ativo { get; set; } = true;
     }
 }

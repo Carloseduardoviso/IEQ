@@ -4,9 +4,10 @@
     {
         public Guid IgrejaId { get; set; }
         public Guid RegiaoId { get; set; }
-
         public string? Nome { get; set; }
         public string? Endereco { get; set; }
+        public string? Codigo { get; set; }
+        public string? FotoUrl { get; set; }
         public bool Ativo { get; set; } = true;
 
         public Regiao Regiao { get; set; } = null!;

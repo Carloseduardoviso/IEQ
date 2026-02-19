@@ -109,31 +109,89 @@ namespace WEB.Controllers
             return PartialView("_Editar", novo);
         }
 
+        public async Task<IActionResult> Cadastrar(Guid? usuarioId)
+        {
+            var novo = new UsuarioVm();
+            if (usuarioId != null) novo = await _usuarioService.GetByIdAsync(usuarioId.Value);
+
+            var regiao = await _regiaoService.GetAllAsync();
+            var igreja = await _igrejaService.GetAllAsync();
+
+            ViewBag.Regiao = regiao;
+            ViewBag.Igreja = igreja;
+            ViewBag.Title = usuarioId != null ? "Editar" : "Cadastrar";
+
+            return PartialView("_Cadastrar", novo);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> AlterarUsuario(UsuarioVm vm)
         {
-            string mensagemSucess = "";
-            var novo = await _usuarioService.GetByIdAllIncludesAsync(vm.UsuarioId);
+            string mensagemSucesso;
 
-            if (novo != null)
+            // Salva foto de perfil
+            if (vm.Foto != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "usuario", "perfil");
+
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var nomeArquivo = vm.Nome + Path.GetExtension(vm.Foto.FileName);
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.Foto.CopyToAsync(stream);
+                }
+
+                vm.FotoUrl = "/images/usuario/perfil/" + nomeArquivo;
+            }
+
+            // Verifica se já existe
+            var existente = await _usuarioService.GetByIdAsync(vm.UsuarioId);
+
+            if (existente != null)
             {
                 await _usuarioService.UpdateAsync(vm);
-                mensagemSucess = "Edição, efetuado com sucesso!";
-            }        
+                mensagemSucesso = "Edição realizada com sucesso!";
+            }
+            else
+            {
+                await _usuarioService.AddAsync(vm);
+                mensagemSucesso = "Cadastro realizado com sucesso!";
+            }
 
-            return RedirectToAction("Index", "Usuario").Success(mensagemSucess);
+            return RedirectToAction("Index", "Danca").Success(mensagemSucesso);
         }
 
         [HttpPost]
         public async Task<IActionResult> Registrar(UsuarioVm vm)
         {
-            if (!ModelState.IsValid)
-                return View(vm);
+            if (!ModelState.IsValid) return View(vm);
 
             if (await _usuarioService.ExisteEmailAsync(vm.Email!))
             {
                 return View("Registrar", vm).Information("Email já cadastrado");
+            }
+
+            if (vm.Foto != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "usuario", "perfil");
+
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var nomeArquivo = vm.Nome + Path.GetExtension(vm.Foto.FileName);
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.Foto.CopyToAsync(stream);
+                }
+
+                vm.FotoUrl = "/images/usuario/perfil/" + nomeArquivo;
             }
 
             await _usuarioService.RegistrarAsync(vm);
@@ -168,18 +226,8 @@ namespace WEB.Controllers
         public async Task<IActionResult> EsqueciMinhaSenha(EsqueciMinhaSenhaVm vm)
         {
             var existe = await _usuarioService.ExisteEmailAsync(vm.Email);
-
-            var link = Url.Action(
-     "RedefinirSenha",   // action
-     "Usuario",        // controller
-     new { email = vm.Email }, // parâmetro
-     Request.Scheme);
-
-            await _usuarioService.EnviarAsync(
-                vm.Email,
-                "Redefinir senha",
-                $"Clique aqui para redefinir sua senha: {link}"
-            );
+            var link = Url.Action("RedefinirSenha", "Usuario", new { email = vm.Email }, Request.Scheme);
+            await _usuarioService.EnviarAsync(vm.Email, "Redefinir senha", $"Clique aqui para redefinir sua senha: {link}");
 
             if (existe)
                 TempData["msg"] = "Link enviado para o email!";

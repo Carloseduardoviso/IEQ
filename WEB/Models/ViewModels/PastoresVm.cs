@@ -9,6 +9,8 @@ public class PastoresVm
 
     public string? Telefone { get; set; }
     public string? Email { get; set; }
+    public IFormFile? Foto { get; set; }
+    public string? FotoUrl { get; set; }
     public bool Ativo { get; set; } = true;
 
     [Required]

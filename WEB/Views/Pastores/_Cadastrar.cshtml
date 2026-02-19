@@ -21,7 +21,20 @@
                 <div class="modal-body">
 
                     <input type="hidden" asp-for="PastorId" />           
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label asp-for="Foto"></label><span class="text-danger"> *</span>
+                            <input asp-for="Foto" type="file" class="form-control" accept="image/*" />
+                            <span asp-validation-for="Foto" class="text-danger"></span>
+                        </div>
 
+                        @if (!string.IsNullOrEmpty(Model?.FotoUrl))
+                        {
+                            <div class="col-md-6 d-flex align-items-end">
+                                <img src="@Model.FotoUrl" alt="Foto" class="border rounded" style="width:130px;" />
+                            </div>
+                        }
+                    </div>
                     <div class="mb-3">
                         <label asp-for="Nome"></label><span class="text-danger"> *</span>
                         <input asp-for="Nome" class="form-control" />

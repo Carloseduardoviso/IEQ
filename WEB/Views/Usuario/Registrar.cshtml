@@ -17,7 +17,16 @@
                     <h3 class="text-center mb-4">Cadastro</h3>
 
                     <form asp-action="Registrar" method="post" enctype="multipart/form-data">
+                        <!-- Foto de Perfil -->
+                        <div class="mb-3 text-center">
+                            <label class="form-label">Foto de Perfil</label>
 
+                            <div class="mb-2"> 
+                                <img id="previewImagem" src="https://via.placeholder.com/150" class="rounded-circle border" style="width:150px;height:150px;object-fit:cover;" />
+                            </div>
+
+                            <input asp-for="Foto" type="file" name="Foto" class="form-control" accept="image/*" onchange="previewFile(this)" />
+                        </div>
                         <div class="mb-3">
                             <label>Nome</label>
                             <input asp-for="Nome" class="form-control" placeholder="Digite seu nome" />
@@ -88,4 +97,19 @@
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function previewFile(input) {
+            var file = input.files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                document.getElementById('previewImagem').src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 }
