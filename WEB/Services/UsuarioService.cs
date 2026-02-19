@@ -165,10 +165,13 @@ namespace WEB.Services
             if (usuario == null)
                 throw new Exception("Usuário não encontrado");
 
+
             if (!string.IsNullOrWhiteSpace(vm.Senha))
             {
                 usuario.SenhaHash = BCrypt.Net.BCrypt.HashPassword(vm.Senha);
             }
+
+            usuario.Role = vm.Role;
 
             await _usuarioRepository.Update(usuario);
         }

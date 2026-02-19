@@ -60,7 +60,17 @@
                             <input asp-for="ConfirmarSenha" class="form-control" placeholder="Confirme a senha" />
                             <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
                         </div>
+                    </div>                                 
+
+                    <div class="mb-3">
+                        <label>  Permissão
+                        </label>
+
+                        <select asp-for="Role" asp-items="Html.GetEnumSelectList<Role>()"  class="form-control select2">
+                            <option value="">Selecione</option>
+                        </select>
                     </div>
+
                     <!-- SEÇÃO 2 =============================== -->
                     <h5 class="border-bottom pb-2 mb-3">Informações da Igreja</h5>
                     <div class="row">                          
