@@ -4,7 +4,7 @@ using WEB.Services.Interfaces;
 
 namespace WEB.Controllers
 {
-    public class LiderancaController : Controller
+    public class CoordenadorController : Controller
     {
         private readonly IDiaconatoService _diaconatoService;
         private readonly ILouvorService _louvorService;
@@ -14,10 +14,10 @@ namespace WEB.Controllers
         private readonly IMulheresService _mulheresService;
         private readonly IMidiaService _midiaService;
         private readonly ICriancaService _criancaService;
-        private readonly ITeatroService _teatroService ;
+        private readonly ITeatroService _teatroService;
         private readonly ICasalService _casalService;
 
-        public LiderancaController(IDiaconatoService diaconatoService, ILouvorService louvorService, IDancaService dancaService, IJovemAdolescenteService jovemAdolescenteService, IHomensService homensService, IMulheresService mulheresService, IMidiaService midiaService, ICriancaService criancaService, ITeatroService teatroService, ICasalService casalService)
+        public CoordenadorController(IDiaconatoService diaconatoService, ILouvorService louvorService, IDancaService dancaService, IJovemAdolescenteService jovemAdolescenteService, IHomensService homensService, IMulheresService mulheresService, IMidiaService midiaService, ICriancaService criancaService, ITeatroService teatroService, ICasalService casalService)
         {
             _diaconatoService = diaconatoService;
             _louvorService = louvorService;
@@ -35,16 +35,8 @@ namespace WEB.Controllers
         {
             var lista = new List<dynamic>();
 
-            var diaconatos = await _diaconatoService.GetAllAsync(x => x.CargoLocal == CargoLocal.Diretor || x.CargoLocal == CargoLocal.Diretora);
-            lista.AddRange(diaconatos.Select(x => new { Nome = x.NomeCompleto, Ministerio = "Diaconato", Igreja = x.Igreja?.Nome, Regiao = x.Regiao?.Nome, CargoLocal = x.CargoLocal }));
-
-            //var criancas = await _casalService.GetAllAsync(...);
-
-            //lista.AddRange(criancas.Select(x => new {
-            //    Nome = x.Nome,
-            //    Ministerio = "Crianças",
-            //    Cargo = x.CargoLocal.ToString()
-            //}));
+            var diaconatos = await _diaconatoService.GetAllAsync(x => x.CargoRegional == CargoRegional.CoordenadorRegionalDiaconato);
+            lista.AddRange(diaconatos.Select(x => new { Nome = x.NomeCompleto, Ministerio = "Diaconato", Igreja = x.Igreja?.Nome, Regiao = x.Regiao?.Nome, CargoRegional = x.CargoRegional }));
 
             return View(lista);
         }

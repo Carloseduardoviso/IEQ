@@ -93,25 +93,45 @@ namespace WEB.Controllers
             return PartialView("_Cadastrar", novo);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> AlterarCasal(CasalVm vm)
         {
-            string mensagemSucess = "";
-            var novo = await _casalService.GetByIdAllIncludesAsync(vm.CasalId);
+            string mensagemSucesso;
 
-            if (novo != null)
+            // Salva foto de perfil
+            if (vm.Foto != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "casal", "perfil");
+
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var nomeArquivo = vm.NomeCompleto + Path.GetExtension(vm.Foto.FileName);
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.Foto.CopyToAsync(stream);
+                }
+
+                vm.FotoUrl = "/images/casal/perfil/" + nomeArquivo;
+            }       
+
+            // Verifica se já existe
+            var existente = await _casalService.GetByIdAsync(vm.CasalId);
+
+            if (existente != null)
             {
                 await _casalService.UpdateAsync(vm);
-                mensagemSucess = "Edição, efetuado com sucesso!";
+                mensagemSucesso = "Edição realizada com sucesso!";
             }
             else
             {
                 await _casalService.AddAsync(vm);
-                mensagemSucess = "Cadastro, efetuado com sucesso!";
+                mensagemSucesso = "Cadastro realizado com sucesso!";
             }
 
-            return RedirectToAction("Index", "Casal").Success(mensagemSucess);
+            return RedirectToAction("Index", "Casal").Success(mensagemSucesso);
         }
     }
 }

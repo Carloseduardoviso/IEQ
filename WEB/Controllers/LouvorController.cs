@@ -92,26 +92,46 @@ namespace WEB.Controllers
 
             return PartialView("_Cadastrar", novo);
         }
-
-
+  
         [HttpPost]
-        public async Task<IActionResult> AlterarIgreja(LouvorVm vm)
+        public async Task<IActionResult> AlterarLouvor(LouvorVm vm)
         {
-            string mensagemSucess = "";
-            var novo = await _louvorService.GetByIdAllIncludesAsync(vm.LouvorId);
+            string mensagemSucesso;
 
-            if (novo != null)
+            // Salva foto de perfil
+            if (vm.Foto != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "louvor", "perfil");
+
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var nomeArquivo = vm.NomeCompleto + Path.GetExtension(vm.Foto.FileName);
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.Foto.CopyToAsync(stream);
+                }
+
+                vm.FotoUrl = "/images/louvor/perfil/" + nomeArquivo;
+            }
+
+            // Verifica se já existe
+            var existente = await _louvorService.GetByIdAsync(vm.LouvorId);
+
+            if (existente != null)
             {
                 await _louvorService.UpdateAsync(vm);
-                mensagemSucess = "Edição, efetuado com sucesso!";
+                mensagemSucesso = "Edição realizada com sucesso!";
             }
             else
             {
                 await _louvorService.AddAsync(vm);
-                mensagemSucess = "Cadastro, efetuado com sucesso!";
+                mensagemSucesso = "Cadastro realizado com sucesso!";
             }
 
-            return RedirectToAction("Index", "Louvor").Success(mensagemSucess);
+            return RedirectToAction("Index", "Louvor").Success(mensagemSucesso);
         }
     }
 }

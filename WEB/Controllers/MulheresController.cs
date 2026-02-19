@@ -93,25 +93,46 @@ namespace WEB.Controllers
             return PartialView("_Cadastrar", novo);
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> AlterarIgreja(MulheresVm vm)
+        public async Task<IActionResult> AlterarMulheres(MulheresVm vm)
         {
-            string mensagemSucess = "";
-            var novo = await _mulheresService.GetByIdAllIncludesAsync(vm.MulheresId);
+            string mensagemSucesso;
 
-            if (novo != null)
+            // Salva foto de perfil
+            if (vm.Foto != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "mulheres", "perfil");
+
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var nomeArquivo = vm.NomeCompleto + Path.GetExtension(vm.Foto.FileName);
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.Foto.CopyToAsync(stream);
+                }
+
+                vm.FotoUrl = "/images/mulheres/perfil/" + nomeArquivo;
+            }
+
+            // Verifica se já existe
+            var existente = await _mulheresService.GetByIdAsync(vm.MulheresId);
+
+            if (existente != null)
             {
                 await _mulheresService.UpdateAsync(vm);
-                mensagemSucess = "Edição, efetuado com sucesso!";
+                mensagemSucesso = "Edição realizada com sucesso!";
             }
             else
             {
                 await _mulheresService.AddAsync(vm);
-                mensagemSucess = "Cadastro, efetuado com sucesso!";
+                mensagemSucesso = "Cadastro realizado com sucesso!";
             }
 
-            return RedirectToAction("Index", "Igreja").Success(mensagemSucess);
+            return RedirectToAction("Index", "Mulheres").Success(mensagemSucesso);
         }
+
     }
 }

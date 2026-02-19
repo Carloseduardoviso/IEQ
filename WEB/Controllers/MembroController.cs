@@ -91,26 +91,47 @@ namespace WEB.Controllers
             ViewBag.Title = membroId != null ? "Editar" : "Cadastrar";
 
             return PartialView("_Cadastrar", novo);
-        }
+        }          
 
         [HttpPost]
-        public async Task<IActionResult> Alterarmembro(MembroVm vm)
+        public async Task<IActionResult> AlterarMembro(MembroVm vm)
         {
-            string mensagemSucess = "";
-            var novo = await _membroService.GetByIdAllIncludesAsync(vm.MembroId);
+            string mensagemSucesso;
 
-            if (novo != null)
+            // Salva foto de perfil
+            if (vm.Foto != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "membro", "perfil");
+
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var nomeArquivo = vm.NomeCompleto + Path.GetExtension(vm.Foto.FileName);
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.Foto.CopyToAsync(stream);
+                }
+
+                vm.FotoUrl = "/images/membro/perfil/" + nomeArquivo;
+            }
+
+            // Verifica se já existe
+            var existente = await _membroService.GetByIdAsync(vm.MembroId);
+
+            if (existente != null)
             {
                 await _membroService.UpdateAsync(vm);
-                mensagemSucess = "Edição, efetuado com sucesso!";
+                mensagemSucesso = "Edição realizada com sucesso!";
             }
             else
             {
                 await _membroService.AddAsync(vm);
-                mensagemSucess = "Cadastro, efetuado com sucesso!";
+                mensagemSucesso = "Cadastro realizado com sucesso!";
             }
 
-            return RedirectToAction("Index", "Membro").Success(mensagemSucess);
+            return RedirectToAction("Index", "Membro").Success(mensagemSucesso);
         }
     }
 }

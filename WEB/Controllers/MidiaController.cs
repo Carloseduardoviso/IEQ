@@ -93,26 +93,46 @@ namespace WEB.Controllers
 
             return PartialView("_Cadastrar", novo);
         }
-
-
+ 
         [HttpPost]
-        public async Task<IActionResult> AlterarIgreja(MidiaVm vm)
+        public async Task<IActionResult> AlterarMidia(MidiaVm vm)
         {
-            string mensagemSucess = "";
-            var novo = await _midiaService.GetByIdAllIncludesAsync(vm.MidiaId);
+            string mensagemSucesso;
 
-            if (novo != null)
+            // Salva foto de perfil
+            if (vm.Foto != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "midia", "perfil");
+
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var nomeArquivo = vm.NomeCompleto + Path.GetExtension(vm.Foto.FileName);
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.Foto.CopyToAsync(stream);
+                }
+
+                vm.FotoUrl = "/images/midia/perfil/" + nomeArquivo;
+            }
+
+            // Verifica se já existe
+            var existente = await _midiaService.GetByIdAsync(vm.MidiaId);
+
+            if (existente != null)
             {
                 await _midiaService.UpdateAsync(vm);
-                mensagemSucess = "Edição, efetuado com sucesso!";
+                mensagemSucesso = "Edição realizada com sucesso!";
             }
             else
             {
                 await _midiaService.AddAsync(vm);
-                mensagemSucess = "Cadastro, efetuado com sucesso!";
+                mensagemSucesso = "Cadastro realizado com sucesso!";
             }
 
-            return RedirectToAction("Index", "Midia").Success(mensagemSucess);
+            return RedirectToAction("Index", "Midia").Success(mensagemSucesso);
         }
     }
 }

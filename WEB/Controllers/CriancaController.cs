@@ -92,26 +92,46 @@ namespace WEB.Controllers
 
             return PartialView("_Cadastrar", novo);
         }     
-
-
+    
         [HttpPost]
         public async Task<IActionResult> AlterarIgreja(CriancaVm vm)
         {
-            string mensagemSucess = "";
-            var novo = await _criancaService.GetByIdAllIncludesAsync(vm.CriancaId);
+            string mensagemSucesso;
 
-            if (novo != null)
+            // Salva foto de perfil
+            if (vm.Foto != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "crianca", "perfil");
+
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var nomeArquivo = vm.NomeCompleto + Path.GetExtension(vm.Foto.FileName);
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.Foto.CopyToAsync(stream);
+                }
+
+                vm.FotoUrl = "/images/crianca/perfil/" + nomeArquivo;
+            }
+
+            // Verifica se já existe
+            var existente = await _criancaService.GetByIdAsync(vm.CriancaId);
+
+            if (existente != null)
             {
                 await _criancaService.UpdateAsync(vm);
-                mensagemSucess = "Edição, efetuado com sucesso!";
+                mensagemSucesso = "Edição realizada com sucesso!";
             }
             else
             {
                 await _criancaService.AddAsync(vm);
-                mensagemSucess = "Cadastro, efetuado com sucesso!";
+                mensagemSucesso = "Cadastro realizado com sucesso!";
             }
 
-            return RedirectToAction("Index", "Crianca").Success(mensagemSucess);
+            return RedirectToAction("Index", "Crianca").Success(mensagemSucesso);
         }
     }
 }

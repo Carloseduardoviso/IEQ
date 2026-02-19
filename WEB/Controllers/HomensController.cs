@@ -91,28 +91,47 @@ namespace WEB.Controllers
             ViewBag.Title = homensId != null ? "Editar" : "Cadastrar";
 
             return PartialView("_Cadastrar", novo);
-        }
-
+        }   
 
         [HttpPost]
-        public async Task<IActionResult> AlterarIgreja(HomensVm vm)
+        public async Task<IActionResult> AlterarHomem(HomensVm vm)
         {
-            string mensagemSucess = "";
-            var novo = await _homensService.GetByIdAllIncludesAsync(vm.HomensId);
+            string mensagemSucesso;
 
-            if (novo != null)
+            // Salva foto de perfil
+            if (vm.Foto != null)
+            {
+                var pasta = Path.Combine("wwwroot", "images", "homens", "perfil");
+
+                if (!Directory.Exists(pasta))
+                    Directory.CreateDirectory(pasta);
+
+                var nomeArquivo = vm.NomeCompleto + Path.GetExtension(vm.Foto.FileName);
+                var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    await vm.Foto.CopyToAsync(stream);
+                }
+
+                vm.FotoUrl = "/images/homens/perfil/" + nomeArquivo;
+            }
+
+            // Verifica se já existe
+            var existente = await _homensService.GetByIdAsync(vm.HomensId);
+
+            if (existente != null)
             {
                 await _homensService.UpdateAsync(vm);
-                mensagemSucess = "Edição, efetuado com sucesso!";
+                mensagemSucesso = "Edição realizada com sucesso!";
             }
             else
             {
                 await _homensService.AddAsync(vm);
-                mensagemSucess = "Cadastro, efetuado com sucesso!";
+                mensagemSucesso = "Cadastro realizado com sucesso!";
             }
 
-            return RedirectToAction("Index", "Homens").Success(mensagemSucess);
+            return RedirectToAction("Index", "Homens").Success(mensagemSucesso);
         }
-
     }
 }

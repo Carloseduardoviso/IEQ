@@ -84,11 +84,6 @@
                                     <td>@item.Regiao!.Nome</td>
                                     <td>
                                         @item.CargoLocal.GetDisplayName()
-
-                                        @if (item.CargoRegional != null)
-                                        {
-                                            <text> / @item.CargoRegional.GetDisplayName()</text>
-                                        }
                                     </td>
                                     <!-- ATIVO -->
                                     <td>
@@ -193,7 +188,7 @@
                             </li>
                         </ul>
                     </nav>
-                } 
+                }
             </div>
         </div>
     </div>
