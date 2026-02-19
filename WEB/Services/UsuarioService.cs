@@ -160,27 +160,16 @@ namespace WEB.Services
 
         public async Task UpdateAsync(UsuarioVm vm)
         {
-            // 1️⃣ Busca usuário existente no banco
             var usuario = await _usuarioRepository.GetByIdAsync(vm.UsuarioId);
 
             if (usuario == null)
                 throw new Exception("Usuário não encontrado");
 
-            // 2️⃣ Atualiza campos normais
-            usuario.Nome = vm.Nome;
-            usuario.Email = vm.Email;
-            usuario.RegiaoId = vm.RegiaoId;
-            usuario.IgrejaId = vm.IgrejaId;
-            usuario.Role = vm.Role;
-            usuario.Ativo = vm.Ativo;
-
-            // 3️⃣ Atualiza senha SOMENTE se informada
             if (!string.IsNullOrWhiteSpace(vm.Senha))
             {
                 usuario.SenhaHash = BCrypt.Net.BCrypt.HashPassword(vm.Senha);
             }
 
-            // 4️⃣ Salva
             await _usuarioRepository.Update(usuario);
         }
     }
