@@ -94,21 +94,6 @@ namespace WEB.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<IActionResult> Editar(Guid? usuarioId)
-        {
-            var novo = new UsuarioVm();
-            if (usuarioId != null) novo = await _usuarioService.GetByIdAsync(usuarioId.Value);
-
-            var regiao = await _regiaoService.GetAllAsync();
-            var igreja = await _igrejaService.GetAllAsync();
-
-            ViewBag.Regiao = regiao;
-            ViewBag.Igreja = igreja;
-            ViewBag.Title = usuarioId != null ? "Editar" : "Cadastrar";
-
-            return PartialView("_Editar", novo);
-        }
-
         public async Task<IActionResult> Cadastrar(Guid? usuarioId)
         {
             var novo = new UsuarioVm();
@@ -163,7 +148,7 @@ namespace WEB.Controllers
                 mensagemSucesso = "Cadastro realizado com sucesso!";
             }
 
-            return RedirectToAction("Index", "Danca").Success(mensagemSucesso);
+            return RedirectToAction("Index", "Usuario").Success(mensagemSucesso);
         }
 
         [HttpPost]

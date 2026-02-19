@@ -11,6 +11,19 @@
     {
         roleDisplay = roleEnum.GetDisplayName();
     }
+
+    var fotoClaim = User.FindFirst("Foto")?.Value;
+
+    string caminhoFoto;
+
+    if (!string.IsNullOrEmpty(fotoClaim))
+    {
+        caminhoFoto = Url.Content("~/imagens/usuarios/" + fotoClaim);
+    }
+    else
+    {
+        caminhoFoto = Url.Content("~/images/Home/foto_padrao.png");
+    }
 }
 
 <nav class="navbar navbar-expand-lg navbar-dark ieq-navbar shadow">
@@ -88,11 +101,18 @@
                 @if (User.Identity!.IsAuthenticated)
                 {
                     <li class="nav-item dropdown">
-                        <a class="nav-link nav-link-ieq dropdown-toggle"
+                        <a class="nav-link nav-link-ieq dropdown-toggle d-flex align-items-center gap-2"
                            data-bs-toggle="dropdown">
-                            👤 @User.Identity.Name
-                            <br />
-                            <small>@roleDisplay</small>
+
+                            <img src="@caminhoFoto"
+                                 class="rounded-circle border shadow-sm"
+                                 style="width:40px;height:40px;object-fit:cover;" />
+
+                            <div class="text-start">
+                                @User.Identity.Name
+                                <br />
+                                <small>@roleDisplay</small>
+                            </div>
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end">
