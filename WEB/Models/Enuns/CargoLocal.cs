@@ -12,13 +12,10 @@ namespace WEB.Models.Enuns
         Homens = 2,
 
         [Display(Name = "Mulheres")]
-        Mulheres = 3,
+        Mulheres = 3,        
 
-        [Display(Name = "Jovem")]
-        Jovem = 4,
-
-        [Display(Name = "Adolescente")]
-        Adolescente = 5,
+        [Display(Name = "Jovem/Adolescente")]
+        JovemAdolescente = 5,
 
         [Display(Name = "Criança")]
         Crianca = 6,
@@ -72,6 +69,9 @@ namespace WEB.Models.Enuns
         Pastor = 22,
 
         [Display(Name = "Pastor(a) Auxiliar")]
-        PastorAuxiliar = 23
+        PastorAuxiliar = 23,
+
+        [Display(Name = "Casal")]
+        Casal = 24
     }
 }

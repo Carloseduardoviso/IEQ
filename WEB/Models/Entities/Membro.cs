@@ -23,6 +23,7 @@ namespace WEB.Models.Entities
 
         public string? FotoUrl { get; set; }
         public bool Ativo { get; set; } = true;
+        public CargoLocal CargoLocal { get; set; }
 
         public Igreja? Igreja { get; set; }
         public Regiao? Regiao { get; set; }

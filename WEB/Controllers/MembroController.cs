@@ -17,14 +17,15 @@ namespace WEB.Controllers
         private readonly IIgrejaService _igrejaService;
         private readonly IPastoresService _pastoresService;
 
-        public MembroController(IMembroService membroService, IRegiaoService regiaoService, ISuperintendenteEstadualService superintendenteEstadualService, ISuperintendenteRegionalService superintendenteRegionalService, IIgrejaService igrejaService, IPastoresService pastoresService)
+        public MembroController(IMembroService membroService, IRegiaoService regiaoService, ISuperintendenteEstadualService superintendenteEstadualService, ISuperintendenteRegionalService superintendenteRegionalService, 
+            IIgrejaService igrejaService, IPastoresService pastoresService)
         {
             _membroService = membroService;
             _regiaoService = regiaoService;
             _superintendenteEstadualService = superintendenteEstadualService;
             _superintendenteRegionalService = superintendenteRegionalService;
             _igrejaService = igrejaService;
-            _pastoresService = pastoresService;
+            _pastoresService = pastoresService;    
         }
 
         public async Task<IActionResult> Index(FiltroMembroVm filtroMembroVm, int pagina = 1)

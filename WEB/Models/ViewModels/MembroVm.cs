@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using WEB.Models.Entities;
+using WEB.Models.Enuns;
 
 namespace WEB.Models.ViewModels
 {
@@ -53,6 +54,7 @@ namespace WEB.Models.ViewModels
 
         public IFormFile? Foto { get; set; }
         public string? FotoUrl { get; set; }
+        public CargoLocal CargoLocal { get; set; }
 
         public Igreja? Igreja { get; set; }
         public Regiao? Regiao { get; set; }

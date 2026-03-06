@@ -1,4 +1,5 @@
-﻿using WEB.Models.Enuns;
+﻿using WEB.Migrations;
+using WEB.Models.Enuns;
 
 namespace WEB.Models.Entities
 {
@@ -31,5 +32,32 @@ namespace WEB.Models.Entities
         public Pastores? Pastor { get; set; }
         public SuperintendenteEstadual? SuperintendenteEstadual { get; set; }
         public SuperintendenteRegional? SuperintendenteRegional { get; set; }
+
+        public void Adicionar(Casal vm)
+        {
+            NomeCompleto = vm.NomeCompleto;
+            IgrejaId = vm.IgrejaId;
+            RegiaoId = vm.RegiaoId;
+            PastorId = vm.PastorId;
+            SuperintendenteEstadualId = vm.SuperintendenteEstadualId;
+            SuperintendenteRegionalId = vm.SuperintendenteRegionalId;
+            Contato = vm.Contato;
+            DataNascimento = vm.DataNascimento;
+            DataMinisterio = vm.DataMinisterio;
+            DataBatismo = vm.DataBatismo;
+            TempoAcumuladoEmMeses = vm.TempoAcumuladoEmMeses;
+            DataReativacao = vm.DataReativacao;
+            DataInativacao = vm.DataInativacao;
+            Estado = vm.Estado;
+            Cidade = vm.Cidade;
+            FotoUrl = vm.FotoUrl;
+            Ativo = vm.Ativo;
+            CargoLocal = vm.CargoLocal;
+        }
+
+        public void Atualizar(Casal vm)
+        {
+            vm.NomeCompleto = NomeCompleto;
+        }
     }
 }
