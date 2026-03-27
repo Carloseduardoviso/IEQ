@@ -80,6 +80,7 @@ namespace WEB.Services
             atualizado.DataReativacao = existente.DataReativacao;
             atualizado.DataInativacao = existente.DataInativacao;
             atualizado.Ativo = existente.Ativo;
+            atualizado.MembroId = existente.MembroId;
 
             await _diaconatoRepository.UpdateAsync(atualizado);
         }

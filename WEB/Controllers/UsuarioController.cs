@@ -21,7 +21,7 @@ namespace WEB.Controllers
         private readonly IIgrejaService _igrejaService;
         private readonly IRegiaoService _regiaoService;
 
-        public UsuarioController(IUsuarioService usuarioService,IIgrejaService igrejaService, IRegiaoService regiaoService)
+        public UsuarioController(IUsuarioService usuarioService, IIgrejaService igrejaService, IRegiaoService regiaoService)
         {
             _usuarioService = usuarioService;
             _igrejaService = igrejaService;
@@ -57,7 +57,7 @@ namespace WEB.Controllers
             ViewBag.Regiao = regiao;
 
             return View();
-        } 
+        }
         public IActionResult EsqueciMinhaSenha() => View();
 
 
@@ -80,7 +80,8 @@ namespace WEB.Controllers
         {
             new Claim(ClaimTypes.Name, usuario.Nome!),
             new Claim(ClaimTypes.Role, usuario.Role.ToString()),
-            new Claim("UserId", usuario.UsuarioId.ToString())
+            new Claim("UserId", usuario.UsuarioId.ToString()),
+            new Claim("FotoUrl", usuario.FotoUrl ?? "/images/Home/foto_padrao.png")
         };
 
             var identity = new ClaimsIdentity(
@@ -115,7 +116,7 @@ namespace WEB.Controllers
         {
             string mensagemSucesso;
 
-            // Salva foto de perfil
+            // 📸 Salvar foto de perfil
             if (vm.Foto != null)
             {
                 var pasta = Path.Combine("wwwroot", "images", "usuario", "perfil");
@@ -123,7 +124,8 @@ namespace WEB.Controllers
                 if (!Directory.Exists(pasta))
                     Directory.CreateDirectory(pasta);
 
-                var nomeArquivo = vm.Nome + Path.GetExtension(vm.Foto.FileName);
+                // 🔥 nome único (evita sobrescrever)
+                var nomeArquivo = Guid.NewGuid() + Path.GetExtension(vm.Foto.FileName);
                 var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
 
                 using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
@@ -134,7 +136,7 @@ namespace WEB.Controllers
                 vm.FotoUrl = "/images/usuario/perfil/" + nomeArquivo;
             }
 
-            // Verifica se já existe
+            // 🔎 Verifica se já existe
             var existente = await _usuarioService.GetByIdAsync(vm.UsuarioId);
 
             if (existente != null)
@@ -148,7 +150,32 @@ namespace WEB.Controllers
                 mensagemSucesso = "Cadastro realizado com sucesso!";
             }
 
-            return RedirectToAction("Index", "Usuario").Success(mensagemSucesso);
+            // 🔥 ATUALIZA CLAIMS SE FOR O USUÁRIO LOGADO
+            var userIdLogado = User.FindFirst("UserId")?.Value;
+
+            if (userIdLogado == vm.UsuarioId.ToString())
+            {
+                var usuarioAtualizado = await _usuarioService.GetByIdAsync(vm.UsuarioId);
+
+                var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, usuarioAtualizado.Nome!),
+            new Claim(ClaimTypes.Role, usuarioAtualizado.Role.ToString()),
+            new Claim("UserId", usuarioAtualizado.UsuarioId.ToString()),
+            new Claim("FotoUrl", usuarioAtualizado.FotoUrl ?? "/images/Home/foto_padrao.png")
+        };
+
+                var identity = new ClaimsIdentity(
+                    claims,
+                    CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(identity));
+            }
+
+            return RedirectToAction("Index", "Usuario")
+                .Success(mensagemSucesso);
         }
 
         [HttpPost]

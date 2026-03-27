@@ -69,8 +69,18 @@ namespace WEB.Services
 
         public async Task UpdateAsync(LouvorVm vm)
         {
-            Louvor result = _mapper.Map<Louvor>(vm);
-            await _louvorRepository.Update(result);
+            var existente = await _louvorRepository.GetByIdAsync(vm.LouvorId);
+            if (existente == null) return;
+
+            var atualizado = _mapper.Map<Louvor>(vm);
+
+            atualizado.TempoAcumuladoEmMeses = existente.TempoAcumuladoEmMeses;
+            atualizado.DataReativacao = existente.DataReativacao;
+            atualizado.DataInativacao = existente.DataInativacao;
+            atualizado.Ativo = existente.Ativo;
+            atualizado.MembroId = existente.MembroId;
+
+            await _louvorRepository.Update(atualizado);
         }
     }
 }

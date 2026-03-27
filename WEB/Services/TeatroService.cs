@@ -71,8 +71,18 @@ namespace WEB.Services
 
         public async Task UpdateAsync(TeatroVm vm)
         {
-            Teatro result = _mapper.Map<Teatro>(vm);
-            await _teatroRepository.Update(result);
+            var existente = await _teatroRepository.GetByIdAsync(vm.TeatroId);
+            if (existente == null) return;
+
+            var atualizado = _mapper.Map<Teatro>(vm);
+
+            atualizado.TempoAcumuladoEmMeses = existente.TempoAcumuladoEmMeses;
+            atualizado.DataReativacao = existente.DataReativacao;
+            atualizado.DataInativacao = existente.DataInativacao;
+            atualizado.Ativo = existente.Ativo;
+            atualizado.MembroId = existente.MembroId;
+
+            await _teatroRepository.Update(atualizado);
         }
     }
 }

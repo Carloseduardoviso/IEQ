@@ -25,6 +25,8 @@ namespace WEB.Models.ViewModels
 
         [Display(Name = "Pastor")]
         public Guid? PastorId { get; set; }
+        public Guid MembroId { get; set; }
+
 
         [Required]
         public CargoLocal CargoLocal { get; set; }
@@ -59,11 +61,12 @@ namespace WEB.Models.ViewModels
         public IFormFile? Foto { get; set; }
         public string? FotoUrl { get; set; }
 
-        public Igreja? Igreja { get; set; }
-        public Regiao? Regiao { get; set; }
-        public Pastores? Pastor { get; set; }
-        public SuperintendenteEstadual? SuperintendenteEstadual { get; set; }
-        public SuperintendenteRegional? SuperintendenteRegional { get; set; }
+        public IgrejaVm? Igreja { get; set; }
+        public RegiaoVm? Regiao { get; set; }
+        public PastoresVm? Pastor { get; set; }
+        public SuperintendenteEstadualVm? SuperintendenteEstadual { get; set; }
+        public SuperintendenteRegionalVm? SuperintendenteRegional { get; set; }
+        public Membro? Membro { get; set; }
 
         // 🔹 TEMPO MINISTÉRIO
         public string TempoMinisterio

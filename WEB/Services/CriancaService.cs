@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System.Linq.Expressions;
+using WEB.Data.Repositories;
 using WEB.Data.Repositories.Interfaces;
 using WEB.Models.Entities;
 using WEB.Models.ViewModels;
@@ -68,8 +69,18 @@ namespace WEB.Services
 
         public async Task UpdateAsync(CriancaVm vm)
         {
-            Crianca result = _mapper.Map<Crianca>(vm);
-            await _criancaRepository.Update(result);
+            var existente = await _criancaRepository.GetByIdAsync(vm.CriancaId);
+            if (existente == null) return;
+
+            var atualizado = _mapper.Map<Crianca>(vm);
+
+            atualizado.TempoAcumuladoEmMeses = existente.TempoAcumuladoEmMeses;
+            atualizado.DataReativacao = existente.DataReativacao;
+            atualizado.DataInativacao = existente.DataInativacao;
+            atualizado.Ativo = existente.Ativo;
+            atualizado.MembroId = existente.MembroId;
+
+            await _criancaRepository.Update(atualizado);
         }
     }
 }

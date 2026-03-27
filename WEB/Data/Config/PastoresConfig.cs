@@ -26,6 +26,10 @@ namespace WEB.Data.Config
                    .WithMany(i => i.Pastores)
                    .HasForeignKey(p => p.IgrejaId)
                    .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(c => c.Membro).WithOne(m => m.Pastor).HasForeignKey<Pastores>(c => c.MembroId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasIndex(c => c.MembroId).IsUnique();
+
         }
     }
 }

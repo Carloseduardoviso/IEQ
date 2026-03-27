@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WEB.Data;
 
@@ -11,9 +12,11 @@ using WEB.Data;
 namespace WEB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20260327142711_upy")]
+    partial class upy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,9 +78,6 @@ namespace WEB.Migrations
                     b.Property<Guid>("IgrejaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MembroId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -101,9 +101,6 @@ namespace WEB.Migrations
                     b.HasKey("CasalId");
 
                     b.HasIndex("IgrejaId");
-
-                    b.HasIndex("MembroId")
-                        .IsUnique();
 
                     b.HasIndex("PastorId");
 
@@ -169,9 +166,6 @@ namespace WEB.Migrations
                     b.Property<Guid>("IgrejaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MembroId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -195,9 +189,6 @@ namespace WEB.Migrations
                     b.HasKey("CriancaId");
 
                     b.HasIndex("IgrejaId");
-
-                    b.HasIndex("MembroId")
-                        .IsUnique();
 
                     b.HasIndex("PastorId");
 
@@ -263,9 +254,6 @@ namespace WEB.Migrations
                     b.Property<Guid>("IgrejaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MembroId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -289,9 +277,6 @@ namespace WEB.Migrations
                     b.HasKey("DancaId");
 
                     b.HasIndex("IgrejaId");
-
-                    b.HasIndex("MembroId")
-                        .IsUnique();
 
                     b.HasIndex("PastorId");
 
@@ -375,9 +360,6 @@ namespace WEB.Migrations
                     b.Property<Guid>("IgrejaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MembroId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -401,9 +383,6 @@ namespace WEB.Migrations
                     b.HasKey("DiaconatoId");
 
                     b.HasIndex("IgrejaId");
-
-                    b.HasIndex("MembroId")
-                        .IsUnique();
 
                     b.HasIndex("PastorId");
 
@@ -469,9 +448,6 @@ namespace WEB.Migrations
                     b.Property<Guid>("IgrejaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MembroId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -495,9 +471,6 @@ namespace WEB.Migrations
                     b.HasKey("HomensId");
 
                     b.HasIndex("IgrejaId");
-
-                    b.HasIndex("MembroId")
-                        .IsUnique();
 
                     b.HasIndex("PastorId");
 
@@ -597,9 +570,6 @@ namespace WEB.Migrations
                     b.Property<Guid>("IgrejaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MembroId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -623,9 +593,6 @@ namespace WEB.Migrations
                     b.HasKey("JovemAdolecenteId");
 
                     b.HasIndex("IgrejaId");
-
-                    b.HasIndex("MembroId")
-                        .IsUnique();
 
                     b.HasIndex("PastorId");
 
@@ -691,9 +658,6 @@ namespace WEB.Migrations
                     b.Property<Guid>("IgrejaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MembroId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -717,9 +681,6 @@ namespace WEB.Migrations
                     b.HasKey("LouvorId");
 
                     b.HasIndex("IgrejaId");
-
-                    b.HasIndex("MembroId")
-                        .IsUnique();
 
                     b.HasIndex("PastorId");
 
@@ -749,6 +710,9 @@ namespace WEB.Migrations
                     b.Property<int?>("CargoRegional")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("CasalId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Cidade")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -756,6 +720,12 @@ namespace WEB.Migrations
 
                     b.Property<string>("Contato")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("CriancaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DancaId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataBatismo")
                         .HasColumnType("datetime2");
@@ -772,6 +742,9 @@ namespace WEB.Migrations
                     b.Property<DateTime?>("DataReativacao")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("DiaconatoId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Estado")
                         .IsRequired()
                         .HasMaxLength(2)
@@ -780,7 +753,22 @@ namespace WEB.Migrations
                     b.Property<string>("FotoUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("HomensId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("IgrejaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("JovemAdolescenteJovemAdolecenteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("LouvorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("MidiaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("MulheresId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("NomeCompleto")
@@ -800,18 +788,43 @@ namespace WEB.Migrations
                     b.Property<Guid?>("SuperintendenteRegionalId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("TeatroId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("TempoAcumuladoEmMeses")
                         .HasColumnType("int");
 
                     b.HasKey("MembroId");
 
+                    b.HasIndex("CasalId");
+
+                    b.HasIndex("CriancaId");
+
+                    b.HasIndex("DancaId");
+
+                    b.HasIndex("DiaconatoId");
+
+                    b.HasIndex("HomensId");
+
                     b.HasIndex("IgrejaId");
+
+                    b.HasIndex("JovemAdolescenteJovemAdolecenteId");
+
+                    b.HasIndex("LouvorId");
+
+                    b.HasIndex("MidiaId");
+
+                    b.HasIndex("MulheresId");
+
+                    b.HasIndex("PastorId");
 
                     b.HasIndex("RegiaoId");
 
                     b.HasIndex("SuperintendenteEstadualId");
 
                     b.HasIndex("SuperintendenteRegionalId");
+
+                    b.HasIndex("TeatroId");
 
                     b.ToTable("Membro", (string)null);
                 });
@@ -869,9 +882,6 @@ namespace WEB.Migrations
                     b.Property<Guid>("IgrejaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MembroId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -895,9 +905,6 @@ namespace WEB.Migrations
                     b.HasKey("MidiaId");
 
                     b.HasIndex("IgrejaId");
-
-                    b.HasIndex("MembroId")
-                        .IsUnique();
 
                     b.HasIndex("PastorId");
 
@@ -963,9 +970,6 @@ namespace WEB.Migrations
                     b.Property<Guid>("IgrejaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MembroId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -989,9 +993,6 @@ namespace WEB.Migrations
                     b.HasKey("MulheresId");
 
                     b.HasIndex("IgrejaId");
-
-                    b.HasIndex("MembroId")
-                        .IsUnique();
 
                     b.HasIndex("PastorId");
 
@@ -1029,9 +1030,6 @@ namespace WEB.Migrations
                     b.Property<Guid>("IgrejaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("MembroId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -1044,10 +1042,6 @@ namespace WEB.Migrations
                     b.HasKey("PastorId");
 
                     b.HasIndex("IgrejaId");
-
-                    b.HasIndex("MembroId")
-                        .IsUnique()
-                        .HasFilter("[MembroId] IS NOT NULL");
 
                     b.ToTable("Pastores", (string)null);
                 });
@@ -1175,9 +1169,6 @@ namespace WEB.Migrations
                     b.Property<Guid>("IgrejaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MembroId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -1201,9 +1192,6 @@ namespace WEB.Migrations
                     b.HasKey("TeatroId");
 
                     b.HasIndex("IgrejaId");
-
-                    b.HasIndex("MembroId")
-                        .IsUnique();
 
                     b.HasIndex("PastorId");
 
@@ -1276,12 +1264,6 @@ namespace WEB.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WEB.Models.Entities.Membro", "Membro")
-                        .WithOne("Casal")
-                        .HasForeignKey("WEB.Models.Entities.Casal", "MembroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("WEB.Models.Entities.Pastores", "Pastor")
                         .WithMany()
                         .HasForeignKey("PastorId");
@@ -1302,8 +1284,6 @@ namespace WEB.Migrations
 
                     b.Navigation("Igreja");
 
-                    b.Navigation("Membro");
-
                     b.Navigation("Pastor");
 
                     b.Navigation("Regiao");
@@ -1319,12 +1299,6 @@ namespace WEB.Migrations
                         .WithMany("Criancas")
                         .HasForeignKey("IgrejaId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WEB.Models.Entities.Membro", "Membro")
-                        .WithOne("Crianca")
-                        .HasForeignKey("WEB.Models.Entities.Crianca", "MembroId")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("WEB.Models.Entities.Pastores", "Pastor")
@@ -1346,8 +1320,6 @@ namespace WEB.Migrations
                         .HasForeignKey("SuperintendenteRegionalId");
 
                     b.Navigation("Igreja");
-
-                    b.Navigation("Membro");
 
                     b.Navigation("Pastor");
 
@@ -1366,12 +1338,6 @@ namespace WEB.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WEB.Models.Entities.Membro", "Membro")
-                        .WithOne("Danca")
-                        .HasForeignKey("WEB.Models.Entities.Danca", "MembroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("WEB.Models.Entities.Pastores", "Pastor")
                         .WithMany()
                         .HasForeignKey("PastorId");
@@ -1392,8 +1358,6 @@ namespace WEB.Migrations
 
                     b.Navigation("Igreja");
 
-                    b.Navigation("Membro");
-
                     b.Navigation("Pastor");
 
                     b.Navigation("Regiao");
@@ -1409,12 +1373,6 @@ namespace WEB.Migrations
                         .WithMany("Diaconos")
                         .HasForeignKey("IgrejaId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WEB.Models.Entities.Membro", "Membro")
-                        .WithOne("Diaconato")
-                        .HasForeignKey("WEB.Models.Entities.Diaconato", "MembroId")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("WEB.Models.Entities.Pastores", "Pastor")
@@ -1436,8 +1394,6 @@ namespace WEB.Migrations
                         .HasForeignKey("SuperintendenteRegionalId");
 
                     b.Navigation("Igreja");
-
-                    b.Navigation("Membro");
 
                     b.Navigation("Pastor");
 
@@ -1456,12 +1412,6 @@ namespace WEB.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WEB.Models.Entities.Membro", "Membro")
-                        .WithOne("Homens")
-                        .HasForeignKey("WEB.Models.Entities.Homens", "MembroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("WEB.Models.Entities.Pastores", "Pastor")
                         .WithMany()
                         .HasForeignKey("PastorId");
@@ -1481,8 +1431,6 @@ namespace WEB.Migrations
                         .HasForeignKey("SuperintendenteRegionalId");
 
                     b.Navigation("Igreja");
-
-                    b.Navigation("Membro");
 
                     b.Navigation("Pastor");
 
@@ -1512,12 +1460,6 @@ namespace WEB.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WEB.Models.Entities.Membro", "Membro")
-                        .WithOne("JovemAdolescente")
-                        .HasForeignKey("WEB.Models.Entities.JovemAdolescente", "MembroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("WEB.Models.Entities.Pastores", "Pastor")
                         .WithMany()
                         .HasForeignKey("PastorId");
@@ -1538,8 +1480,6 @@ namespace WEB.Migrations
 
                     b.Navigation("Igreja");
 
-                    b.Navigation("Membro");
-
                     b.Navigation("Pastor");
 
                     b.Navigation("Regiao");
@@ -1557,12 +1497,6 @@ namespace WEB.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WEB.Models.Entities.Membro", "Membro")
-                        .WithOne("Louvor")
-                        .HasForeignKey("WEB.Models.Entities.Louvor", "MembroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("WEB.Models.Entities.Pastores", "Pastor")
                         .WithMany()
                         .HasForeignKey("PastorId");
@@ -1583,8 +1517,6 @@ namespace WEB.Migrations
 
                     b.Navigation("Igreja");
 
-                    b.Navigation("Membro");
-
                     b.Navigation("Pastor");
 
                     b.Navigation("Regiao");
@@ -1596,11 +1528,51 @@ namespace WEB.Migrations
 
             modelBuilder.Entity("WEB.Models.Entities.Membro", b =>
                 {
+                    b.HasOne("WEB.Models.Entities.Casal", "Casal")
+                        .WithMany()
+                        .HasForeignKey("CasalId");
+
+                    b.HasOne("WEB.Models.Entities.Crianca", "Crianca")
+                        .WithMany()
+                        .HasForeignKey("CriancaId");
+
+                    b.HasOne("WEB.Models.Entities.Danca", "Danca")
+                        .WithMany()
+                        .HasForeignKey("DancaId");
+
+                    b.HasOne("WEB.Models.Entities.Diaconato", "Diaconato")
+                        .WithMany()
+                        .HasForeignKey("DiaconatoId");
+
+                    b.HasOne("WEB.Models.Entities.Homens", "Homens")
+                        .WithMany()
+                        .HasForeignKey("HomensId");
+
                     b.HasOne("WEB.Models.Entities.Igreja", "Igreja")
                         .WithMany("Membros")
                         .HasForeignKey("IgrejaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("WEB.Models.Entities.JovemAdolescente", "JovemAdolescente")
+                        .WithMany()
+                        .HasForeignKey("JovemAdolescenteJovemAdolecenteId");
+
+                    b.HasOne("WEB.Models.Entities.Louvor", "Louvor")
+                        .WithMany()
+                        .HasForeignKey("LouvorId");
+
+                    b.HasOne("WEB.Models.Entities.Midia", "Midia")
+                        .WithMany()
+                        .HasForeignKey("MidiaId");
+
+                    b.HasOne("WEB.Models.Entities.Mulheres", "Mulheres")
+                        .WithMany()
+                        .HasForeignKey("MulheresId");
+
+                    b.HasOne("WEB.Models.Entities.Pastores", "Pastor")
+                        .WithMany()
+                        .HasForeignKey("PastorId");
 
                     b.HasOne("WEB.Models.Entities.Regiao", "Regiao")
                         .WithMany("Membros")
@@ -1616,13 +1588,39 @@ namespace WEB.Migrations
                         .WithMany()
                         .HasForeignKey("SuperintendenteRegionalId");
 
+                    b.HasOne("WEB.Models.Entities.Teatro", "Teatro")
+                        .WithMany()
+                        .HasForeignKey("TeatroId");
+
+                    b.Navigation("Casal");
+
+                    b.Navigation("Crianca");
+
+                    b.Navigation("Danca");
+
+                    b.Navigation("Diaconato");
+
+                    b.Navigation("Homens");
+
                     b.Navigation("Igreja");
+
+                    b.Navigation("JovemAdolescente");
+
+                    b.Navigation("Louvor");
+
+                    b.Navigation("Midia");
+
+                    b.Navigation("Mulheres");
+
+                    b.Navigation("Pastor");
 
                     b.Navigation("Regiao");
 
                     b.Navigation("SuperintendenteEstadual");
 
                     b.Navigation("SuperintendenteRegional");
+
+                    b.Navigation("Teatro");
                 });
 
             modelBuilder.Entity("WEB.Models.Entities.Midia", b =>
@@ -1631,12 +1629,6 @@ namespace WEB.Migrations
                         .WithMany("Midias")
                         .HasForeignKey("IgrejaId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WEB.Models.Entities.Membro", "Membro")
-                        .WithOne("Midia")
-                        .HasForeignKey("WEB.Models.Entities.Midia", "MembroId")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("WEB.Models.Entities.Pastores", "Pastor")
@@ -1658,8 +1650,6 @@ namespace WEB.Migrations
                         .HasForeignKey("SuperintendenteRegionalId");
 
                     b.Navigation("Igreja");
-
-                    b.Navigation("Membro");
 
                     b.Navigation("Pastor");
 
@@ -1678,12 +1668,6 @@ namespace WEB.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WEB.Models.Entities.Membro", "Membro")
-                        .WithOne("Mulheres")
-                        .HasForeignKey("WEB.Models.Entities.Mulheres", "MembroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("WEB.Models.Entities.Pastores", "Pastor")
                         .WithMany()
                         .HasForeignKey("PastorId");
@@ -1704,8 +1688,6 @@ namespace WEB.Migrations
 
                     b.Navigation("Igreja");
 
-                    b.Navigation("Membro");
-
                     b.Navigation("Pastor");
 
                     b.Navigation("Regiao");
@@ -1723,14 +1705,7 @@ namespace WEB.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("WEB.Models.Entities.Membro", "Membro")
-                        .WithOne("Pastor")
-                        .HasForeignKey("WEB.Models.Entities.Pastores", "MembroId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.Navigation("Igreja");
-
-                    b.Navigation("Membro");
                 });
 
             modelBuilder.Entity("WEB.Models.Entities.Regiao", b =>
@@ -1758,12 +1733,6 @@ namespace WEB.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WEB.Models.Entities.Membro", "Membro")
-                        .WithOne("Teatro")
-                        .HasForeignKey("WEB.Models.Entities.Teatro", "MembroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("WEB.Models.Entities.Pastores", "Pastor")
                         .WithMany()
                         .HasForeignKey("PastorId");
@@ -1783,8 +1752,6 @@ namespace WEB.Migrations
                         .HasForeignKey("SuperintendenteRegionalId");
 
                     b.Navigation("Igreja");
-
-                    b.Navigation("Membro");
 
                     b.Navigation("Pastor");
 
@@ -1839,31 +1806,6 @@ namespace WEB.Migrations
                     b.Navigation("Teatros");
 
                     b.Navigation("Usuarios");
-                });
-
-            modelBuilder.Entity("WEB.Models.Entities.Membro", b =>
-                {
-                    b.Navigation("Casal");
-
-                    b.Navigation("Crianca");
-
-                    b.Navigation("Danca");
-
-                    b.Navigation("Diaconato");
-
-                    b.Navigation("Homens");
-
-                    b.Navigation("JovemAdolescente");
-
-                    b.Navigation("Louvor");
-
-                    b.Navigation("Midia");
-
-                    b.Navigation("Mulheres");
-
-                    b.Navigation("Pastor");
-
-                    b.Navigation("Teatro");
                 });
 
             modelBuilder.Entity("WEB.Models.Entities.Regiao", b =>

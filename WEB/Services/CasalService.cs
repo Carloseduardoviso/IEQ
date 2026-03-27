@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System.Linq.Expressions;
+using WEB.Data.Repositories;
 using WEB.Data.Repositories.Interfaces;
 using WEB.Models.Entities;
 using WEB.Models.ViewModels;
@@ -65,11 +66,21 @@ namespace WEB.Services
         {
             throw new NotImplementedException();
         }
-
+             
         public async Task UpdateAsync(CasalVm vm)
         {
-            Casal result = _mapper.Map<Casal>(vm);
-            await _casalRepository.Update(result);
+            var existente = await _casalRepository.GetByIdAsync(vm.CasalId);
+            if (existente == null) return;
+
+            var atualizado = _mapper.Map<Casal>(vm);
+
+            atualizado.TempoAcumuladoEmMeses = existente.TempoAcumuladoEmMeses;
+            atualizado.DataReativacao = existente.DataReativacao;
+            atualizado.DataInativacao = existente.DataInativacao;
+            atualizado.Ativo = existente.Ativo;
+            atualizado.MembroId = existente.MembroId;
+
+            await _casalRepository.Update(atualizado);
         }
     }
 }

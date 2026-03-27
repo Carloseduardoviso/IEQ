@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using DocumentFormat.OpenXml.Office2010.PowerPoint;
 using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.AspNetCore.Http.HttpResults;
 using System.Linq.Expressions;
 using WEB.Data.Repositories.Interfaces;
 using WEB.Models.Entities;
@@ -19,9 +21,15 @@ namespace WEB.Services
         private readonly IDancaRepository _dancaRepository;
         private readonly IDiaconatoRepository _diaconatoRepository;
         private readonly IHomensRepository _homensRepository;
+        private readonly IJovemAdolescenteRepository _jovemAdolescenteRepository;
+        private readonly ILouvorRepository _louvorRepository;
+        private readonly IMidiaRepository _midiaRepository;
+        private readonly IMulheresRepository _mulheresRepository;
+        private readonly IPastoresRepository _pastoresRepository;
+        private readonly ITeatroRepository _teatroRepository;
 
 
-        public MembroService(IMembroRepository membroRepository, IMapper mapper, ICasalRepository casalRepository, ICriancaRepository criancaRepository, IDancaRepository dancaRepository, IDiaconatoRepository diaconatoRepository, IHomensRepository homensRepository)
+        public MembroService(IMembroRepository membroRepository, IMapper mapper, ICasalRepository casalRepository, ICriancaRepository criancaRepository, IDancaRepository dancaRepository, IDiaconatoRepository diaconatoRepository, IHomensRepository homensRepository, IJovemAdolescenteRepository jovemAdolescenteRepository, ILouvorRepository louvorRepository, IMidiaRepository midiaRepository, IMulheresRepository mulheresRepository, IPastoresRepository pastoresRepository, ITeatroRepository teatroRepository)
         {
             _membroRepository = membroRepository;
             _mapper = mapper;
@@ -30,6 +38,12 @@ namespace WEB.Services
             _dancaRepository = dancaRepository;
             _diaconatoRepository = diaconatoRepository;
             _homensRepository = homensRepository;
+            _jovemAdolescenteRepository = jovemAdolescenteRepository;
+            _louvorRepository = louvorRepository;
+            _midiaRepository = midiaRepository;
+            _mulheresRepository = mulheresRepository;
+            _pastoresRepository = pastoresRepository;
+            _teatroRepository = teatroRepository;
         }
 
         public async Task AddAsync(MembroVm vm)
@@ -82,104 +96,87 @@ namespace WEB.Services
 
         public async Task UpdateAsync(MembroVm vm)
         {
-            Membro result = _mapper.Map<Membro>(vm);
-            await _membroRepository.Update(result);
+            Membro membro = _mapper.Map<Membro>(vm);
 
             if (vm.CargoLocal == CargoLocal.Casal)
             {
-                var casal = new Casal();
-                casal.CasalId = Guid.NewGuid();
-                casal.NomeCompleto = vm.NomeCompleto;
-                casal.IgrejaId = vm.IgrejaId;
-                casal.RegiaoId = vm.RegiaoId;
-                casal.PastorId = vm.PastorId;
-                casal.SuperintendenteEstadualId = vm.SuperintendenteEstadualId;
-                casal.SuperintendenteRegionalId = vm.SuperintendenteRegionalId;
-                casal.Contato = vm.Contato;
-                casal.DataNascimento = vm.DataNascimento;
-                casal.DataMinisterio = DateTime.Now;
-                casal.DataBatismo = vm.DataBatismo;
-                casal.TempoAcumuladoEmMeses = vm.TempoAcumuladoEmMeses;
-                casal.DataReativacao = vm.DataReativacao;
-                casal.DataInativacao = vm.DataInativacao;
-                casal.Estado = vm.Estado;
-                casal.Cidade = vm.Cidade;
-                casal.FotoUrl = vm.FotoUrl;
-                casal.Ativo = true;
-                casal.CargoLocal = vm.CargoLocal;
-                await _casalRepository.AddAsync(casal);
+                var casal = Casal.Adicionar(vm);
+                casal.MembroId = vm.MembroId;
+                await _casalRepository.AddAsync(casal);                              
             }
 
             if (vm.CargoLocal == CargoLocal.Danca)
             {
-                var danca = new Danca();
-                danca.DancaId = Guid.NewGuid();
-                danca.NomeCompleto = vm.NomeCompleto;
-                danca.IgrejaId = vm.IgrejaId;
-                danca.RegiaoId = vm.RegiaoId;
-                danca.PastorId = vm.PastorId;
-                danca.SuperintendenteEstadualId = vm.SuperintendenteEstadualId;
-                danca.SuperintendenteRegionalId = vm.SuperintendenteRegionalId;
-                danca.Contato = vm.Contato;
-                danca.DataNascimento = vm.DataNascimento;
-                danca.DataMinisterio = DateTime.Now;
-                danca.DataBatismo = vm.DataBatismo;
-                danca.TempoAcumuladoEmMeses = vm.TempoAcumuladoEmMeses;
-                danca.DataReativacao = vm.DataReativacao;
-                danca.DataInativacao = vm.DataInativacao;
-                danca.Estado = vm.Estado;
-                danca.Cidade = vm.Cidade;
-                danca.FotoUrl = vm.FotoUrl;
-                danca.Ativo = true;
-                danca.CargoLocal = vm.CargoLocal;
+                var danca = Danca.Adicionar(vm);
+                danca.MembroId = vm.MembroId;
                 await _dancaRepository.AddAsync(danca);
             }
 
             if (vm.CargoLocal == CargoLocal.Crianca)
             {
-
+                var crianca = Crianca.Adicionar(vm);
+                crianca.MembroId = vm.MembroId;
+                await _criancaRepository.AddAsync(crianca);
             }
 
-            if (vm.CargoLocal == CargoLocal.Diacono && vm.CargoLocal == CargoLocal.Diaconisa && vm.CargoLocal == CargoLocal.Diretor && vm.CargoLocal == CargoLocal.Diretora)
+            if (vm.CargoLocal == CargoLocal.Diacono || vm.CargoLocal == CargoLocal.Diaconisa || vm.CargoLocal == CargoLocal.Diretor || vm.CargoLocal == CargoLocal.Diretora)
             {
-
+                var diaconato = Diaconato.Adicionar(vm);
+                diaconato.MembroId = vm.MembroId;
+                await _diaconatoRepository.AddAsync(diaconato);
             }
 
             if (vm.CargoLocal == CargoLocal.Homens)
             {
-
+                var homens = Homens.Adicionar(vm);
+                homens.MembroId = vm.MembroId;
+                await _homensRepository.AddAsync(homens);
             }
 
             if (vm.CargoLocal == CargoLocal.JovemAdolescente)
             {
-
+                var jovemAdolescente = JovemAdolescente.Adicionar(vm);
+                jovemAdolescente.MembroId = vm.MembroId;
+                await _jovemAdolescenteRepository.AddAsync(jovemAdolescente);
             }
 
             if (vm.CargoLocal == CargoLocal.Louvor)
             {
-
+                var louvor = Louvor.Adicionar(vm);
+                louvor.MembroId = vm.MembroId;
+                await _louvorRepository.AddAsync(louvor);
             }
-
 
             if (vm.CargoLocal == CargoLocal.Midia)
             {
-
+                var midia = Midia.Adicionar(vm);
+                midia.MembroId = vm.MembroId;
+                await _midiaRepository.AddAsync(midia);
             }
 
             if (vm.CargoLocal == CargoLocal.Mulheres)
             {
-
+                var mulheres = Mulheres.Adicionar(vm);
+                mulheres.MembroId = vm.MembroId;
+                await _mulheresRepository.AddAsync(mulheres);
             }
 
-            if (vm.CargoLocal == CargoLocal.Pastor && vm.CargoLocal == CargoLocal.PastorAuxiliar)
+            if (vm.CargoLocal == CargoLocal.Pastor || vm.CargoLocal == CargoLocal.PastorAuxiliar)
             {
-
+                var pastor = Pastores.Adicionar(vm);
+                pastor.MembroId = vm.MembroId;
+                await _pastoresRepository.AddAsync(pastor);
             }
 
             if (vm.CargoLocal == CargoLocal.Teatro)
             {
-
+                var teatro = Teatro.Adicionar(vm);
+                teatro.MembroId = vm.MembroId;
+                await _teatroRepository.AddAsync(teatro);
             }
+
+            membro.CargoLocal = CargoLocal.Membro;
+            await _membroRepository.Update(membro);
         }
     }
 }

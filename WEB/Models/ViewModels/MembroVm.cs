@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WEB.Models.Entities;
 using WEB.Models.Enuns;
 
 namespace WEB.Models.ViewModels
@@ -55,12 +54,24 @@ namespace WEB.Models.ViewModels
         public IFormFile? Foto { get; set; }
         public string? FotoUrl { get; set; }
         public CargoLocal CargoLocal { get; set; }
+        public CargoRegional CargoRegional { get; set; }
 
-        public Igreja? Igreja { get; set; }
-        public Regiao? Regiao { get; set; }
-        public Pastores? Pastor { get; set; }
-        public SuperintendenteEstadual? SuperintendenteEstadual { get; set; }
-        public SuperintendenteRegional? SuperintendenteRegional { get; set; }
+        public IgrejaVm? Igreja { get; set; }
+        public RegiaoVm? Regiao { get; set; }
+        public PastoresVm? Pastor { get; set; }
+        public SuperintendenteEstadualVm? SuperintendenteEstadual { get; set; }
+        public SuperintendenteRegionalVm? SuperintendenteRegional { get; set; }
+
+        public CasalVm? Casal { get; set; }
+        public CriancaVm? Crianca { get; set; }
+        public DancaVm? Danca { get; set; }
+        public DiaconatoVm? Diaconato { get; set; }
+        public HomensVm? Homens { get; set; }
+        public JovemAdolescenteVm? JovemAdolescente { get; set; }
+        public LouvorVm? Louvor { get; set; }
+        public MidiaVm? Midia { get; set; }
+        public MulheresVm? Mulheres { get; set; }
+        public TeatroVm? Teatro { get; set; }
 
         // 🔹 TEMPO MINISTÉRIO
         public string TempoEntrouIgreja

@@ -19,7 +19,9 @@ namespace WEB.Data.Config
             builder.Property(d => d.Ativo).HasDefaultValue(true);
 
             builder.HasOne(d => d.Igreja).WithMany(i => i.Diaconos).HasForeignKey(d => d.IgrejaId).OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(d => d.Regiao).WithMany(r => r.Diaconos).HasForeignKey(d => d.RegiaoId).OnDelete(DeleteBehavior.Cascade);         
+            builder.HasOne(d => d.Regiao).WithMany(r => r.Diaconos).HasForeignKey(d => d.RegiaoId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(c => c.Membro).WithOne(m => m.Diaconato).HasForeignKey<Diaconato>(c => c.MembroId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasIndex(c => c.MembroId).IsUnique();
         }
     }
 }

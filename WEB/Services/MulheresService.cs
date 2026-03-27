@@ -69,8 +69,18 @@ namespace WEB.Services
 
         public async Task UpdateAsync(MulheresVm vm)
         {
-            Mulheres result = _mapper.Map<Mulheres>(vm);
-            await _mulheresRepository.Update(result);
+            var existente = await _mulheresRepository.GetByIdAsync(vm.MulheresId);
+            if (existente == null) return;
+
+            var atualizado = _mapper.Map<Mulheres>(vm);
+
+            atualizado.TempoAcumuladoEmMeses = existente.TempoAcumuladoEmMeses;
+            atualizado.DataReativacao = existente.DataReativacao;
+            atualizado.DataInativacao = existente.DataInativacao;
+            atualizado.Ativo = existente.Ativo;
+            atualizado.MembroId = existente.MembroId;
+
+            await _mulheresRepository.Update(atualizado);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using WEB.Models.Enuns;
+using WEB.Models.ViewModels;
 
 namespace WEB.Models.Entities
 {
@@ -10,6 +11,7 @@ namespace WEB.Models.Entities
         public Guid? PastorId { get; set; }
         public Guid? SuperintendenteEstadualId { get; set; }
         public Guid? SuperintendenteRegionalId { get; set; }
+        public Guid MembroId { get; set; }
         public string? NomeCompleto { get; set; }
         public CargoLocal CargoLocal { get; set; }
         public CargoRegional CargoRegional { get; set; }
@@ -31,6 +33,33 @@ namespace WEB.Models.Entities
         public Pastores? Pastor { get; set; }
         public SuperintendenteEstadual? SuperintendenteEstadual { get; set; }
         public SuperintendenteRegional? SuperintendenteRegional { get; set; }
+        public Membro? Membro { get; set; }
 
+        public static Homens Adicionar(MembroVm vm)
+        {
+            return new Homens
+            {
+                HomensId = Guid.NewGuid(),
+                NomeCompleto = vm.NomeCompleto,
+                IgrejaId = vm.IgrejaId,
+                RegiaoId = vm.RegiaoId,
+                PastorId = vm.PastorId,
+                SuperintendenteEstadualId = vm.SuperintendenteEstadualId,
+                SuperintendenteRegionalId = vm.SuperintendenteRegionalId,
+                Contato = vm.Contato,
+                DataNascimento = vm.DataNascimento,
+                DataMinisterio = DateTime.Now,
+                DataBatismo = vm.DataBatismo,
+                TempoAcumuladoEmMeses = vm.TempoAcumuladoEmMeses,
+                DataReativacao = vm.DataReativacao,
+                DataInativacao = vm.DataInativacao,
+                Estado = vm.Estado,
+                Cidade = vm.Cidade,
+                FotoUrl = vm.FotoUrl,
+                Ativo = true,
+                CargoLocal = vm.CargoLocal,
+                CargoRegional = vm.CargoRegional
+            };
+        }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WEB.Models.Enuns;
+using WEB.Models.ViewModels;
 
 public class PastoresVm
 {
@@ -12,7 +14,8 @@ public class PastoresVm
     public IFormFile? Foto { get; set; }
     public string? FotoUrl { get; set; }
     public bool Ativo { get; set; } = true;
-
+    public CargoLocal CargoLocal { get; set; }
+    public CargoRegional? CargoRegional { get; set; }
     [Required]
     public Guid IgrejaId { get; set; }
     public IgrejaVm? Igreja { get; set; }

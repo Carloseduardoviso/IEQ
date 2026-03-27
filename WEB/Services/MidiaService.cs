@@ -69,8 +69,18 @@ namespace WEB.Services
 
         public async Task UpdateAsync(MidiaVm vm)
         {
-            Midia result = _mapper.Map<Midia>(vm);
-            await _midiaRepository.Update(result);
+            var existente = await _midiaRepository.GetByIdAsync(vm.MidiaId);
+            if (existente == null) return;
+
+            var atualizado = _mapper.Map<Midia>(vm);
+
+            atualizado.TempoAcumuladoEmMeses = existente.TempoAcumuladoEmMeses;
+            atualizado.DataReativacao = existente.DataReativacao;
+            atualizado.DataInativacao = existente.DataInativacao;
+            atualizado.Ativo = existente.Ativo;
+            atualizado.MembroId = existente.MembroId;
+
+            await _midiaRepository.Update(atualizado);
         }
     }
 }

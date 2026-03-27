@@ -69,8 +69,18 @@ namespace WEB.Services
 
         public async Task UpdateAsync(DancaVm vm)
         {
-            Danca result = _mapper.Map<Danca>(vm);
-            await _dancaRepository.Update(result);
+            var existente = await _dancaRepository.GetByIdAsync(vm.DancaId);
+            if (existente == null) return;
+
+            var atualizado = _mapper.Map<Danca>(vm);
+
+            atualizado.TempoAcumuladoEmMeses = existente.TempoAcumuladoEmMeses;
+            atualizado.DataReativacao = existente.DataReativacao;
+            atualizado.DataInativacao = existente.DataInativacao;
+            atualizado.Ativo = existente.Ativo;
+            atualizado.MembroId = existente.MembroId;
+
+            await _dancaRepository.Update(atualizado);
         }
     }
 }

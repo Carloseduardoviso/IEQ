@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WEB.Data;
 
@@ -11,9 +12,11 @@ using WEB.Data;
 namespace WEB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20260327154952_upykls")]
+    partial class upykls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -807,6 +810,8 @@ namespace WEB.Migrations
 
                     b.HasIndex("IgrejaId");
 
+                    b.HasIndex("PastorId");
+
                     b.HasIndex("RegiaoId");
 
                     b.HasIndex("SuperintendenteEstadualId");
@@ -1029,9 +1034,6 @@ namespace WEB.Migrations
                     b.Property<Guid>("IgrejaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("MembroId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -1044,10 +1046,6 @@ namespace WEB.Migrations
                     b.HasKey("PastorId");
 
                     b.HasIndex("IgrejaId");
-
-                    b.HasIndex("MembroId")
-                        .IsUnique()
-                        .HasFilter("[MembroId] IS NOT NULL");
 
                     b.ToTable("Pastores", (string)null);
                 });
@@ -1602,6 +1600,10 @@ namespace WEB.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WEB.Models.Entities.Pastores", "Pastor")
+                        .WithMany()
+                        .HasForeignKey("PastorId");
+
                     b.HasOne("WEB.Models.Entities.Regiao", "Regiao")
                         .WithMany("Membros")
                         .HasForeignKey("RegiaoId")
@@ -1617,6 +1619,8 @@ namespace WEB.Migrations
                         .HasForeignKey("SuperintendenteRegionalId");
 
                     b.Navigation("Igreja");
+
+                    b.Navigation("Pastor");
 
                     b.Navigation("Regiao");
 
@@ -1723,14 +1727,7 @@ namespace WEB.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("WEB.Models.Entities.Membro", "Membro")
-                        .WithOne("Pastor")
-                        .HasForeignKey("WEB.Models.Entities.Pastores", "MembroId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.Navigation("Igreja");
-
-                    b.Navigation("Membro");
                 });
 
             modelBuilder.Entity("WEB.Models.Entities.Regiao", b =>
@@ -1860,8 +1857,6 @@ namespace WEB.Migrations
                     b.Navigation("Midia");
 
                     b.Navigation("Mulheres");
-
-                    b.Navigation("Pastor");
 
                     b.Navigation("Teatro");
                 });
