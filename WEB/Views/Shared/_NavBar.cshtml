@@ -29,6 +29,7 @@
 
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" asp-controller="Igreja" asp-action="Index">Igrejas</a></li>
+                            <li><a class="dropdown-item" asp-controller="Membro" asp-action="Index">Membro</a></li>
                             <li><a class="dropdown-item" asp-controller="SuperintendenteRegional" asp-action="Index">Superintendente Regional</a></li>
                             <li><a class="dropdown-item" asp-controller="Regiao" asp-action="Index">Região</a></li>
                             <li><a class="dropdown-item" asp-controller="Pastores" asp-action="Index">Pastores</a></li>
@@ -53,8 +54,6 @@
                             <li><a class="dropdown-item" asp-controller="Casal" asp-action="Index">Casal</a></li>
                         </ul>
                     </li>
-
-                    <li class="nav-item"><a class="nav-link nav-link-ieq" asp-controller="Membro" asp-action="Index">Membro</a></li>
 
                     @if (User.IsInRole("SuperintendenteRegional") || User.IsInRole("PastorTitular") || User.IsInRole("PastorAuxiliar") || User.IsInRole("LiderLocal")
                                     || User.IsInRole("ViceLider") || User.IsInRole("Diretor") || User.IsInRole("Diretora") || User.IsInRole("CoordenadorRegionalDiaconato") || User.IsInRole("CoordenadorRegionalLouvor")

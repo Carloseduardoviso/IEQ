@@ -15,17 +15,25 @@ using WEB.Services.Interfaces;
 
 namespace WEB.Controllers
 {
-    public class UsuarioController : Controller
+    public class UsuarioController : BaseController
     {
         private readonly IUsuarioService _usuarioService;
         private readonly IIgrejaService _igrejaService;
         private readonly IRegiaoService _regiaoService;
+        private readonly ISuperintendenteEstadualService _superintendenteEstadualService;
+        private readonly ISuperintendenteRegionalService _superintendenteRegionalService;
+        private readonly IMembroService _membroService;
+        private readonly IPastoresService _pastoresService;
 
-        public UsuarioController(IUsuarioService usuarioService, IIgrejaService igrejaService, IRegiaoService regiaoService)
+        public UsuarioController(IUsuarioService usuarioService, IIgrejaService igrejaService, IRegiaoService regiaoService, IMembroService membroService, IPastoresService pastoresService, ISuperintendenteEstadualService superintendenteEstadualService, ISuperintendenteRegionalService superintendenteRegionalService)
         {
             _usuarioService = usuarioService;
             _igrejaService = igrejaService;
             _regiaoService = regiaoService;
+            _membroService = membroService;
+            _pastoresService = pastoresService;
+            _superintendenteEstadualService = superintendenteEstadualService;
+            _superintendenteRegionalService = superintendenteRegionalService;
         }
 
         public async Task<IActionResult> Index(FiltroUsuarioVm filtroUsuarioVm, int pagina = 1)
@@ -48,17 +56,42 @@ namespace WEB.Controllers
 
         public IActionResult Login() => View();
 
-        public async Task<IActionResult> Registrar()
+        public async Task<IActionResult> Registrar(Guid? usuarioId)
         {
-            var igreja = await _igrejaService.GetAllAsync();
+            var novo = new UsuarioVm();
+            if (usuarioId != null) novo = await _usuarioService.GetByIdAsync(usuarioId.Value);
+
             var regiao = await _regiaoService.GetAllAsync();
+            var ids = regiao.Select(x => x.SuperintendenteRegionalId).ToList();
+
+            var superintendentesRegionais = await _superintendenteRegionalService
+                .GetAllAsync(x => ids.Contains(x.SuperintendenteRegionalId));
+
+            //var superintendentesEstaduais = await _superintendenteEstadualService.GetAllAsync(x => x.SuperintendenteEstadualId == regiao.Select(x =>x.SuperintendenteEstadualId);
+            var igreja = await _igrejaService.GetAllAsync();
+            var pastores = await _pastoresService.GetAllAsync();
+            var estados = GetEstados(novo?.Estado);
 
             ViewBag.Igreja = igreja;
+            ViewBag.SuperintendentesRegionais = superintendentesRegionais;
+            //ViewBag.SuperintendentesEstaduais = superintendentesEstaduais;
             ViewBag.Regiao = regiao;
+            ViewBag.Estados = estados;
+            ViewBag.Pastores = pastores;
+            ViewBag.Cidades = GetCidades(novo?.Estado!);
 
             return View();
         }
-        public IActionResult EsqueciMinhaSenha() => View();
+
+        public IActionResult EsqueciMinhaSenha() => View();       
+
+        public async Task<IActionResult> Perfil()
+        {
+            var usuarioId = User.FindFirst("UserId")?.Value;
+            var usuario = await _usuarioService.GetByIdAsync(Guid.Parse(usuarioId));
+
+            return View(usuario);
+        }           
 
 
         [HttpPost]
@@ -102,14 +135,57 @@ namespace WEB.Controllers
 
             var regiao = await _regiaoService.GetAllAsync();
             var igreja = await _igrejaService.GetAllAsync();
+            var estados = GetEstados(novo?.Estado);
 
             ViewBag.Regiao = regiao;
-            ViewBag.Igreja = igreja;
+            ViewBag.Igreja = igreja; 
+            ViewBag.Estados = estados;
+            ViewBag.Cidades = GetCidades(novo?.Estado!);
+
             ViewBag.Title = usuarioId != null ? "Editar" : "Cadastrar";
 
             return PartialView("_Cadastrar", novo);
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> GetRegioes(Guid superintendenteId)
+        {
+            var regioes = await _regiaoService
+                .GetAllAsync(x => x.SuperintendenteRegionalId == superintendenteId);
+
+            return Json(regioes.Select(x => new {
+                id = x.RegiaoId,
+                text = x.Nome
+            }));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetIgrejas(Guid regiaoId)
+        {
+            var igrejas = await _igrejaService.GetAllAsync(x => x.RegiaoId == regiaoId);
+
+            var result = igrejas.Select(x => new {
+                id = x.IgrejaId,
+                text = x.Nome
+            });
+
+            return Json(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPastores(Guid igrejaId)
+        {
+            var pastores = await _pastoresService.GetAllAsync(x => x.IgrejaId == igrejaId);
+
+            var result = pastores.Select(x => new {
+                id = x.PastorId,
+                text = x.Nome
+            });
+
+            return Json(result);
+        }
+      
 
         [HttpPost]
         public async Task<IActionResult> AlterarUsuario(UsuarioVm vm)
@@ -208,6 +284,8 @@ namespace WEB.Controllers
 
             await _usuarioService.RegistrarAsync(vm);
 
+
+            var 
             return RedirectToAction("Login");
         }
 

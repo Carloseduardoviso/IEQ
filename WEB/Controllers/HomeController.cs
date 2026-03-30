@@ -13,7 +13,7 @@ public class HomeController : Controller
     public async Task<IActionResult> Index()
     {
         var todosDiaconatos = await _diaconatoService.GetAllAsync();
-        return View(todosDiaconatos); // envia para a view Home/Index
+        return View(todosDiaconatos);
     }
 
     // Partial dos aniversariantes

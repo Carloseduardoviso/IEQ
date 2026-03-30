@@ -1,15 +1,15 @@
 ﻿@using WEB.Models.Enuns
 @model UsuarioVm
+
 @{
     Layout = "_LayoutLogin";
 
-    var igreja = ViewBag.Igreja;
-    var regiao = ViewBag.Regiao;
+    var superintendentesRegionais = ViewBag.SuperintendentesRegionais;
 }
 
 <div class="container">
     <div class="row justify-content-center mt-5">
-        <div class="col-md-5">
+        <div class="col-md-6">
 
             <div class="card shadow">
                 <div class="card-body">
@@ -17,74 +17,105 @@
                     <h3 class="text-center mb-4">Cadastro</h3>
 
                     <form asp-action="Registrar" method="post" enctype="multipart/form-data">
-                        <!-- Foto de Perfil -->
-                        <div class="mb-3 text-center">
-                            <label class="form-label">Foto de Perfil</label>
 
-                            <div class="mb-2"> 
-                                <img id="previewImagem" src="https://via.placeholder.com/150" class="rounded-circle border" style="width:150px;height:150px;object-fit:cover;" />
-                            </div>
+                        <!-- FOTO -->
+                        <div class="text-center mb-4">
+                            <img id="previewImagem" src="https://via.placeholder.com/150"
+                                 class="rounded-circle border"
+                                 style="width:150px;height:150px;object-fit:cover;" />
 
-                            <input asp-for="Foto" type="file" name="Foto" class="form-control" accept="image/*" onchange="previewFile(this)" />
-                        </div>
-                        <div class="mb-3">
-                            <label>Nome</label>
-                            <input asp-for="Nome" class="form-control" placeholder="Digite seu nome" />
-                            <span asp-validation-for="Nome" class="text-danger"></span>
+                            <input asp-for="Foto" type="file" class="form-control mt-2"
+                                   accept="image/*" onchange="previewFile(this)" />
                         </div>
 
-                        <div class="mb-3">
-                            <label>Email</label>
-                            <input asp-for="Email" class="form-control" placeholder="Digite seu email" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
+                        <!-- DADOS -->
+                        <h5>Dados Pessoais</h5>
+
+                        <input asp-for="Nome" class="form-control mb-2" placeholder="Nome" required />
+                        <input asp-for="Email" class="form-control mb-2" placeholder="Email" required />
 
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label>Senha</label>
-                                <input asp-for="Senha" class="form-control" placeholder="Digite sua senha" />
-                                <span asp-validation-for="Senha" class="text-danger"></span>
+                            <div class="col-md-6">
+                                <input asp-for="Senha" type="password" class="form-control mb-2" placeholder="Senha" required />
                             </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label>Confirmar Senha</label>
-                                <input asp-for="ConfirmarSenha" class="form-control" placeholder="Confirme a senha" />
-                                <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
+                            <div class="col-md-6">
+                                <input asp-for="ConfirmarSenha" type="password" class="form-control mb-2" placeholder="Confirmar Senha" required />
                             </div>
                         </div>
 
+                        <input asp-for="Contato" id="Contato" class="form-control mb-3" placeholder="Contato" required />
 
-                        <!-- Região -->
-                        <div class="mb-3">
-                            <label>Região</label>
-                            <select asp-for="RegiaoId" class="input-custom form-select form-control select2bs4 p-2">
-                                <option value="" disabled selected>Selecione</option>
-                                @foreach (var item in regiao)
-                                {
-                                    <option value="@item.RegiaoId">@item.Nome</option>
-                                }
-                            </select>
+                        <hr />
+
+                        <!-- LOCALIZAÇÃO -->
+                        <h5>Localização</h5>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <select asp-for="Estado" id="Estado" asp-items="ViewBag.Estados"
+                                        class="form-control select2 mb-2" required></select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <select asp-for="Cidade" id="Cidade"
+                                        class="form-control select2 mb-2" required></select>
+                            </div>
                         </div>
 
-                        <!-- Igreja -->
-                        <div class="mb-3">
-                            <label>Igreja</label>
-                            <select asp-for="IgrejaId" class="input-custom form-select form-control select2bs4 p-2">
-                                <option value="" disabled selected>Selecione</option>
-                                @foreach (var item in igreja)
-                                {
-                                    <option value="@item.IgrejaId">@item.Nome</option>
-                                }
-                            </select>
-                        </div>                  
+                        <hr />
 
-                        <button type="submit" class="btn btn-success w-100">
+                        <!-- HIERARQUIA -->
+                        <h5>Vínculo Ministerial</h5>
+
+                        <!-- SUPERINTENDENTE -->
+                        <select asp-for="SuperintendenteRegionalId"
+                                id="SuperintendenteRegionalId"
+                                class="form-select mb-2" required>
+                            <option value="">Selecione Superintendente</option>
+                            @foreach (var item in superintendentesRegionais)
+                            {
+                                <option value="@item.SuperintendenteRegionalId">@item.Nome</option>
+                            }
+                        </select>
+
+                        <!-- REGIÃO -->
+                        <select asp-for="RegiaoId"
+                                id="RegiaoId"
+                                class="form-select mb-2"
+                                disabled></select>
+
+                        <!-- IGREJA -->
+                        <select asp-for="IgrejaId"
+                                id="IgrejaId"
+                                class="form-select mb-2"
+                                disabled></select>
+
+                        <!-- PASTOR -->
+                        <select asp-for="PastorId"
+                                id="PastorId"
+                                class="form-select mb-2"
+                                disabled></select>
+
+                        <hr />
+
+                        <!-- DATAS -->
+                        <h5>Datas</h5>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input asp-for="DataNascimento" type="date" class="form-control mb-2" />
+                            </div>
+                            <div class="col-md-4">
+                                <input asp-for="DataMinisterio" type="date" class="form-control mb-2" required />
+                            </div>
+                            <div class="col-md-4">
+                                <input asp-for="DataBatismo" type="date" class="form-control mb-2" />
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100 mt-3">
                             Cadastrar
                         </button>
-
-                        <div class="text-center mt-3">
-                            <a asp-action="Login">Já tenho conta</a>
-                        </div>
 
                     </form>
 
@@ -95,8 +126,9 @@
     </div>
 </div>
 
-@section Scripts{
+@section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/usuario.js"></script>
 
     <script>
         function previewFile(input) {
@@ -107,9 +139,7 @@
                 document.getElementById('previewImagem').src = reader.result;
             }
 
-            if (file) {
-                reader.readAsDataURL(file);
-            }
+            if (file) reader.readAsDataURL(file);
         }
     </script>
 }

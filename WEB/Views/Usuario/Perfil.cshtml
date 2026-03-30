@@ -1,0 +1,62 @@
+﻿@model UsuarioVm
+
+@{
+    ViewData["Title"] = "Meu Perfil";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <div class="row">
+                <!-- Foto -->
+                <div class="col-md-3 text-center">
+                    <img src="@Model.FotoUrl" class="img-fluid rounded-circle mb-3" style="max-width:150px;" />
+                    <h5>@Model.Nome</h5>
+                    <span class="badge bg-success">Ativo</span>
+                </div>
+
+                <!-- Dados -->
+                <div class="col-md-9">
+                    <h4 class="mb-3">Detalhes do Usuário</h4>
+
+                    <div class="row mb-2">
+                        <div class="col-md-4"><strong>Nome:</strong></div>
+                        <div class="col-md-8">@Model.Nome</div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-4"><strong>Email:</strong></div>
+                        <div class="col-md-8">@Model.Email</div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-4"><strong>Nível:</strong></div>
+                        <div class="col-md-8">Model</div>
+                    </div>
+
+               @*      <div class="row mb-2">
+                        <div class="col-md-4"><strong>Data Cadastro:</strong></div>
+                        <div class="col-md-8">@Model.DataCadastro.ToString("dd/MM/yyyy HH:mm")</div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-4"><strong>Última Atualização:</strong></div>
+                        <div class="col-md-8">
+                            @(Model.DataAtualizacao?.ToString("dd/MM/yyyy HH:mm") ?? "Não atualizado")
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-4"><strong>Status:</strong></div>
+                        <div class="col-md-8">
+                            @(Model.Ativo == 1 ? "Ativo" : "Inativo")
+                        </div>
+                    </div> *@
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
