@@ -8,7 +8,7 @@ using WEB.Services.Interfaces;
 
 namespace WEB.Controllers
 {
-    public class CriancaController : Controller
+    public class CriancaController : BaseController
     {
         private readonly ICriancaService _criancaService;
         private readonly IRegiaoService _regiaoService;
@@ -82,12 +82,16 @@ namespace WEB.Controllers
             var superintendentesEstaduais = await _superintendenteEstadualService.GetAllAsync();
             var igreja = await _igrejaService.GetAllAsync();
             var pastores = await _pastoresService.GetAllAsync();
+            var estados = GetEstados(novo?.Estado);
 
             ViewBag.Regiao = regiao;
             ViewBag.SuperintendentesRegionais = superintendentesRegionais;
             ViewBag.SuperintendentesEstaduais = superintendentesEstaduais;
             ViewBag.Igreja = igreja;
-            ViewBag.Pastores = pastores;
+            ViewBag.Pastores = pastores; 
+            ViewBag.Estados = estados;
+            ViewBag.Cidades = GetCidades(novo?.Estado!);
+
             ViewBag.Title = criancaId != null ? "Editar" : "Cadastrar";
 
             return PartialView("_Cadastrar", novo);

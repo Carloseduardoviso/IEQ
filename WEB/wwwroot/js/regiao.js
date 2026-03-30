@@ -8,6 +8,7 @@
                 modal = new bootstrap.Modal($('#modalAdicionar'));
                 modal.show();
                 rebindValidators($('#modal'))
+
             }
         })
     })

@@ -69,15 +69,17 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label asp-for="Estado"></label><span class="text-danger"> *</span>
-                            <input asp-for="Estado" class="form-control" placeholder="Ro" />
+                            <select asp-for="Estado" asp-items="ViewBag.Estados" class="form-control select2"></select>
                         </div>
-                        <div class="col-md-5 mb-3">
+
+                        <div class="col-md-4 mb-3">
                             <label asp-for="Cidade"></label><span class="text-danger"> *</span>
-                            <input asp-for="Cidade" class="form-control" placeholder="Porto Velho" />
+                            <select asp-for="Cidade" class="form-control select2" id="Cidade"></select>
                         </div>
-                        <div class="col-md-5 mb-3">
+
+                        <div class="col-md-4 mb-3">
                             <label asp-for="Contato"></label><span class="text-danger"> *</span>
                             <input asp-for="Contato" id="Contato" data-mask="(00) 00000-0000" class="form-control" />
                         </div>

@@ -7,7 +7,7 @@ using WEB.Services.Interfaces;
 
 namespace WEB.Controllers
 {
-    public class DiaconatoController : Controller
+    public class DiaconatoController : BaseController
     {
         public readonly IDiaconatoService _diaconatoService;
         private readonly IRegiaoService _regiaoService;
@@ -82,12 +82,15 @@ namespace WEB.Controllers
             var superintendentesEstaduais = await _superintendenteEstadualService.GetAllAsync();
             var igreja = await _igrejaService.GetAllAsync();
             var pastores = await _pastoresService.GetAllAsync();
+            var estados = GetEstados(novo?.Estado);
 
             ViewBag.Regiao = regiao;
             ViewBag.SuperintendentesRegionais = superintendentesRegionais;
             ViewBag.SuperintendentesEstaduais = superintendentesEstaduais;
             ViewBag.Igreja = igreja;
             ViewBag.Pastores = pastores;
+            ViewBag.Estados = estados;
+            ViewBag.Cidades = GetCidades(novo?.Estado!);
             ViewBag.Title = diaconatoId != null ? "Editar" : "Cadastrar";
 
             return PartialView("_Cadastrar", novo);
