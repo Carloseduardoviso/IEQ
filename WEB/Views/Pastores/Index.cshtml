@@ -12,12 +12,12 @@
                 <strong>Pastores</strong>
             </h4>
             <div class="d-flex gap-2">
-                @if (User.IsInRole("SuperintendenteRegional") || User.IsInRole("PastorTitular"))
+               @*  @if (User.IsInRole("SuperintendenteRegional") || User.IsInRole("PastorTitular"))
                 {
                     <button type="button" id="btnNovo" data-url="@Url.Action("Cadastrar", "Pastores")" class="btn btn-primary">
                         <i class="fa-solid fa-plus"></i> Novo
                     </button>
-                }
+                } *@
                 <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">
                     <i class="fa-solid fa-arrow-left"></i> Voltar
                 </a>

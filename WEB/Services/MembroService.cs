@@ -27,9 +27,10 @@ namespace WEB.Services
         private readonly IMulheresRepository _mulheresRepository;
         private readonly IPastoresRepository _pastoresRepository;
         private readonly ITeatroRepository _teatroRepository;
+        private readonly ISuperintendenteRegionalRepository _superintendenteRegionalRepository;
 
 
-        public MembroService(IMembroRepository membroRepository, IMapper mapper, ICasalRepository casalRepository, ICriancaRepository criancaRepository, IDancaRepository dancaRepository, IDiaconatoRepository diaconatoRepository, IHomensRepository homensRepository, IJovemAdolescenteRepository jovemAdolescenteRepository, ILouvorRepository louvorRepository, IMidiaRepository midiaRepository, IMulheresRepository mulheresRepository, IPastoresRepository pastoresRepository, ITeatroRepository teatroRepository)
+        public MembroService(IMembroRepository membroRepository, IMapper mapper, ICasalRepository casalRepository, ICriancaRepository criancaRepository, IDancaRepository dancaRepository, IDiaconatoRepository diaconatoRepository, IHomensRepository homensRepository, IJovemAdolescenteRepository jovemAdolescenteRepository, ILouvorRepository louvorRepository, IMidiaRepository midiaRepository, IMulheresRepository mulheresRepository, IPastoresRepository pastoresRepository, ITeatroRepository teatroRepository, ISuperintendenteRegionalRepository superintendenteRegionalRepository)
         {
             _membroRepository = membroRepository;
             _mapper = mapper;
@@ -44,6 +45,7 @@ namespace WEB.Services
             _mulheresRepository = mulheresRepository;
             _pastoresRepository = pastoresRepository;
             _teatroRepository = teatroRepository;
+            _superintendenteRegionalRepository = superintendenteRegionalRepository;
         }
 
         public async Task AddAsync(MembroVm vm)
@@ -173,6 +175,12 @@ namespace WEB.Services
                 var teatro = Teatro.Adicionar(vm);
                 teatro.MembroId = vm.MembroId;
                 await _teatroRepository.AddAsync(teatro);
+            }
+
+            if (vm.CargoRegional == CargoRegional.SuperintendenteRegional)
+            {
+                var superintendenteRegional = SuperintendenteRegional.Adicionar(vm);
+                await _superintendenteRegionalRepository.AddAsync(superintendenteRegional);
             }
 
             membro.CargoLocal = CargoLocal.Membro;

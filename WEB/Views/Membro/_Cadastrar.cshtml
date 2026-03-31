@@ -72,11 +72,22 @@
                     <!-- SEÇÃO 2 =============================== -->
                     <h5 class="border-bottom pb-2 mb-3">Informações da Igreja</h5>
                     <div class="row">
-                        <div class="col-md-12 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label>Cargo</label><span class="text-danger"> *</span>
                             <select asp-for="CargoLocal" asp-items="Html.GetEnumSelectList<CargoLocal>()" class="form-control select2"></select>
                         </div>
-                        <div class="col-md-12 mb-3">
+                        <div class="col-md-6 mb-3">
+                            <label>
+                                Cargo Regional
+                            </label>
+
+                            <select asp-for="CargoRegional"
+                                    asp-items="Html.GetEnumSelectList<CargoRegional>()"
+                                    class="form-control select2">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
                             <label>Pastor</label>
                             <select asp-for="PastorId" class="input-custom form-select form-control select2bs4 p-2">
                                 <option value="" disabled selected>Selecione</option>
@@ -86,6 +97,7 @@
                                 }
                             </select>
                         </div>
+
                         @*<div class="col-md-6 mb-3">
                             <label>Superintendente Estadual</label>
                             <select asp-for="SuperintendenteEstadualId" class="input-custom form-select form-control select2bs4 p-2">
@@ -96,7 +108,7 @@
                                 }
                             </select>
                         </div> *@
-                        <div class="col-md-12 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label>Superintendente Regional</label>
                             <select asp-for="SuperintendenteRegionalId" class="input-custom form-select form-control select2bs4 p-2">
                                 <option value="" disabled selected>Selecione</option>
