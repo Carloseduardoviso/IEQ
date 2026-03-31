@@ -19,8 +19,10 @@ namespace WEB.Services
         private readonly IHomensRepository _homensRepository;
         private readonly IMulheresRepository _mulheresRepository;
         private readonly IMembroRepository _membroRepository;
+        private readonly IJovemAdolescenteRepository _jovemAdolescenteRepository;
+        private readonly ICasalRepository _casalRepository;
 
-        public UsuarioService(IUsuarioRepository usuarioRepository, IMapper mapper, IConfiguration config, IHomensRepository homensRepository, IMulheresRepository mulheresRepository, IMembroRepository membroRepository)
+        public UsuarioService(IUsuarioRepository usuarioRepository, IMapper mapper, IConfiguration config, IHomensRepository homensRepository, IMulheresRepository mulheresRepository, IMembroRepository membroRepository, IJovemAdolescenteRepository jovemAdolescenteRepository, ICasalRepository casalRepository)
         {
             _usuarioRepository = usuarioRepository;
             _mapper = mapper;
@@ -28,6 +30,8 @@ namespace WEB.Services
             _homensRepository = homensRepository;
             _mulheresRepository = mulheresRepository;
             _membroRepository = membroRepository;
+            _jovemAdolescenteRepository = jovemAdolescenteRepository;
+            _casalRepository = casalRepository;
         }
 
         public async Task AddAsync(UsuarioVm vm)
@@ -158,6 +162,36 @@ namespace WEB.Services
                 mulheres.MembroId = usuario.Membro!.MembroId;
                 await _mulheresRepository.AddAsync(mulheres);
             }
+
+            if (vm.EstadoCivil == EstadoCivil.Casado || vm.EstadoCivil == EstadoCivil.UniaoEstavel)
+            {
+                var casal = Casal.AdicionarAutomatico(vm);
+                casal.MembroId = usuario.Membro!.MembroId;
+                await _casalRepository.AddAsync(casal);
+            }
+
+            int idade = 0;
+
+            if (vm.Membro?.DataNascimento.HasValue == true)
+            {
+                var dataNascimento = vm.Membro.DataNascimento.Value;
+                var hoje = DateTime.Today;
+
+                idade = hoje.Year - dataNascimento.Year;
+
+                if (dataNascimento.Date > hoje.AddYears(-idade))
+                    idade--;
+            }
+
+            if (idade >= 15 && idade < 29)
+            {
+                var jovem = JovemAdolescente.AdicionarAutomatico(vm);
+                jovem.MembroId = usuario.Membro!.MembroId;
+
+                await _jovemAdolescenteRepository.AddAsync(jovem);
+            }
+
+
 
             await _usuarioRepository.SaveAsync();
         }

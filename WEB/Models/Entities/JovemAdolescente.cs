@@ -60,5 +60,28 @@ namespace WEB.Models.Entities
                 CargoRegional = vm.CargoRegional
             };
         }
+
+        public static JovemAdolescente AdicionarAutomatico(UsuarioVm vm)
+        {
+            return new JovemAdolescente
+            {
+                JovemAdolecenteId = Guid.NewGuid(),
+                NomeCompleto = vm.NomeCompleto,
+                IgrejaId = vm.Membro.IgrejaId,
+                RegiaoId = vm.Membro.RegiaoId,
+                PastorId = vm.Membro.PastorId,
+                SuperintendenteEstadualId = vm.Membro.SuperintendenteEstadualId,
+                SuperintendenteRegionalId = vm.Membro.SuperintendenteRegionalId,
+                Contato = vm.Membro.Contato,
+                DataNascimento = vm.Membro.DataNascimento,
+                DataMinisterio = DateTime.Now,
+                DataBatismo = vm.Membro.DataBatismo,
+                Estado = vm.Membro.Estado,
+                Cidade = vm.Membro.Cidade,
+                FotoUrl = vm.FotoUrl,
+                Ativo = true,
+                CargoLocal = CargoLocal.JovemAdolescente,
+            };
+        }
     }
 }

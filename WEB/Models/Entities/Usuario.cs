@@ -19,6 +19,7 @@ namespace WEB.Models.Entities
         public DateTime? UltimoLogin { get; set; }
         public string? FotoUrl { get; set; }
         public Genero Genero { get; set; }
+        public EstadoCivil EstadoCivil { get; set; }
         public Membro? Membro { get; set; }
     }
 }

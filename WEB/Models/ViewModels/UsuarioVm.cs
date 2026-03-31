@@ -31,6 +31,7 @@ namespace WEB.Models.ViewModels
         public bool Ativo { get; set; } = true;
         public DateTime DataCriacao { get; set; }
         public Genero Genero { get; set; }
+        public EstadoCivil EstadoCivil { get; set; }
         public MembroVm? Membro { get; set; }
     }
 }

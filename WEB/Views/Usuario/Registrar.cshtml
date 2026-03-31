@@ -41,12 +41,17 @@
                             <div class="col-md-6">
                                 <input asp-for="ConfirmarSenha" type="password" class="form-control mb-2" placeholder="Confirmar Senha" required />
                             </div>
-                             <div class="col-md-6">
+                             <div class="col-md-4">
                                 <input asp-for="Membro.Contato" id="Contato" class="form-control mb-3" data-mask="(00) 00000-0000" placeholder="Contato" required />
                             </div>
-                            <div class="col-md-6">                              
+                            <div class="col-md-4">                              
                                 <select asp-for="Genero" asp-items="Html.GetEnumSelectList<Genero>()" class="form-control select2" placeholder="Gênero" required>
                                     <option value="">Selecione Gênero</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select asp-for="EstadoCivil" asp-items="Html.GetEnumSelectList<EstadoCivil>()" class="form-control select2" placeholder="Estado Civil" required>
+                                    <option value="">Selecione Estado Civil </option>
                                 </select>
                             </div>
                         </div>
@@ -107,7 +112,7 @@
 
                         <div class="row">
                             <div class="col-md-4">
-                                <input asp-for="Membro.DataNascimento" type="date" class="form-control mb-2" />
+                                <input asp-for="Membro.DataNascimento" type="date" class="form-control mb-2" required/>
                             </div>
                             <div class="col-md-4">
                                 <input asp-for="Membro.DataMinisterio" type="date" class="form-control mb-2" required />
