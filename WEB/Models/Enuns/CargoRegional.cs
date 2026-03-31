@@ -3,9 +3,9 @@
 namespace WEB.Models.Enuns
 {
     public enum CargoRegional
-    {
+    {       
         [Display(Name = "Superintendente Regional")]
-        SuperintendenteRegional = 1,
+        SuperintendenteRegional = 1,   
 
         // Coordenadores Regionais
         [Display(Name = "Coordenador Regional Diaconato")]
