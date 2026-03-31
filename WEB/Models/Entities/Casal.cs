@@ -59,7 +59,6 @@ namespace WEB.Models.Entities
                 FotoUrl = vm.FotoUrl,
                 Ativo = true,
                 CargoLocal = vm.CargoLocal,
-                CargoRegional = vm.CargoRegional,              
             };
         }
 

@@ -23,7 +23,8 @@ namespace WEB.Models.ViewModels
         public Guid RegiaoId { get; set; }
 
         [Display(Name = "Pastor")]
-        public Guid? PastorId { get; set; }   
+        public Guid? PastorId { get; set; }
+        public Guid? UsuarioId { get; set; }
 
         [Required]
         [Phone]

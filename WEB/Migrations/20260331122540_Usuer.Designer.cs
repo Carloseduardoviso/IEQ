@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WEB.Data;
 
@@ -11,9 +12,11 @@ using WEB.Data;
 namespace WEB.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20260331122540_Usuer")]
+    partial class Usuer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -529,7 +532,7 @@ namespace WEB.Migrations
                     b.Property<string>("FotoUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
@@ -803,9 +806,6 @@ namespace WEB.Migrations
                     b.Property<int>("TempoAcumuladoEmMeses")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("MembroId");
 
                     b.HasIndex("IgrejaId");
@@ -815,10 +815,6 @@ namespace WEB.Migrations
                     b.HasIndex("SuperintendenteEstadualId");
 
                     b.HasIndex("SuperintendenteRegionalId");
-
-                    b.HasIndex("UsuarioId")
-                        .IsUnique()
-                        .HasFilter("[UsuarioId] IS NOT NULL");
 
                     b.ToTable("Membro", (string)null);
                 });
@@ -1039,7 +1035,7 @@ namespace WEB.Migrations
                     b.Property<Guid?>("MembroId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
@@ -1065,7 +1061,7 @@ namespace WEB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -1097,7 +1093,7 @@ namespace WEB.Migrations
                     b.Property<string>("FotoUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
@@ -1119,7 +1115,7 @@ namespace WEB.Migrations
                     b.Property<string>("FotoUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("NomeCompleto")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
@@ -1232,11 +1228,29 @@ namespace WEB.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Cidade")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Contato")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DataBatismo")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataMinisterio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataNascimento")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Estado")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FotoUrl")
                         .HasColumnType("nvarchar(max)");
@@ -1244,7 +1258,7 @@ namespace WEB.Migrations
                     b.Property<int>("Genero")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("IgrejaId")
+                    b.Property<Guid>("IgrejaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("NomeCompleto")
@@ -1252,7 +1266,10 @@ namespace WEB.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<Guid?>("RegiaoId")
+                    b.Property<Guid?>("PastorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RegiaoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Role")
@@ -1261,6 +1278,12 @@ namespace WEB.Migrations
                     b.Property<string>("SenhaHash")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<Guid?>("SuperintendenteEstadualId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("SuperintendenteRegionalId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("UltimoLogin")
                         .HasColumnType("datetime2");
@@ -1626,11 +1649,6 @@ namespace WEB.Migrations
                         .WithMany()
                         .HasForeignKey("SuperintendenteRegionalId");
 
-                    b.HasOne("WEB.Models.Entities.Usuario", "Usuario")
-                        .WithOne("Membro")
-                        .HasForeignKey("WEB.Models.Entities.Membro", "UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.Navigation("Igreja");
 
                     b.Navigation("Regiao");
@@ -1638,8 +1656,6 @@ namespace WEB.Migrations
                     b.Navigation("SuperintendenteEstadual");
 
                     b.Navigation("SuperintendenteRegional");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("WEB.Models.Entities.Midia", b =>
@@ -1814,13 +1830,21 @@ namespace WEB.Migrations
 
             modelBuilder.Entity("WEB.Models.Entities.Usuario", b =>
                 {
-                    b.HasOne("WEB.Models.Entities.Igreja", null)
+                    b.HasOne("WEB.Models.Entities.Igreja", "Igreja")
                         .WithMany("Usuarios")
-                        .HasForeignKey("IgrejaId");
+                        .HasForeignKey("IgrejaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.HasOne("WEB.Models.Entities.Regiao", null)
+                    b.HasOne("WEB.Models.Entities.Regiao", "Regiao")
                         .WithMany("Usuarios")
-                        .HasForeignKey("RegiaoId");
+                        .HasForeignKey("RegiaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Igreja");
+
+                    b.Navigation("Regiao");
                 });
 
             modelBuilder.Entity("WEB.Models.Entities.Igreja", b =>
@@ -1918,11 +1942,6 @@ namespace WEB.Migrations
                     b.Navigation("Diaconos");
 
                     b.Navigation("Regioes");
-                });
-
-            modelBuilder.Entity("WEB.Models.Entities.Usuario", b =>
-                {
-                    b.Navigation("Membro");
                 });
 #pragma warning restore 612, 618
         }

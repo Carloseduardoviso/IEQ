@@ -5,6 +5,7 @@ using System.Net.Mail;
 using WEB.Data.Repositories;
 using WEB.Data.Repositories.Interfaces;
 using WEB.Models.Entities;
+using WEB.Models.Enuns;
 using WEB.Models.ViewModels;
 using WEB.Services.Interfaces;
 
@@ -15,12 +16,18 @@ namespace WEB.Services
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
+        private readonly IHomensRepository _homensRepository;
+        private readonly IMulheresRepository _mulheresRepository;
+        private readonly IMembroRepository _membroRepository;
 
-        public UsuarioService(IUsuarioRepository usuarioRepository, IMapper mapper, IConfiguration config)
+        public UsuarioService(IUsuarioRepository usuarioRepository, IMapper mapper, IConfiguration config, IHomensRepository homensRepository, IMulheresRepository mulheresRepository, IMembroRepository membroRepository)
         {
             _usuarioRepository = usuarioRepository;
             _mapper = mapper;
             _config = config;
+            _homensRepository = homensRepository;
+            _mulheresRepository = mulheresRepository;
+            _membroRepository = membroRepository;
         }
 
         public async Task AddAsync(UsuarioVm vm)
@@ -131,19 +138,27 @@ namespace WEB.Services
 
         public async Task RegistrarAsync(UsuarioVm vm)
         {
-            var usuario = new Usuario
-            {
-                UsuarioId = Guid.NewGuid(),
-                Nome = vm.Nome,
-                Email = vm.Email,
-                SenhaHash = BCrypt.Net.BCrypt.HashPassword(vm.Senha),
-                RegiaoId = vm.RegiaoId,
-                IgrejaId = vm.IgrejaId,
-                Role = vm.Role,
-                DataCriacao = DateTime.Now
-            };
+            vm.NomeCompleto = vm.Membro?.NomeCompleto;
 
+            Usuario usuario = _mapper.Map<Usuario>(vm);
+            usuario.SenhaHash = BCrypt.Net.BCrypt.HashPassword(vm.Senha);
+            usuario.DataCriacao = DateTime.Now;
             await _usuarioRepository.AddAsync(usuario);
+
+            if (vm.Genero == Genero.Homens)
+            {
+                var homens = Homens.AdicionarAutomatico(vm);
+                homens.MembroId = usuario.Membro!.MembroId;
+                await _homensRepository.AddAsync(homens);
+            }
+
+            if (vm.Genero == Genero.Mulheres)
+            {
+                var mulheres = Mulheres.AdicionarAutomatico(vm);
+                mulheres.MembroId = usuario.Membro!.MembroId;
+                await _mulheresRepository.AddAsync(mulheres);
+            }
+
             await _usuarioRepository.SaveAsync();
         }
 

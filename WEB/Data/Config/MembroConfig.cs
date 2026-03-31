@@ -18,6 +18,7 @@ namespace WEB.Data.Config
 
             builder.HasOne(d => d.Igreja).WithMany(i => i.Membros).HasForeignKey(d => d.IgrejaId).OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(d => d.Regiao).WithMany(r => r.Membros).HasForeignKey(d => d.RegiaoId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(m => m.Usuario).WithOne(u => u.Membro).HasForeignKey<Membro>(m => m.UsuarioId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

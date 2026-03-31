@@ -27,7 +27,7 @@ namespace WEB.Helpers.Builder
             if (!string.IsNullOrWhiteSpace(search))
             {
                 search = search.Trim();
-                var nomeProperty = Expression.Property(View, nameof(UsuarioVm.Nome));
+                var nomeProperty = Expression.Property(View, nameof(UsuarioVm.NomeCompleto));
                 var nomeContains = Expression.Call(nomeProperty, MethodInfoContains!, Expression.Constant(search));
                 Expression filtroCombinado = nomeContains;
 

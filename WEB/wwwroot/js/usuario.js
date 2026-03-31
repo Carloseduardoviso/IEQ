@@ -178,6 +178,7 @@
 
                 inicializarComponentes('#modalAdicionar');
                 rebindValidators($('#modalAdicionar'));
+                $('#Contato').mask('(00) 00000-0000');
             }
         });
     });
@@ -201,6 +202,7 @@
 
                 inicializarComponentes('#modalAdicionar');
                 rebindValidators($('#modalAdicionar'));
+                $('#Contato').mask('(00) 00000-0000');
 
                 // 🔥 carregar cidade automaticamente
                 let estado = $('#Estado').val();

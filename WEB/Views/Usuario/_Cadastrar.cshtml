@@ -44,9 +44,9 @@
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Nome"></label><span class="text-danger"> *</span>
-                        <input asp-for="Nome" class="form-control" />
-                        <span asp-validation-for="Nome" class="text-danger"></span>
+                        <label asp-for="NomeCompleto"></label><span class="text-danger"> *</span>
+                        <input asp-for="NomeCompleto" class="form-control" />
+                        <span asp-validation-for="NomeCompleto" class="text-danger"></span>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -76,7 +76,7 @@
                     <div class="row">                          
                         <div class="col-md-6 mb-3">
                             <label>Igreja</label>
-                            <select asp-for="IgrejaId" class="input-custom form-select form-control select2bs4 p-2">
+                            <select asp-for="Membro.IgrejaId" class="input-custom form-select form-control select2bs4 p-2">
                                 <option value="" disabled selected>Selecione</option>
                                 @foreach (var item in igreja)
                                 {
@@ -87,7 +87,7 @@
 
                         <div class="col-md-6 mb-3">
                             <label>Região</label><span class="text-danger"> *</span>
-                            <select asp-for="RegiaoId" class="input-custom form-select form-control select2bs4 p-2">
+                            <select asp-for="Membro.RegiaoId" class="input-custom form-select form-control select2bs4 p-2">
                                 <option value="" disabled selected>Selecione</option>
                                 @foreach (var item in regiao)
                                 {

@@ -1,4 +1,5 @@
 ﻿using WEB.Models.Enuns;
+using WEB.Models.ViewModels;
 
 namespace WEB.Models.Entities
 {
@@ -10,7 +11,8 @@ namespace WEB.Models.Entities
         public Guid? PastorId { get; set; }
         public Guid? SuperintendenteEstadualId { get; set; }
         public Guid? SuperintendenteRegionalId { get; set; }
-        public string? NomeCompleto { get; set; }  
+        public Guid? UsuarioId { get; set; }
+        public string? NomeCompleto { get; set; }
         public string? Contato { get; set; }
         public DateTime? DataNascimento { get; set; }
         public DateTime? DataMinisterio { get; set; }
@@ -41,6 +43,31 @@ namespace WEB.Models.Entities
         public Louvor? Louvor { get; set; }
         public Midia? Midia { get; set; }
         public Mulheres? Mulheres { get; set; }
-        public Teatro? Teatro { get; set; }        
+        public Teatro? Teatro { get; set; }
+        public Usuario? Usuario { get; set; }
+
+        public static Membro AdicionarAutomatico(UsuarioVm vm, Guid usuarioId)
+        {
+            return new Membro
+            {
+                MembroId = Guid.NewGuid(),
+                UsuarioId = usuarioId,
+                NomeCompleto = vm.Membro!.NomeCompleto,
+                IgrejaId = vm.Membro!.IgrejaId,
+                RegiaoId = vm.Membro.RegiaoId,
+                PastorId = vm.Membro.PastorId,
+                SuperintendenteEstadualId = vm.Membro.SuperintendenteEstadualId,
+                SuperintendenteRegionalId = vm.Membro.SuperintendenteRegionalId,
+                Contato = vm.Membro.Contato,
+                DataNascimento = vm.Membro.DataNascimento,
+                DataMinisterio = DateTime.Now,
+                DataBatismo = vm.Membro.DataBatismo,
+                Estado = vm.Membro.Estado,
+                Cidade = vm.Membro.Cidade,
+                FotoUrl = vm.FotoUrl,
+                Ativo = true,
+                CargoLocal = CargoLocal.Membro,
+            };
+        }
     }
 }

@@ -31,7 +31,7 @@
                         <!-- DADOS -->
                         <h5>Dados Pessoais</h5>
 
-                        <input asp-for="Nome" class="form-control mb-2" placeholder="Nome" required />
+                        <input asp-for="Membro.NomeCompleto" class="form-control mb-2" placeholder="Nome" required />
                         <input asp-for="Email" class="form-control mb-2" placeholder="Email" required />
 
                         <div class="row">
@@ -41,9 +41,15 @@
                             <div class="col-md-6">
                                 <input asp-for="ConfirmarSenha" type="password" class="form-control mb-2" placeholder="Confirmar Senha" required />
                             </div>
+                             <div class="col-md-6">
+                                <input asp-for="Membro.Contato" id="Contato" class="form-control mb-3" data-mask="(00) 00000-0000" placeholder="Contato" required />
+                            </div>
+                            <div class="col-md-6">                              
+                                <select asp-for="Genero" asp-items="Html.GetEnumSelectList<Genero>()" class="form-control select2" placeholder="Gênero" required>
+                                    <option value="">Selecione Gênero</option>
+                                </select>
+                            </div>
                         </div>
-
-                        <input asp-for="Contato" id="Contato" class="form-control mb-3" placeholder="Contato" required />
 
                         <hr />
 
@@ -52,12 +58,12 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <select asp-for="Estado" id="Estado" asp-items="ViewBag.Estados"
+                                <select asp-for="Membro.Estado" id="Estado" asp-items="ViewBag.Estados"
                                         class="form-control select2 mb-2" required></select>
                             </div>
 
                             <div class="col-md-6">
-                                <select asp-for="Cidade" id="Cidade"
+                                <select asp-for="Membro.Cidade" id="Cidade"
                                         class="form-control select2 mb-2" required></select>
                             </div>
                         </div>
@@ -68,9 +74,7 @@
                         <h5>Vínculo Ministerial</h5>
 
                         <!-- SUPERINTENDENTE -->
-                        <select asp-for="SuperintendenteRegionalId"
-                                id="SuperintendenteRegionalId"
-                                class="form-select mb-2" required>
+                        <select asp-for="Membro.SuperintendenteRegionalId" id="SuperintendenteRegionalId"  class="form-select mb-2" required>
                             <option value="">Selecione Superintendente</option>
                             @foreach (var item in superintendentesRegionais)
                             {
@@ -79,19 +83,19 @@
                         </select>
 
                         <!-- REGIÃO -->
-                        <select asp-for="RegiaoId"
+                        <select asp-for="Membro.RegiaoId"
                                 id="RegiaoId"
                                 class="form-select mb-2"
                                 disabled></select>
 
                         <!-- IGREJA -->
-                        <select asp-for="IgrejaId"
+                        <select asp-for="Membro.IgrejaId"
                                 id="IgrejaId"
                                 class="form-select mb-2"
                                 disabled></select>
 
                         <!-- PASTOR -->
-                        <select asp-for="PastorId"
+                        <select asp-for="Membro.PastorId"
                                 id="PastorId"
                                 class="form-select mb-2"
                                 disabled></select>
@@ -103,13 +107,13 @@
 
                         <div class="row">
                             <div class="col-md-4">
-                                <input asp-for="DataNascimento" type="date" class="form-control mb-2" />
+                                <input asp-for="Membro.DataNascimento" type="date" class="form-control mb-2" />
                             </div>
                             <div class="col-md-4">
-                                <input asp-for="DataMinisterio" type="date" class="form-control mb-2" required />
+                                <input asp-for="Membro.DataMinisterio" type="date" class="form-control mb-2" required />
                             </div>
                             <div class="col-md-4">
-                                <input asp-for="DataBatismo" type="date" class="form-control mb-2" />
+                                <input asp-for="Membro.DataBatismo" type="date" class="form-control mb-2" />
                             </div>
                         </div>
 

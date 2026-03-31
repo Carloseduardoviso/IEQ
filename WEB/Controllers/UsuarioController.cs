@@ -60,17 +60,17 @@ namespace WEB.Controllers
         {
             var novo = new UsuarioVm();
             if (usuarioId != null) novo = await _usuarioService.GetByIdAsync(usuarioId.Value);
+            if (novo.Membro == null) novo.Membro = new MembroVm();
 
             var regiao = await _regiaoService.GetAllAsync();
-            var ids = regiao.Select(x => x.SuperintendenteRegionalId).ToList();
+            //var ids = regiao.Select(x => x.SuperintendenteRegionalId).ToList();
 
-            var superintendentesRegionais = await _superintendenteRegionalService
-                .GetAllAsync(x => ids.Contains(x.SuperintendenteRegionalId));
+            var superintendentesRegionais = await _superintendenteRegionalService.GetAllAsync();
 
             //var superintendentesEstaduais = await _superintendenteEstadualService.GetAllAsync(x => x.SuperintendenteEstadualId == regiao.Select(x =>x.SuperintendenteEstadualId);
             var igreja = await _igrejaService.GetAllAsync();
             var pastores = await _pastoresService.GetAllAsync();
-            var estados = GetEstados(novo?.Estado);
+            var estados = GetEstados(novo?.Membro?.Estado);
 
             ViewBag.Igreja = igreja;
             ViewBag.SuperintendentesRegionais = superintendentesRegionais;
@@ -78,9 +78,9 @@ namespace WEB.Controllers
             ViewBag.Regiao = regiao;
             ViewBag.Estados = estados;
             ViewBag.Pastores = pastores;
-            ViewBag.Cidades = GetCidades(novo?.Estado!);
+            ViewBag.Cidades = GetCidades(novo?.Membro?.Estado!);
 
-            return View();
+            return View(novo);
         }
 
         public IActionResult EsqueciMinhaSenha() => View();       
@@ -111,7 +111,7 @@ namespace WEB.Controllers
 
             var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, usuario.Nome!),
+            new Claim(ClaimTypes.Name, usuario.NomeCompleto!),
             new Claim(ClaimTypes.Role, usuario.Role.ToString()),
             new Claim("UserId", usuario.UsuarioId.ToString()),
             new Claim("FotoUrl", usuario.FotoUrl ?? "/images/Home/foto_padrao.png")
@@ -135,12 +135,12 @@ namespace WEB.Controllers
 
             var regiao = await _regiaoService.GetAllAsync();
             var igreja = await _igrejaService.GetAllAsync();
-            var estados = GetEstados(novo?.Estado);
+            var estados = GetEstados(novo?.Membro?.Estado);
 
             ViewBag.Regiao = regiao;
             ViewBag.Igreja = igreja; 
             ViewBag.Estados = estados;
-            ViewBag.Cidades = GetCidades(novo?.Estado!);
+            ViewBag.Cidades = GetCidades(novo?.Membro?.Estado!);
 
             ViewBag.Title = usuarioId != null ? "Editar" : "Cadastrar";
 
@@ -235,7 +235,7 @@ namespace WEB.Controllers
 
                 var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, usuarioAtualizado.Nome!),
+            new Claim(ClaimTypes.Name, usuarioAtualizado.NomeCompleto!),
             new Claim(ClaimTypes.Role, usuarioAtualizado.Role.ToString()),
             new Claim("UserId", usuarioAtualizado.UsuarioId.ToString()),
             new Claim("FotoUrl", usuarioAtualizado.FotoUrl ?? "/images/Home/foto_padrao.png")
@@ -257,12 +257,10 @@ namespace WEB.Controllers
         [HttpPost]
         public async Task<IActionResult> Registrar(UsuarioVm vm)
         {
-            if (!ModelState.IsValid) return View(vm);
-
-            if (await _usuarioService.ExisteEmailAsync(vm.Email!))
-            {
-                return View("Registrar", vm).Information("Email já cadastrado");
-            }
+            //if (await _usuarioService.ExisteEmailAsync(vm.Email!))
+            //{
+            //    return View("Registrar", vm).Information("Email já cadastrado");
+            //}
 
             if (vm.Foto != null)
             {
@@ -271,7 +269,7 @@ namespace WEB.Controllers
                 if (!Directory.Exists(pasta))
                     Directory.CreateDirectory(pasta);
 
-                var nomeArquivo = vm.Nome + Path.GetExtension(vm.Foto.FileName);
+                var nomeArquivo = vm.NomeCompleto + Path.GetExtension(vm.Foto.FileName);
                 var caminhoCompleto = Path.Combine(pasta, nomeArquivo);
 
                 using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
@@ -284,8 +282,6 @@ namespace WEB.Controllers
 
             await _usuarioService.RegistrarAsync(vm);
 
-
-            var 
             return RedirectToAction("Login");
         }
 

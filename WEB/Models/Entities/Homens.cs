@@ -33,7 +33,7 @@ namespace WEB.Models.Entities
         public Pastores? Pastor { get; set; }
         public SuperintendenteEstadual? SuperintendenteEstadual { get; set; }
         public SuperintendenteRegional? SuperintendenteRegional { get; set; }
-        public Membro? Membro { get; set; }
+        public Membro? Membro { get; set; }  
 
         public static Homens Adicionar(MembroVm vm)
         {
@@ -59,6 +59,28 @@ namespace WEB.Models.Entities
                 Ativo = true,
                 CargoLocal = vm.CargoLocal,
                 CargoRegional = vm.CargoRegional
+            };
+        }
+        public static Homens AdicionarAutomatico(UsuarioVm vm)
+        {
+            return new Homens
+            {
+                HomensId = Guid.NewGuid(),
+                NomeCompleto = vm.NomeCompleto,
+                IgrejaId = vm.Membro.IgrejaId,
+                RegiaoId = vm.Membro.RegiaoId,
+                PastorId = vm.Membro.PastorId,
+                SuperintendenteEstadualId = vm.Membro.SuperintendenteEstadualId,
+                SuperintendenteRegionalId = vm.Membro.SuperintendenteRegionalId,
+                Contato = vm.Membro.Contato,
+                DataNascimento = vm.Membro.DataNascimento,
+                DataMinisterio = DateTime.Now,
+                DataBatismo = vm.Membro.DataBatismo,
+                Estado = vm.Membro.Estado,
+                Cidade = vm.Membro.Cidade,
+                FotoUrl = vm.FotoUrl,
+                Ativo = true,
+                CargoLocal = CargoLocal.Homens,
             };
         }
     }
